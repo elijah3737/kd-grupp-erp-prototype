@@ -1,0 +1,770 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>КД-Групп ERP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap">
+<style>
+/* Раскладка: шапка с ролями и одна рабочая поверхность; график — таблицей как в Excel, на узком экране карточками; режим показа — офис и телефон рядом */
+:root{
+  --bg:#f2f4f2;--surface:#ffffff;--surface-2:#f6f8f6;--line:#e0e5e1;--line-strong:#c8cfca;
+  --ink:#161616;--ink-2:#58605b;--ink-3:#8e8e8e;
+  --kd:#36895f;--kd-deep:#00552f;--kd-ink:#00552f;--kd-tint:#e4f1e9;--kd-row:#eff7f2;--on-kd:#ffffff;
+  --prog:#1f5f9e;--prog-tint:#e6eef8;--warn:#875200;--warn-tint:#fff2d4;--warn-line:#ebc77c;--bad:#b42318;--bad-tint:#fdeceb;--bad-line:#f1b9b4;
+  --font-ui:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-data:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1311;--surface:#171c19;--surface-2:#1e2420;--line:#2a322d;--line-strong:#3b453f;--ink:#e8eeea;--ink-2:#a7b1ab;--ink-3:#7c8680;--kd-ink:#8fd1ad;--kd-tint:#183a2a;--kd-row:#132a1e;--prog:#8db8f0;--prog-tint:#1b2a3f;--warn:#f2c46b;--warn-tint:#3a2e12;--warn-line:#6b5320;--bad:#ff8a80;--bad-tint:#3a1714;--bad-line:#6b2a25;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1311;--surface:#171c19;--surface-2:#1e2420;--line:#2a322d;--line-strong:#3b453f;--ink:#e8eeea;--ink-2:#a7b1ab;--ink-3:#7c8680;--kd-ink:#8fd1ad;--kd-tint:#183a2a;--kd-row:#132a1e;--prog:#8db8f0;--prog-tint:#1b2a3f;--warn:#f2c46b;--warn-tint:#3a2e12;--warn-line:#6b5320;--bad:#ff8a80;--bad-tint:#3a1714;--bad-line:#6b2a25;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px;padding-block:16px 40px}
+.wrap.wide{max-width:1680px}
+.cq{container-type:inline-size;min-width:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;padding:0 14px;border-radius:var(--r);border:1px solid var(--line-strong);background:var(--surface);cursor:pointer;font-size:14px;font-weight:500;white-space:nowrap}
+button:hover{background:var(--surface-2)}
+button:disabled{opacity:.55;cursor:default}
+:focus-visible{outline:2px solid var(--kd);outline-offset:2px}
+.pri{background:var(--kd);border-color:var(--kd);color:var(--on-kd)}
+.pri:hover{background:var(--kd-deep);border-color:var(--kd-deep)}
+.ghost{border-color:transparent;background:transparent}
+.danger{color:var(--bad);border-color:var(--bad-line)}
+.danger.pri,.danger.solid{background:var(--bad);border-color:var(--bad);color:var(--on-kd)}
+button.lnk{border:none;background:none;padding:0;min-height:0;color:var(--kd-ink);text-decoration:underline;text-underline-offset:2px;font-size:inherit;font-weight:500;white-space:normal}
+input,select,textarea{width:100%;min-height:40px;padding:8px 12px;border:1px solid var(--line-strong);border-radius:var(--r);background:var(--surface)}
+textarea{resize:vertical}
+input[type=checkbox]{width:16px;height:16px;min-height:0;padding:0;flex:none;accent-color:var(--kd)}
+::placeholder{color:var(--ink-3)}
+a{color:var(--kd-ink)}
+.ic{flex:none;vertical-align:-3px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.pad{padding:18px 20px}
+.mu{color:var(--ink-2);font-size:13px}
+.sm{font-size:12.5px;color:var(--ink-2)}
+.b1{font-weight:600;font-size:14px}
+.lb{display:block;font-size:13px;color:var(--ink-2);margin:12px 0 6px}
+.er{color:var(--bad);font-size:13px;margin-top:8px}
+.bad{color:var(--bad)}
+.fl{color:var(--warn)}
+.data{font-family:var(--font-data);font-size:.9em;font-variant-numeric:tabular-nums}
+.h2{font-size:18px;font-weight:600;margin:0;text-wrap:balance}
+.h3{font-size:15px;font-weight:600;margin:0}
+.mt{margin:24px 0 10px}
+.num{display:inline-block;font-family:var(--font-data);font-weight:500;font-size:.82em;line-height:1.5;padding:0 6px;border-radius:6px;background:var(--surface-2);border:1px solid var(--line-strong);margin-right:7px;white-space:nowrap;vertical-align:1px;color:var(--ink)}
+.logo{width:34px;height:34px;border-radius:9px;background:var(--kd-deep);color:var(--on-kd);display:grid;place-items:center;font-weight:600;font-size:13px;flex:none}
+.brand{display:flex;align-items:center;gap:10px}
+.tag{margin-left:auto;font-size:11px;font-weight:500;padding:3px 8px;border-radius:999px;background:var(--warn-tint);color:var(--warn)}
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--line)}
+.nav{display:flex;gap:4px;flex:1;min-width:0}
+.tab{border:none;background:transparent;min-height:36px;padding:0 12px;color:var(--ink-2)}
+.tab.on{background:var(--kd-tint);color:var(--kd-ink)}
+.who{text-align:right;line-height:1.35}
+.login{display:flex;justify-content:center;padding-block:4vh}
+.lc{width:100%;max-width:400px}
+.wide-b{width:100%;margin-top:16px}
+.pw{position:relative}
+.pw input{padding-right:96px}
+.pw button{position:absolute;right:4px;top:4px;min-height:32px;padding:0 10px;font-size:13px;border-color:transparent;background:transparent;color:var(--kd-ink)}
+.lhint{font-size:13px;color:var(--warn);margin-top:6px}
+.demo{border-top:1px solid var(--line);margin-top:16px;padding-top:14px}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.dg button{font-size:13px;white-space:normal;text-align:center;min-height:42px;line-height:1.25}
+.dg .duo-b{grid-column:1/-1}
+.polb{margin-top:10px;padding:12px 14px;border-radius:var(--r);background:var(--surface-2);font-size:13px;color:var(--ink-2)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.search{position:relative;flex:1 1 240px;min-width:0}
+.search .ic{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ink-3)}
+.search input{padding-left:36px}
+select.auto{width:auto;max-width:100%}
+.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:var(--r);overflow:hidden;background:var(--surface);max-width:100%}
+.seg button{border:none;border-radius:0;min-height:36px;font-size:13px;padding:0 12px}
+.seg button.on{background:var(--kd-tint);color:var(--kd-ink)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.chip{min-height:32px;padding:0 12px;font-size:13px;border-radius:999px}
+.chip.on{background:var(--kd-tint);border-color:var(--kd);color:var(--kd-ink)}
+.chip .n{color:var(--ink-2);font-weight:400}
+.chip.warn .n{color:var(--warn)}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.toast{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--kd-tint);color:var(--kd-ink);border-radius:var(--r);padding:8px 12px;font-size:13px;margin-bottom:10px;flex-wrap:wrap}
+.toast .tb{display:flex;gap:6px}
+.sm-btn{min-height:28px;padding:0 10px;font-size:12px}
+/* «Сегодня из Брянска» */
+.today{padding:14px 16px;margin:0 0 14px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:8px 20px}
+.today .th{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;grid-column:1/-1}
+.tl{display:flex;flex-direction:column}
+.tl button{justify-content:flex-start;border:none;background:transparent;min-height:30px;padding:2px 6px;margin-inline:-6px;font-weight:400;font-size:13px;white-space:normal;text-align:left;gap:8px}
+.tl button:hover{background:var(--surface-2)}
+.tl .tm{font-family:var(--font-data);color:var(--ink-2);font-size:12px;flex:none}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-content:start}
+.kpis button{flex-direction:column;align-items:flex-start;gap:0;min-height:52px;padding:6px 12px;font-weight:400;font-size:12.5px;color:var(--ink-2);white-space:normal;text-align:left}
+.kpis b{font-size:18px;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.kpis .w b{color:var(--warn)}.kpis .x b{color:var(--bad)}
+.new{display:inline-block;font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:var(--kd);color:var(--on-kd);margin-left:4px;white-space:nowrap}
+/* таблица */
+.gwrap{position:relative}
+.tbl{overflow:auto;max-height:calc(100vh - 190px);min-height:280px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+table{border-collapse:separate;border-spacing:0;table-layout:fixed;font-size:13px;min-width:100%}
+thead th{position:sticky;z-index:2;background:var(--surface-2)}
+thead tr.sumr th{top:0;height:30px;font-weight:500;font-size:12px;color:var(--ink-2);border-bottom:1px solid var(--line);padding:4px 8px;text-align:left;white-space:nowrap}
+thead tr.sumr th.s{color:var(--ink);font-family:var(--font-data)}
+thead tr.hdr th{top:30px;text-align:left;font-weight:500;border-bottom:1px solid var(--line-strong);padding:4px 4px;vertical-align:bottom}
+td{padding:8px 8px;border-bottom:1px solid var(--line);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:var(--surface)}
+tbody tr{cursor:pointer}
+tbody tr:hover td,tbody tr:focus-visible td{background:var(--surface-2)}
+tr.rdy td{background:var(--kd-row)}
+tr.shp td{color:var(--ink-2)}
+tr.cxr td{color:var(--ink-3);text-decoration:line-through;text-decoration-color:var(--line-strong)}
+tr.cxr td:first-child,tr.cxr td:nth-child(2){text-decoration:none}
+tr.hl td{background:var(--kd-tint)}
+.hb{border:none;background:transparent;min-height:30px;padding:2px 4px;font-size:12px;color:var(--ink-2);gap:2px;white-space:normal;text-align:left;line-height:1.2;justify-content:flex-start;align-items:flex-end;width:100%}
+.hb.act,.hb.open{color:var(--kd-ink)}
+.hb.open{background:var(--kd-tint)}
+.fcell{display:inline-flex;gap:4px;align-items:center}
+.rqn{opacity:.55}
+.qm{color:var(--prog)}
+.pl{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:500;padding:3px 9px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+.pl.s0{background:var(--surface-2);color:var(--ink-2);border-color:var(--line)}
+.pl.sp{background:var(--prog-tint);color:var(--prog)}
+.pl.s5{background:var(--kd-tint);color:var(--kd-ink)}
+.pl.s6{background:transparent;color:var(--ink-2);border-color:var(--line)}
+.pl.cx{background:var(--bad-tint);color:var(--bad)}
+button.on-fl,.pl.on-fl{background:var(--warn-tint);color:var(--warn);border-color:var(--warn-line)}
+.tot{margin-top:10px}
+.fpop{position:absolute;z-index:30;top:0;left:0;width:330px;max-height:470px;display:flex;flex-direction:column;gap:8px;padding:12px 14px;box-shadow:0 10px 30px rgb(0 0 0 / .16)}
+.fph{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.fsort,.fbt{display:flex;gap:6px;flex-wrap:wrap}
+.fsort button{min-height:30px;font-size:12.5px;padding:0 10px}
+.fsort button.on{background:var(--kd-tint);border-color:var(--kd);color:var(--kd-ink)}
+.fbt{gap:14px;font-size:13px}
+.fvals{overflow:auto;min-height:60px;display:flex;flex-direction:column;gap:2px;font-size:13px}
+.fvals label{display:flex;gap:8px;align-items:center;min-width:0;cursor:pointer;padding:3px 2px}
+.fvals .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fvals .c{color:var(--ink-2);margin-left:auto;font-family:var(--font-data);font-size:12px}
+.fok{display:flex;justify-content:flex-end}
+.flist{display:flex;flex-direction:column}
+.frow{justify-content:space-between;border:none;border-bottom:1px solid var(--line);border-radius:0;background:transparent;min-height:44px;padding:0 2px;font-weight:400}
+.mob,.mob-inline{display:none}
+.mcard{padding:12px 14px;margin-bottom:8px;cursor:pointer}
+.mcard.rdy{background:var(--kd-row)}
+.mcard.shp .mt-t{color:var(--ink-2)}
+.mcard.cxr{opacity:.7}
+.mcard.hl{border-color:var(--kd);background:var(--kd-tint)}
+.mrow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mt-t{font-weight:600;font-size:15px;margin:4px 0 2px}
+.oform{margin-bottom:14px}
+.ogrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0 12px}
+.zbox{margin-top:14px;border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;background:var(--surface-2)}
+.zbox summary{cursor:pointer;font-size:14px;font-weight:500}
+.zbox .zs{color:var(--kd-ink);font-weight:400;font-size:13px}
+.acts{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;align-items:center}
+.dh{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.dact{display:flex;gap:8px;flex-wrap:wrap}
+.kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px 18px;margin-top:14px}
+.k{font-size:12px;color:var(--ink-2)}
+.v{font-size:14px;overflow-wrap:anywhere}
+.box{margin-top:14px;padding:12px 14px;border-radius:var(--r);font-size:14px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.box.w{background:var(--warn-tint);color:var(--warn);border:1px solid var(--warn-line)}
+.box.x{background:var(--bad-tint);color:var(--bad);border:1px solid var(--bad-line)}
+.box.g{background:var(--kd-tint);color:var(--kd-ink)}
+.box .bb{display:flex;gap:8px;flex-wrap:wrap}
+.cdrow{margin-top:14px;display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+.cdrow>div:first-child{flex:0 1 220px}
+.cdrow .sm{flex:1 1 220px;padding-bottom:4px}
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:24px 0 12px;flex-wrap:wrap}
+.steps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.stp{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;border:none;background:transparent;padding:0;min-height:0;font-weight:400;white-space:normal;min-width:0}
+.stp:hover{background:transparent}
+.stp .dt{width:16px;height:16px;border-radius:50%;border:2px solid var(--line-strong);background:var(--surface);position:relative;z-index:1}
+.stp .ln{position:absolute;top:7px;right:50%;width:100%;height:2px;background:var(--line-strong)}
+.stp:first-child .ln{display:none}
+.stp.done .dt{background:var(--kd);border-color:var(--kd)}
+.stp.done .ln{background:var(--kd)}
+.stp .tx{font-size:12px;color:var(--ink-2);text-align:center;line-height:1.25;margin-top:2px}
+.stp .dd{font-size:11px;color:var(--ink-2);font-family:var(--font-data)}
+.stp.cur .tx{color:var(--kd-ink);font-weight:600}
+.stp.cur .dt{box-shadow:0 0 0 4px var(--kd-tint)}
+button.stp:hover .dt{border-color:var(--kd)}
+.cfb{margin-top:14px;padding:12px 14px;border-radius:var(--r);background:var(--warn-tint);border:1px solid var(--warn-line);font-size:14px}
+.cfb .acts{margin-top:10px}
+.alt{margin:12px 0 0;font-size:13px}
+.hist{font-size:13px}
+.hist>div{padding:7px 0;border-bottom:1px solid var(--line)}
+.cm{display:flex;gap:8px;margin-top:12px;align-items:flex-start}
+.cm input,.cm textarea{flex:1;min-width:0}
+.thread{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.msg{padding:8px 12px;border-radius:12px;font-size:14px;max-width:92%}
+.msg.client{background:var(--surface-2);border:1px solid var(--line);align-self:flex-start}
+.msg.office{background:var(--kd-tint);color:var(--ink);align-self:flex-end}
+.phone{max-width:400px;margin:0 auto;border:1px solid var(--line-strong);border-radius:28px;padding:16px;background:var(--surface-2)}
+.ph{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.sc{padding:12px 14px;margin-bottom:8px}
+.sc.hl{border-color:var(--kd)}
+.prog{display:flex;align-items:center;gap:8px;margin:10px 0}
+.bar{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--kd)}
+.sa{display:flex;gap:8px;align-items:center}
+.grow{flex:1}
+.phone .sa button,.pr .sa button{min-height:48px;font-size:16px;font-weight:600}
+.phone .sa .pri,.pr .sa .pri{background:var(--kd-deep);border-color:var(--kd-deep)}
+.sq{width:48px;padding:0;flex:none}
+.sdone{flex:1;display:flex;gap:8px;align-items:center;min-height:48px;padding:0 12px;border-radius:var(--r);background:var(--kd-tint);color:var(--kd-ink);font-size:14px}
+.sundo{min-height:48px}
+.scf{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:var(--r);background:var(--warn-tint);border:1px solid var(--warn-line)}
+.scf .sm{color:var(--warn);font-size:13.5px}
+.empty{padding:20px;text-align:center;color:var(--ink-2);font-size:13px}
+.agrid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr) auto;gap:10px;align-items:end}
+.acc{margin:12px 0;padding:14px;border-radius:var(--r);background:var(--kd-tint);color:var(--kd-ink)}
+.acc textarea{background:var(--surface);color:var(--ink);font-size:13px;resize:none;margin-top:8px}
+.acc .row2{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.lrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.lrow .r{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+.ct{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.asb{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 14px;border-radius:var(--r);background:var(--prog-tint);color:var(--prog);font-size:13.5px;margin-bottom:14px}
+.asb span{flex:1;min-width:200px}
+.mine{max-width:640px;margin:0 auto}
+.readyb{margin:16px 0 6px;padding:14px 16px;border-radius:14px;background:var(--kd-tint);color:var(--kd-ink);border:1px solid var(--kd)}
+.rbh{display:flex;gap:8px;align-items:center;font-size:17px;font-weight:600}
+.rbl{display:flex;flex-direction:column;gap:4px;margin:10px 0 12px;color:var(--ink);font-size:14px}
+.readyb .sm{color:var(--ink-2)}
+.ctabs{margin:16px 0 2px}
+.cc{padding:14px 16px;margin-bottom:10px}
+.cc.rdy{border-color:var(--kd)}
+.cct{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.cc-n{font-weight:600;font-size:15px;min-width:0}
+.now{font-size:16px;font-weight:600;margin-top:12px}
+.eta{font-size:14px;color:var(--ink-2);margin-top:2px}
+.cc .prog{margin:10px 0 12px}
+.csteps{margin:4px 0 6px}
+.cact{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.cact button{min-height:40px}
+.rqs{margin-top:10px;font-size:13.5px;color:var(--warn)}
+.rqs .ic{margin-right:4px}
+.rqs.ok{color:var(--kd-ink)}
+.rqs.no{color:var(--ink-2)}
+.rqf,.qs{margin-top:12px;padding:12px 14px;border-radius:var(--r);background:var(--surface-2);border:1px solid var(--line)}
+.rqf .lb,.qs .lb{margin-top:0}
+.qs .sm{margin-top:8px}
+.inv{font-size:12px;color:var(--ink-2);margin:16px 0 6px}
+.mgr{margin-top:18px;display:flex;gap:6px;align-items:center;font-size:13px;color:var(--ink-2)}
+.duoh{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;padding:12px 16px;margin-bottom:14px}
+.duoh .dl{flex:1 1 420px;min-width:0}
+.duoh .dr{display:flex;gap:8px;flex-wrap:wrap}
+.duo{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:16px;align-items:start}
+.pr{border:1px solid var(--line-strong);border-radius:28px;padding:14px;background:var(--surface-2);position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);max-height:calc(100vh - 24px);overflow:auto}
+.foot{margin-top:28px;font-size:12px;color:var(--ink-2);max-width:900px}
+@media (max-width:1100px){.duo{grid-template-columns:minmax(0,1fr)}.pr{position:static;max-height:none}}
+@container (max-width:900px){
+  .sm-btn,.fsort button,.hb{min-height:36px}
+  .today{grid-template-columns:minmax(0,1fr)}
+  .agrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+}
+@container (max-width:720px){
+  .sm .data{font-size:12px}
+  .stp .tx{min-height:2.5em}
+  .ctabs{display:flex;width:100%}
+  .ctabs button{flex:1 1 0;min-width:0;white-space:normal;line-height:1.2;padding:4px 8px;min-height:44px}
+  .dact button{flex:1 1 auto}
+  .top{gap:10px}
+  .top .bt{display:none}
+  .who{margin-left:auto;flex:1 1 0;min-width:0}
+  .who .b1,.who .sm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .nav{order:3;flex-basis:100%;overflow-x:auto}
+  .search{flex-basis:100%}
+  .desk{display:none}
+  .mob{display:block}
+  .mob-inline{display:inline-flex}
+  .chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}
+  .chip{flex:none}
+  .seg{overflow-x:auto}
+  .phone{max-width:none;border:none;border-radius:0;padding:0;background:transparent}
+  .agrid{grid-template-columns:minmax(0,1fr)}
+  .pad{padding:16px}
+  .stp .tx{font-size:11px;letter-spacing:-.01em}
+  .csteps .stp:not(.cur) .tx,.csteps .stp .dd{visibility:hidden}
+  .fpop{position:static;width:auto;max-height:none;margin-bottom:12px;box-shadow:none}
+  .fvals{max-height:50vh}
+  .kpis{grid-template-columns:1fr 1fr}
+  .dact{width:100%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<div id="app"><p class="mu" style="padding:16px">Загружаю прототип…</p></div>
+<script src="data.js"></script>
+<script>
+const TODAY='2026-10-02';
+const R=['Принят','В работе','Разобран','К сборке','Сборка','Готов','Отгружен'];
+const RN=['Принят','В работе','Материал','К сборке','Сборка','Готов','Отгружен'];
+const CR=['Принят','В работе','Разобран','Подготовка к сборке','Сборка','Готов','Отгружен'];
+const CRN=['Принят','В работе','Подготовка материала','Подготовка к сборке','Сборка','Готов','Отгружен'];
+const PCT=[0,15,35,55,75,100,100];
+const RL={admin:'Ст. администратор',shift:'Руководитель производства',master:'Сотрудник (просмотр)',client:'Клиент'};
+const NAV={admin:[['grid','График'],['shop','Цех'],['access','Клиенты и доступы']],shift:[['shop','Цех'],['grid','График']],master:[['grid','График']],client:[['mine','Мои транспортёры']]};
+const HOME={admin:'grid',shift:'shop',master:'grid',client:'mine'};
+const COLS0={admin:'x',shift:'a',master:'z',client:'x'};
+const W=['lenta','kolos','pole','zerno','niva','sever','luch','klen','grad','rosa'];
+const I={search:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/>',flag:'<path d="M5 21V4"/><path d="M5 4h12l-2.5 4.5L17 13H5"/>',left:'<path d="M19 12H5"/><path d="M11 18l-6-6 6-6"/>',right:'<path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>',out:'<path d="M14 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2"/><path d="M10 12h11"/><path d="M18 9l3 3-3 3"/>',plus:'<path d="M12 5v14M5 12h14"/>',x:'<path d="M17 7L7 17M7 7l10 10"/>',chev:'<path d="M7 10l5 5 5-5"/>',filter:'<path d="M4 5h16l-6 7.5V18l-4 2v-7.5z"/>',alert:'<path d="M12 9v4M12 17h.01"/><path d="M10.3 4.2L2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/>',truck:'<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>',copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',phone:'<path d="M5 4h3.5l2 5-2.4 1.5a11 11 0 0 0 5.4 5.4L15 13.5l5 2V19a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/>',ok:'<circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/>',spark:'<path d="M12 3l1.9 4.6 4.6 1.9-4.6 1.9L12 16l-1.9-4.6-4.6-1.9 4.6-1.9z"/>',doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',sliders:'<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',msg:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/>',edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/>',ban:'<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>',eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',screens:'<rect x="2" y="4" width="13" height="12" rx="2"/><rect x="17" y="7" width="5" height="11" rx="1.5"/><path d="M6 20h5"/>',dl:'<path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/>',undo:'<path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'};
+const ic=(n,s=16)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]}</svg>`;
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ru=(a,b)=>String(a).localeCompare(String(b),'ru',{numeric:true});
+const uniq=a=>[...new Set(a)];
+const fd=d=>d?d.slice(8,10)+'.'+d.slice(5,7):'';
+const fdy=d=>d?fd(d)+'.'+d.slice(0,4):'';
+const hm=()=>new Date().toTimeString().slice(0,5);
+const addD=(d,n)=>{const x=new Date(d+'T12:00:00');x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)};
+const mon=k=>p=>p[k]?p[k].slice(5,7)+'.'+p[k].slice(0,4):'без даты';
+function route(p){return p.rp>0?R:RN}
+function cRoute(p){return p.rp>0?CR:CRN}
+const prod=p=>p.st<5&&!p.cx;
+const over=p=>prod(p)&&!!p.plan&&p.plan<TODAY;
+const prio=p=>!!p.pri||!!(p.rq&&p.rq.st==='ok');
+const rqNew=p=>!!(p.rq&&p.rq.st==='new');
+const unans=p=>p.msgs.length>0&&p.msgs[p.msgs.length-1].from==='client';
+const isFlash=p=>!!p.flash&&Date.now()-p.flash<15000;
+const stLabel=p=>p.cx?'Отменена':route(p)[p.st];
+const tag=p=>p.cl+(p.num?' № '+p.num:'');
+const numB=p=>p.num?`<span class="num">№ ${esc(p.num)}</span>`:'';
+const invLabel=p=>p.inv&&/\d/.test(p.inv)&&!/^(ИП|Отмена|Испытания)/.test(p.inv)?'Счёт '+p.inv:'Без номера счёта';
+const qtyTxt=p=>p.nw&&p.rp?`новых ${p.nw} + восстановить ${p.rp}`:p.rp?`восстановить ${p.rp} шт.`:p.nw?`новый ${p.nw} шт.`:p.qt?`${p.qt} шт.`:'кол-во не указано';
+const fmtPh=ph=>'+7 '+ph.slice(2,5)+' '+ph.slice(5,8)+'-'+ph.slice(8,10)+'-'+ph.slice(10,12);
+const normPh=s=>{let d=String(s||'').replace(/\D/g,'');if(d.length===11&&(d[0]==='8'||d[0]==='7'))d=d.slice(1);return d.length===10?'+7'+d:null};
+const gen=()=>W[Math.floor(Math.random()*W.length)]+'-'+(1000+Math.floor(Math.random()*9000));
+const logo=()=>`<div class="logo" aria-hidden="true">КД</div>`;
+
+/* ---------- данные: строки графика + демо-состояние ---------- */
+const U=[
+  {ph:'+79000000001',pw:'pole-1001',role:'admin',nm:'Андрей М.',place:'Офис, Москва',last:'2026-10-02 08:55'},
+  {ph:'+79000000002',pw:'kolos-2002',role:'shift',nm:'Павел Р.',place:'Производство, Брянск',last:'2026-10-02 08:31'},
+  {ph:'+79000000003',pw:'zerno-3003',role:'master',nm:'Дмитрий Л.',place:'Цех, Брянск',last:'2026-10-01 17:40'},
+  {ph:'+79000000004',pw:'lenta-4827',role:'client',nm:'Игорь Н.',cl:'ООО «Нива»',last:'2026-10-01 18:20'},
+  {ph:'+79000000005',pw:'sever-5005',role:'admin',nm:'Ольга К.',place:'Офис, Москва',last:'2026-10-01 16:12'}
+];
+const MGR=U[0];
+const DEMO_ST=[4,2,1,3,0,2,4,1,3,2,1,4,0,3,2,1,4,2,3,1,0];
+const DEMO_OFF=[0,1,3,0,2,5,1,4,0,2,6,3,1,5,2,4,1,3,6,2,4];
+const TIMES=['08:40','09:12','10:05','10:48','11:30','13:15','14:02','15:20','16:10','17:05'];
+let wi=0;
+const P=(window.KD_ROWS||[]).map((r,i)=>{
+  const [inv,cl,num,br,art,nm,qt,nw,rp,plan,rd,sd,sdx,sh,ty,be,ln,jn,wd,pl,fs,ba,di,al,fill]=r;
+  const p={id:i+1,inv,cl,num,br,art,nm,qt:+qt||0,nw:+nw||0,rp:+rp||0,plan,rd,sd,sdx,sh,ty,be,ln,jn,wd,pl,fs,ba,di,al,fill,st:0,pri:false,rq:null,cd:'',cx:null,msgs:[],h:[],sdt:['','','','','','',''],flash:0};
+  if(fill==='r')p.cx={r:inv==='Отмена'?'отмена, отмечено в графике':'строка красная в графике — причину уточняем',d:'',w:'перенос из Excel'};
+  if(sd||sdx){p.st=6;p.sdt[6]=sd;p.sdt[5]=rd}
+  else if(fill==='g'||fill==='b'||rd){p.st=5;p.sdt[5]=rd}
+  else if(fill==='r'){p.st=0}
+  else{const k=wi++;p.st=DEMO_ST[k%DEMO_ST.length];let d=addD(TODAY,-DEMO_OFF[k%DEMO_OFF.length]);
+    for(let s=p.st;s>=0;s--){p.sdt[s]=d;d=addD(d,-(2+((k+s)%3)))}
+    p.h.push({d:p.sdt[0],tm:'10:00',w:'Андрей М.',r:'admin',x:'позиция создана'});
+    for(let s=1;s<=p.st;s++)p.h.push({d:p.sdt[s],tm:TIMES[(k*3+s)%TIMES.length],w:'Павел Р.',r:'shift',x:route(p)[s-1]+' → '+route(p)[s]});}
+  if(!p.h.length)p.h.push({d:TODAY,tm:'08:00',w:'перенос из Excel',r:'sys',x:'строка графика перенесена'+(p.cx?' (красная)':p.st===6?' (отгружена)':' (готова)')});
+  return p});
+(function seed(){const nv=P.filter(p=>p.cl==='ООО «Нива»'&&prod(p));
+  if(nv[0])nv[0].cd='2026-10-09';
+  if(nv[1]){nv[1].cd='2026-10-16';nv[1].rq={need:'2026-10-07',d:'2026-10-01',tm:'16:40',st:'new'};nv[1].h.push({d:'2026-10-01',tm:'16:40',w:'ООО «Нива»',r:'client',x:'просит в первую очередь, нужен к 07.10'})}
+  if(nv[2]){nv[2].rq={need:'',d:'2026-09-29',tm:'11:05',st:'ok',ad:'2026-09-29'};nv[2].h.push({d:'2026-09-29',tm:'11:05',w:'ООО «Нива»',r:'client',x:'просит в первую очередь'},{d:'2026-09-29',tm:'12:20',w:'Ольга К.',r:'admin',x:'просьба клиента принята — приоритет'})}
+  const ov=P.find(p=>over(p)&&p.cl!=='ООО «Нива»');if(ov){ov.pri=true;ov.h.push({d:'2026-09-25',tm:'11:00',w:'Андрей М.',r:'admin',x:'срочно (офис)'})}})();
+const byId=id=>P.find(p=>p.id===id);
+const clients=()=>uniq(P.map(p=>p.cl)).filter(c=>c!=='Склад').sort(ru);
+
+/* ---------- колонки — как в Excel, плюс приоритет и стадия ---------- */
+const C=[
+{k:'fl',t:'',w:44,g:'s',v:p=>prio(p)?'приоритет':rqNew(p)?'просьба клиента':unans(p)?'вопрос клиента':'нет',r:p=>flagCell(p)},
+{k:'st',t:'Стадия',w:136,g:'s',v:stLabel,r:p=>pill(p)+(isFlash(p)?' <span class="new">только что</span>':''),s:p=>p.cx?9:p.st},
+{k:'inv',t:'№ счёта',w:116,g:'a',v:p=>p.inv||'—',mono:1},
+{k:'cl',t:'Клиент',w:170,g:'a',v:p=>p.cl},
+{k:'num',t:'Номер клиента',w:78,g:'a',v:p=>p.num||'—',mono:1},
+{k:'br',t:'Бренд с/х',w:96,g:'a',v:p=>p.br||'—'},
+{k:'art',t:'Артикул',w:128,g:'a',v:p=>p.art||'—',mono:1},
+{k:'nm',t:'Наименование',w:250,g:'a',v:p=>p.nm},
+{k:'qt',t:'Кол-во Итого',w:84,g:'a',v:p=>String(p.qt||0),mono:1,n:1},
+{k:'nw',t:'Новый',w:68,g:'a',v:p=>p.nw?String(p.nw):'—',mono:1,n:1},
+{k:'rp',t:'Восстановить',w:110,g:'a',v:p=>p.rp?String(p.rp):'—',mono:1,n:1},
+{k:'plan',t:'Дата выдачи (План)',w:104,g:'a',dt:1,v:p=>fdy(p.plan),fv:mon('plan'),r:p=>over(p)?`<span class="bad data">${fdy(p.plan)}</span> <span class="bad" title="Просрочено">${ic('alert',13)}</span>`:`<span class="data">${fdy(p.plan)}</span>`},
+{k:'rd',t:'Готов к отгрузке',w:98,g:'a',dt:1,v:p=>fdy(p.rd),fv:mon('rd'),mono:1},
+{k:'sd',t:'Дата реализации',w:104,g:'a',dt:1,v:p=>p.sd?fdy(p.sd):p.sdx,fv:p=>p.sd?mon('sd')(p):p.sdx?'текстом («Продан …»)':'без даты',mono:1},
+{k:'sh',t:'Шаг',w:60,g:'z',v:p=>p.sh||'—',mono:1},
+{k:'ty',t:'Тип',w:80,g:'z',v:p=>p.ty||'—',mono:1},
+{k:'be',t:'Кол-во ремней',w:68,g:'z',v:p=>String(p.be||'—'),mono:1},
+{k:'ln',t:'Длина, мм',w:72,g:'z',v:p=>String(p.ln||'—'),mono:1},
+{k:'jn',t:'Соединение',w:112,g:'z',v:p=>p.jn||'—'},
+{k:'wd',t:'Ширина, мм',w:74,g:'z',v:p=>String(p.wd||'—'),mono:1},
+{k:'pl',t:'Пластина',w:92,g:'z',v:p=>p.pl||'—',mono:1},
+{k:'fs',t:'Крепеж ср. ремня',w:110,g:'z',v:p=>p.fs||'—'},
+{k:'ba',t:'Кол-во прутков',w:74,g:'z',v:p=>String(p.ba||'—'),mono:1},
+{k:'di',t:'ø прутка (с резиной)',w:108,g:'z',v:p=>p.di||'—',mono:1},
+{k:'al',t:'Чередование',w:260,g:'z',v:p=>p.al||'—'}
+];
+const col=k=>C.find(c=>c.k===k);
+const LBL={inv:'№ счёта',cl:'Клиент',num:'Номер клиента',br:'Бренд с/х',art:'Артикул',nm:'Наименование',nw:'Новый',rp:'Восстановить',plan:'План',sh:'Шаг',ty:'Тип',be:'Кол-во ремней',ln:'Длина',jn:'Соединение',wd:'Ширина',pl:'Пластина',fs:'Крепеж ср. ремня',ba:'Кол-во прутков',di:'ø прутка',al:'Чередование'};
+const ZK=['sh','ty','be','ln','jn','wd','pl','fs','ba','di','al'];
+function visCols(){const c=S.cols;return C.filter(x=>c==='x'||x.g==='s'||(c==='a'&&x.g==='a')||(c==='z'&&(x.g==='z'||['cl','num','nm'].includes(x.k))))}
+function pill(p){if(p.cx)return '<span class="pl cx">Отменена</span>';return `<span class="pl ${p.st===5?'s5':p.st===6?'s6':p.st>=1?'sp':'s0'}">${route(p)[p.st]}</span>`}
+function flagCell(p){let h='';if(prio(p))h+=`<span class="fl" title="Приоритет${p.pri?' (срочно, офис)':' по просьбе клиента'}">${ic('flag',15)}</span>`;else if(rqNew(p))h+=`<span class="fl rqn" title="Просьба клиента ждёт решения">${ic('flag',15)}</span>`;if(unans(p))h+=`<span class="qm" title="Вопрос клиента без ответа">${ic('msg',15)}</span>`;return `<span class="fcell">${h}</span>`}
+
+/* ---------- состояние; в режиме показа у каждой половины своё ---------- */
+const fresh=()=>({u:null,view:'login',q:'',cols:'x',chip:'all',f:{},fp:null,fsq:'',sort:null,mf:false,lim:50,d:null,from:'grid',toast:null,of:false,o:null,oerr:'',ed:false,cf:null,cxo:false,cxr:'',cxe:'',cdd:null,rep:'',acc:null,aerr:'',aph:'',anm:'',acl:'',acq:'',aall:false,rc:null,cp:'',ct:'work',sf:'',lph:'',lpw:'',lerr:'',pwv:false,pol:false,cerr:'',hl:null,top:false,sy:0,sy0:0,as:null,qs:null,qt:'',qerr:'',rqf:null,rqd:''});
+let S=fresh(),DUO=null,CUR=null;
+const PEND={},UNDO={};
+let DL=null,TK=null;
+const app=document.getElementById('app');
+function pick(el){if(!DUO){CUR=null;return}const pn=el&&el.closest?el.closest('[data-pane]'):null;CUR=pn?pn.dataset.pane:'L';S=DUO[CUR]}
+const root=()=>DUO&&CUR?app.querySelector('[data-pane="'+CUR+'"]'):app;
+const $=id=>{const r=root();return r?r.querySelector('#'+id):null};
+const who=()=>S.u.role==='client'?S.u.cl:S.u.nm;
+const ev=x=>({d:TODAY,tm:hm(),w:who(),r:S.u.role,x});
+function touch(p){if(S.u.role!=='admin')p.flash=Date.now();sync();tick()}
+
+/* ---------- синхронизация вкладок (если браузер разрешает) ---------- */
+let BC=null;const TAB=Math.random().toString(36).slice(2);
+/* новая вкладка спрашивает текущее состояние; отвечают только вкладки, где уже что-то меняли, — иначе свежая вкладка затёрла бы чужие правки */
+let LIVE=false;
+try{BC=new BroadcastChannel('kd-erp-prototype');BC.onmessage=e=>{const m=e.data;if(!m||m.from===TAB)return;if(m.hello){if(LIVE)sync();return}if(!Array.isArray(m.P))return;LIVE=true;P.splice(0,P.length,...m.P);U.splice(0,U.length,...m.U);render()};BC.postMessage({from:TAB,hello:1})}catch(e){BC=null}
+function sync(){LIVE=true;if(!BC)return;try{BC.postMessage({from:TAB,P,U})}catch(e){}}
+function tick(){clearTimeout(TK);const now=Date.now();const ts=Object.values(PEND).concat(P.filter(isFlash).map(p=>p.flash+15000)).filter(t=>t>now);if(!ts.length)return;TK=setTimeout(()=>{const n=Date.now();for(const k in PEND)if(PEND[k]<=n)delete PEND[k];render();tick()},Math.min(...ts)-now+60)}
+
+/* ---------- стадии ---------- */
+function setStage(p,to){if(!p||to<0||to>6||to===p.st)return false;
+  UNDO[p.id]={st:p.st,rd:p.rd,sd:p.sd,sdx:p.sdx,sdt:p.sdt.slice()};const from=p.st;p.st=to;
+  if(to>from){for(let i=from+1;i<=to;i++)p.sdt[i]=TODAY}else{for(let i=to+1;i<7;i++)p.sdt[i]=''}
+  if(to>=5){if(!p.rd)p.rd=TODAY}else p.rd='';
+  if(to===6)p.sd=TODAY;else{p.sd='';p.sdx=''}
+  p.h.push(ev(route(p)[from]+' → '+route(p)[to]));touch(p);return true}
+function undoStage(id){const u=UNDO[id],p=byId(id);if(!u||!p)return;const from=p.st;Object.assign(p,{st:u.st,rd:u.rd,sd:u.sd,sdx:u.sdx,sdt:u.sdt});delete UNDO[id];delete PEND[id];p.h.push(ev('отменено: '+route(p)[from]+' → '+route(p)[p.st]));touch(p)}
+function askStage(p,to){if(to===p.st)return render();if(to===5||to-p.st>1){S.cf={id:p.id,to};return render()}doStage(p,to)}
+function doStage(p,to){const from=p.st;if(!setStage(p,to))return render();S.cf=null;S.toast={m:`${tag(p)}: ${route(p)[from]} → ${route(p)[to]}`+(S.u.role==='shift'?'. Офис и клиент видят без звонка':''),u:p.id};render()}
+
+/* ---------- выборка графика ---------- */
+const CHIPS={all:()=>true,prod,ready:p=>p.st===5&&!p.cx,ship:p=>p.st===6&&!p.cx,cx:p=>!!p.cx,over,prio:p=>prio(p)&&prod(p),rq:rqNew,msg:unans,today:p=>p.h.some(h=>h.d===TODAY&&h.r==='shift')};
+function rows(skip){const q=S.q.trim().toLowerCase();const ch=CHIPS[S.chip]||CHIPS.all;return P.filter(p=>{if(!ch(p))return false;if(q&&![p.cl,p.nm,p.art,p.inv,p.br,p.num].join(' ').toLowerCase().includes(q))return false;for(const k in S.f){if(k===skip)continue;const c=col(k);if(!S.f[k].has((c.fv||c.v)(p)))return false}return true})}
+const grp=p=>p.cx?3:p.st<5?0:p.st===5?1:2;
+function cmpDef(a,b){const ga=grp(a);return ga-grp(b)||(ga===0?(prio(b)-prio(a)||over(b)-over(a)||ru(a.plan||'9999',b.plan||'9999')):ga===1?ru(b.rd||'',a.rd||''):ru(b.sd||'',a.sd||''))||a.id-b.id}
+function sorted(a){if(!S.sort)return a.sort(cmpDef);const c=col(S.sort.k),d=S.sort.dir==='asc'?1:-1;const val=p=>c.dt?(p[c.k]||''):c.s?c.s(p):c.v(p);return a.sort((x,y)=>{const vx=val(x),vy=val(y);const ex=vx===''||vx==='—',ey=vy===''||vy==='—';if(ex!==ey)return ex?1:-1;return d*ru(vx,vy)||x.id-y.id})}
+function fvSort(c){if(c.dt)return (a,b)=>{const k=v=>/^\d\d\.\d{4}$/.test(v)?v.slice(3)+v.slice(0,2):'0';return ru(k(b),k(a))};return ru}
+
+/* ---------- вход ---------- */
+function vLogin(){const cyr=/[а-яё]/i.test(S.lpw);return `<div class="login"><div class="card pad lc">
+<div class="brand">${logo()}<div><div class="b1">КД-Групп</div><div class="sm">Статус заказов и график производства</div></div><span class="tag">прототип</span></div>
+<form id="lf" novalidate>
+<label class="lb" for="lph">Телефон</label><input id="lph" type="tel" inputmode="tel" autocomplete="username" value="${esc(S.lph)}" placeholder="8 900 123-45-67">
+<label class="lb" for="lpw">Пароль из сообщения КД-Групп</label><div class="pw"><input id="lpw" type="${S.pwv?'text':'password'}" autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false" value="${esc(S.lpw)}" placeholder="слово-1234"><button type="button" data-a="pwv" aria-label="${S.pwv?'Скрыть пароль':'Показать пароль'}">${S.pwv?'Скрыть':'Показать'}</button></div>
+<div class="lhint" id="lhint"${cyr?'':' hidden'}>Пароль набирается латиницей — переключите раскладку</div>
+${S.lerr?`<div class="er">${esc(S.lerr)}</div>`:''}
+<button type="submit" class="pri wide-b">Войти</button>
+<p class="sm" style="margin:8px 0 0">Вход запомнится на этом устройстве.</p></form>
+<p class="sm" style="margin:12px 0 0">Нет пароля или забыли? Менеджер КД-Групп: <a href="tel:${MGR.ph}" class="data">${fmtPh(MGR.ph)}</a></p>
+<p class="sm" style="margin:6px 0 0">Входя, вы соглашаетесь с <button class="lnk" data-a="policy">политикой обработки персональных данных</button>.</p>
+${S.pol?`<div class="polb">Здесь будет политика обработки персональных данных КД-Групп: какие данные храним (телефон и имя контакта), зачем (вход и сообщения о готовности), где (сервер в России), как удалить. Текст готовим к запуску.</div>`:''}
+<div class="demo"><div class="sm">Демо-вход по ролям</div><div class="dg">${[0,1,2,3].map(i=>`<button data-a="demo" data-i="${i}">${RL[U[i].role]}</button>`).join('')}
+<button data-a="duo" data-v="shift" class="duo-b">${ic('screens')} Показ: офис и цех на одном экране</button><button data-a="duo" data-v="client" class="duo-b">${ic('screens')} Показ: офис и клиент на одном экране</button></div></div>
+</div></div>`}
+function bar(){const u=S.u,c=u.role==='client';return `<header class="top"><div class="brand">${logo()}<div class="bt"><div class="b1">КД-Групп</div><div class="sm">${c?'статус заказа':'график производства'} · прототип</div></div></div><nav class="nav" aria-label="Разделы">${NAV[u.role].map(([k,t])=>`<button data-a="nav" data-v="${k}" class="tab${S.view===k||(S.view==='detail'&&S.from===k)?' on':''}">${t}</button>`).join('')}</nav><div class="who"><div class="b1">${esc(c?u.cl:u.nm)}</div><div class="sm">${c?esc(u.nm)+' · клиент':RL[u.role]} · <span class="data">${fmtPh(u.ph)}</span></div></div><button data-a="out" class="ghost" aria-label="Выйти" title="Выйти">${ic('out',18)}</button></header>`}
+function toastH(){const t=S.toast;return `<div class="toast" role="status"><span>${esc(t.m)}</span><span class="tb">${t.u?`<button data-a="undo" data-v="${t.u}" class="sm-btn">${ic('undo',14)} Отменить</button>`:''}${t.sa?'<button data-a="showall" class="sm-btn">Показать</button>':''}<button data-a="tx" class="sm-btn ghost" aria-label="Скрыть">${ic('x',14)}</button></span></div>`}
+
+/* ---------- «Сегодня из Брянска» ---------- */
+function vToday(){const evs=[];P.forEach(p=>p.h.forEach(h=>{if(h.d===TODAY&&h.r==='shift')evs.push({p,h})}));evs.sort((a,b)=>ru(b.h.tm,a.h.tm));
+const n=f=>P.filter(f).length;const rdyToday=n(p=>p.st===5&&p.sdt[5]===TODAY&&!p.cx);
+const k=(v,ch,label,cls)=>`<button data-a="chip" data-v="${ch}" class="${cls||''}"><b>${v}</b>${label}</button>`;
+return `<section class="card today" aria-label="Сегодня из Брянска"><div class="th"><span class="h3">${ic('sun')} Сегодня из Брянска</span><span class="sm">${fd(TODAY)} · отметки руководителя производства, без звонков</span></div>
+<div class="tl">${evs.slice(0,5).map(({p,h})=>`<button data-a="open" data-v="${p.id}"><span class="tm">${h.tm}</span><span>${esc(tag(p))} · <b>${esc(h.x)}</b> <span class="sm">· ${esc(h.w)}</span>${isFlash(p)&&h===p.h[p.h.length-1]?' <span class="new">только что</span>':''}</span></button>`).join('')||'<div class="sm">Отметок из цеха сегодня пока нет. Они появятся здесь сами, когда руководитель производства нажмёт «Дальше».</div>'}${evs.length>5?`<button data-a="chip" data-v="today" class="sm">и ещё ${evs.length-5} — показать все изменения сегодня</button>`:''}</div>
+<div class="kpis">${k(rdyToday,'ready','готово сегодня')}${k(n(over),'over','просрочено по плану','x')}${k(n(rqNew),'rq','просьбы клиентов ждут решения','w')}${k(n(unans),'msg','вопросы клиентов без ответа')}</div></section>`}
+
+/* ---------- график ---------- */
+function vGrid(){const role=S.u.role;const rs=sorted(rows());const cols=visCols();const w=cols.reduce((s,c)=>s+c.w,0);const nf=Object.keys(S.f).length;const n=f=>P.filter(f).length;
+const chipDefs=[['all','Все',P.length],['prod','В производстве',n(prod)],['ready','Готовы',n(CHIPS.ready)],['ship','Отгружены',n(CHIPS.ship)],['cx','Отменены',n(CHIPS.cx)],['over','Просрочено',n(over)],['prio','Приоритет',n(CHIPS.prio)],['rq','Просьбы клиентов',n(rqNew)],['msg','Вопросы клиентов',n(unans)],['today','Изменено сегодня',n(CHIPS.today)]].filter(([k,,c])=>k==='all'||c>0&&(k!=='today'||S.chip==='today'));
+const steps=uniq(P.map(p=>p.sh||'—')).sort(ru);const shv=S.f.sh?[...S.f.sh]:null;
+const sums={qt:0,nw:0,rp:0};rs.forEach(p=>{sums.qt+=p.qt||0;sums.nw+=p.nw||0;sums.rp+=p.rp||0});
+let sumRow='',lead=0;cols.forEach(c=>{if(sums[c.k]==null&&!sumRow)lead++;else if(sums[c.k]!=null)sumRow+=`<th class="s">${sums[c.k]}</th>`;else sumRow+='<th></th>'});
+const sumHead=lead?`<th colspan="${lead}">Показано ${rs.length} из ${P.length}${sums.qt!=null&&cols.some(c=>c.n)?' · итоги по видимым строкам':''}</th>`:'';
+const lim=S.lim||50;
+return `${role!=='shift'?vToday():''}<div class="tools">
+<div class="search">${ic('search')}<input id="q" value="${esc(S.q)}" placeholder="Клиент, номер, артикул, наименование, счёт" aria-label="Поиск по графику"></div>
+<select id="ssh" class="auto" aria-label="Шаг">${shv&&shv.length>1?`<option value="multi" selected>Шаг: ${esc(shv.join(', '))}</option>`:''}<option value=""${!shv?' selected':''}>Шаг: все</option>${steps.map(s=>`<option value="${esc(s)}"${shv&&shv.length===1&&shv[0]===s?' selected':''}>Шаг ${esc(s)}</option>`).join('')}</select>
+<div class="seg" role="group" aria-label="Набор колонок">${[['x','Как в Excel'],['a','Учёт'],['z','Замеры']].map(([k,t])=>`<button data-a="cols" data-v="${k}" class="${S.cols===k?'on':''}">${t}</button>`).join('')}</div>
+<button data-a="mf" class="mob-inline${S.mf?' on-fl':''}">${ic('sliders')} Фильтры${nf?' · '+nf:''}</button>
+${DL?`<button data-a="xls" title="Видимые строки и колонки в файл CSV — откроется в Excel">${ic('dl')} Выгрузить в Excel</button>`:''}
+${role==='admin'?`<button data-a="neworder" class="pri">${ic('plus')} Заказ</button>`:''}
+</div>
+<div class="chips" role="group" aria-label="Быстрые фильтры">${chipDefs.map(([k,t,c])=>`<button data-a="chip" data-v="${k}" class="chip${S.chip===k?' on':''}${['over','rq','prio'].includes(k)?' warn':''}">${t} <span class="n">${c}</span></button>`).join('')}</div>
+${nf?`<div class="pills">${Object.keys(S.f).map(k=>{const c=col(k);const v=[...S.f[k]];const s=v.length?(v.length>2?v.slice(0,2).join(', ')+' и ещё '+(v.length-2):v.join(', ')):'ничего';return `<button data-a="frm" data-v="${k}" class="chip on">${c.t||'Приоритет'}: ${esc(s)} ${ic('x',14)}</button>`}).join('')}${nf>1?'<button data-a="fclr" class="lnk sm">Сбросить все фильтры</button>':''}</div>`:''}
+${S.toast?toastH():''}${S.of?orderForm():''}
+<div class="gwrap">${S.fp||S.mf?fpop():''}
+<div class="tbl desk"><table style="width:${w}px"><colgroup>${cols.map(c=>`<col style="width:${c.w}px">`).join('')}</colgroup>
+<thead><tr class="sumr">${sumHead}${sumRow}</tr><tr class="hdr">${cols.map(c=>{const so=S.sort&&S.sort.k===c.k?(S.sort.dir==='asc'?' ↑':' ↓'):'';return `<th style="width:${c.w}px">${c.k==='fl'?`<button data-a="fp" data-v="fl" class="hb${S.f.fl?' act':''}${S.fp==='fl'?' open':''}" aria-label="Фильтр: приоритет">${ic('flag',14)}</button>`:`<button data-a="fp" data-v="${c.k}" class="hb${S.f[c.k]?' act':''}${S.fp===c.k?' open':''}"><span>${c.t}${so}</span>${ic(S.f[c.k]?'filter':'chev',12)}</button>`}</th>`}).join('')}</tr></thead>
+<tbody>${rs.map(p=>`<tr data-a="open" data-v="${p.id}" tabindex="0" class="${p.cx?'cxr':p.st===5?'rdy':p.st===6?'shp':''}${S.hl===p.id||isFlash(p)?' hl':''}">${cols.map(c=>{const v=c.v(p);return `<td title="${esc(v)}">${c.r?c.r(p):c.mono?`<span class="data">${esc(v)}</span>`:esc(v)}</td>`}).join('')}</tr>`).join('')||`<tr><td colspan="${cols.length}" class="mu" style="padding:18px">Ничего не нашлось — снимите часть фильтров</td></tr>`}</tbody></table></div></div>
+<div class="mob">${rs.slice(0,lim).map(gCard).join('')||'<div class="empty">Ничего не нашлось — снимите часть фильтров</div>'}${rs.length>lim?`<button data-a="more" class="wide-b">Показать ещё ${Math.min(50,rs.length-lim)} из ${rs.length-lim}</button>`:''}</div>
+<div class="mu tot">Позиций ${rs.length} · штук ${sums.qt} · новых ${sums.nw} · восстановить ${sums.rp}${role==='master'?' · только просмотр':''}</div>`}
+function gCard(p){return `<div class="card mcard${p.cx?' cxr':p.st===5?' rdy':p.st===6?' shp':''}${S.hl===p.id||isFlash(p)?' hl':''}" data-a="open" data-v="${p.id}" role="button" tabindex="0">
+<div class="mrow"><span class="sm">${flagCell(p)} ${esc(p.cl)}</span>${pill(p)}</div>
+<div class="mt-t">${numB(p)}${esc(p.nm)}</div>
+<div class="sm">${esc(p.br||'—')} · ${qtyTxt(p)}${p.plan?' · '+(over(p)?`<span class="bad">план ${fdy(p.plan)}, просрочено</span>`:'план '+fdy(p.plan)):''}</div>
+${S.cols!=='z'?`<div class="sm">счёт <span class="data">${esc(p.inv||'—')}</span> · арт. <span class="data">${esc(p.art||'—')}</span>${p.rd?' · готов '+fdy(p.rd):''}${p.sd?' · реализ. '+fdy(p.sd):''}</div>`:''}
+${S.cols!=='a'?`<div class="sm data">шаг ${esc(p.sh||'—')} · ${esc(p.ty||'—')} · ${esc(p.be)} рем. · ${esc(p.ln)}×${esc(p.wd||'—')} · ${esc(p.jn||'—')}</div>`:''}
+${isFlash(p)?'<span class="new">только что</span>':''}</div>`}
+function fpop(){if(!S.fp){return `<div class="card fpop" role="dialog" aria-label="Фильтры"><div class="fph"><span class="h3">Фильтры по колонкам</span><button data-a="mf" class="ghost sm-btn" aria-label="Закрыть">${ic('x',16)}</button></div><div class="flist">${visCols().map(c=>`<button data-a="fp" data-v="${c.k}" class="frow"><span>${c.t||'Приоритет'}</span><span class="sm">${S.f[c.k]?S.f[c.k].size+' выбрано':'все'}</span></button>`).join('')}</div><div class="fok"><button data-a="mf" class="pri">Готово</button></div></div>`}
+const c=col(S.fp),f=c.fv||c.v;const base=rows(c.k);const cnt={};base.forEach(p=>{const x=f(p);cnt[x]=(cnt[x]||0)+1});const sel=S.f[c.k];
+let ks=uniq(P.map(f)).filter(k=>cnt[k]||(sel&&sel.has(k)));ks.sort(fvSort(c));const q=S.fsq.trim().toLowerCase();const shown=q?ks.filter(k=>k.toLowerCase().includes(q)):ks;
+const so=d=>S.sort&&S.sort.k===c.k&&S.sort.dir===d?' on':'';
+return `<div class="card fpop" data-k="${c.k}" role="dialog" aria-label="Фильтр: ${esc(c.t||'приоритет')}"><div class="fph"><span class="h3">${esc(c.t||'Приоритет')}</span><button data-a="fclose" class="ghost sm-btn" aria-label="Закрыть">${ic('x',16)}</button></div>
+<div class="fsort"><button data-a="sort" data-v="asc" class="${so('asc')}">${c.dt?'Сначала ранние':c.n?'По возрастанию':'А → Я'}</button><button data-a="sort" data-v="desc" class="${so('desc')}">${c.dt?'Сначала поздние':c.n?'По убыванию':'Я → А'}</button>${S.sort?'<button data-a="sort" data-v="">Как было</button>':''}</div>
+<input id="fsq" value="${esc(S.fsq)}" placeholder="Найти значение" aria-label="Поиск по значениям" autocomplete="off">
+<div class="fbt"><button data-a="fall" class="lnk">Выбрать все</button><button data-a="fnone" class="lnk">Снять все</button>${S.fsq.trim()?'<span class="sm">останутся только отмеченные</span>':c.dt?'<span class="sm">месяц.год</span>':''}</div>
+<div class="fvals">${shown.map(k=>`<label><input type="checkbox" data-fv="${esc(k)}"${!sel||sel.has(k)?' checked':''}><span class="t">${esc(k)}</span><span class="c">${cnt[k]||0}</span></label>`).join('')||'<div class="sm">Таких значений нет</div>'}</div>
+<div class="fok"><button data-a="fclose" class="pri">Готово</button></div></div>`}
+function placePop(){app.querySelectorAll('.fpop[data-k]').forEach(pop=>{if(getComputedStyle(pop).position!=='absolute')return;const gw=pop.parentElement,pn=pop.closest('.cq')||app;const b=pn.querySelector('thead [data-a="fp"][data-v="'+pop.dataset.k+'"]');if(!b)return;const g=gw.getBoundingClientRect(),r=b.getBoundingClientRect();const x=Math.max(0,Math.min(r.left-g.left,g.width-pop.offsetWidth));pop.style.left=x+'px';pop.style.top=(r.bottom-g.top+4)+'px'})}
+
+/* ---------- форма позиции: новая и правка ---------- */
+const blankO=x=>Object.assign({mode:'new',id:null,inv:'',cl:'',num:'',br:'',art:'',nm:'',nw:'1',rp:'0',plan:'',z:Object.fromEntries(ZK.map(k=>[k,''])),src:null,zopen:false,cnt:0},x||{});
+function editO(p){return blankO({mode:'edit',id:p.id,inv:p.inv||'',cl:p.cl,num:p.num||'',br:p.br||'',art:p.art||'',nm:p.nm||'',nw:String(p.nw||0),rp:String(p.rp||0),plan:p.plan||'',z:Object.fromEntries(ZK.map(k=>[k,p[k]==null?'':String(p[k])])),zopen:true})}
+function artLookup(){const o=S.o,a=o.art.trim();const src=a?P.slice().reverse().find(p=>p.art===a&&p.id!==o.id):null;if(src){ZK.forEach(k=>o.z[k]=src[k]==null?'':String(src[k]));if(!o.br)o.br=src.br||'';if(!o.nm)o.nm=src.nm||'';o.src=(src.inv||'без счёта')+(src.num?' № '+src.num:'');o.zopen=true}else o.src=null}
+function orderForm(){const o=S.o,ed=o.mode==='edit';const cls=clients();const brs=uniq(P.map(p=>p.br).filter(Boolean)).sort(ru);const arts=uniq(P.map(p=>p.art).filter(Boolean));
+const used=o.cl?uniq(P.filter(p=>p.cl===o.cl&&p.num&&!p.cx&&p.id!==o.id).map(p=>p.num)).sort(ru):[];const zf=ZK.some(k=>o.z[k]);
+const fld=(k,l,a)=>`<div><label class="lb" for="o-${k}">${l}</label><input id="o-${k}" data-o="${k}" value="${esc(o[k])}" ${a||''}></div>`;
+return `<section class="card pad oform"><div class="dh"><h2 class="h3">${ed?'Изменить позицию':'Новая позиция в график'}</h2>${!ed&&o.cnt?`<span class="sm">в этот счёт уже добавлено: ${o.cnt}</span>`:''}</div>
+<div class="ogrid">${fld('inv','№ счёта','placeholder="00ЦБ-000160" autocomplete="off"')}
+<div><label class="lb" for="o-cl">Клиент</label><input id="o-cl" data-o="cl" list="kd-cls" value="${esc(o.cl)}" placeholder="Начните вводить название" autocomplete="off"><datalist id="kd-cls">${cls.map(c=>`<option value="${esc(c)}"></option>`).join('')}</datalist>${o.cl&&!cls.includes(o.cl)&&o.cl!=='Склад'?'<div class="sm" style="margin-top:4px">Новый клиент — добавим в справочник</div>':''}</div>
+<div><label class="lb" for="o-num">Номер клиента</label><input id="o-num" data-o="num" value="${esc(o.num)}" placeholder="бирка, например 10" autocomplete="off">${used.length?`<div class="sm" style="margin-top:4px">уже заняты: ${esc(used.slice(-10).join(', '))}</div>`:''}</div>
+<div><label class="lb" for="o-br">Бренд с/х</label><input id="o-br" data-o="br" list="kd-brs" value="${esc(o.br)}" autocomplete="off"><datalist id="kd-brs">${brs.map(b=>`<option value="${esc(b)}"></option>`).join('')}</datalist></div>
+<div><label class="lb" for="o-art">Артикул</label><input id="o-art" data-o="art" list="kd-arts" value="${esc(o.art)}" autocomplete="off" placeholder="251004300"><datalist id="kd-arts">${arts.map(a=>`<option value="${esc(a)}"></option>`).join('')}</datalist></div>
+${fld('nw','Новый','type="number" min="0" step="1" inputmode="numeric"')}${fld('rp','Восстановить','type="number" min="0" step="1" inputmode="numeric"')}${fld('plan','Дата выдачи (план), необязательно','type="date"')}</div>
+${fld('nm','Наименование','placeholder="Транспортер 3850 х 800 х 77"')}
+<details class="zbox" id="zbox"${o.zopen?' open':''}><summary>Замеры ${o.src?`<span class="zs">· подставлены из ${esc(o.src)}, проверьте</span>`:zf?'':'<span class="zs">· не заполнены</span>'}</summary><div class="ogrid">${ZK.map(k=>`<div><label class="lb" for="z-${k}">${LBL[k]}</label><input id="z-${k}" data-z="${k}" value="${esc(o.z[k])}" autocomplete="off"></div>`).join('')}</div></details>
+${S.oerr?`<div class="er">${esc(S.oerr)}</div>`:''}
+<div class="acts"><button data-a="osave" class="pri">${ed?'Сохранить изменения':'Добавить в график'}</button>${ed?'':'<button data-a="osave" data-v="more">Добавить и ещё позицию в этот счёт</button>'}<button data-a="ocancel">Отмена</button></div></section>`}
+function saveOrder(more){const o=S.o,ed=o.mode==='edit';const nw=Math.max(0,parseInt(o.nw)||0),rp=Math.max(0,parseInt(o.rp)||0);const cl=o.cl.trim();const num=o.num.trim();
+if(!cl){S.oerr='Выберите клиента из списка или впишите нового';return render()}
+if(!o.art.trim()&&!o.nm.trim()){S.oerr='Укажите артикул или наименование';return render()}
+if(nw+rp<1){S.oerr='Количество: хотя бы один новый или на восстановление';return render()}
+if(num){const dup=P.find(p=>p.cl===cl&&p.num===num&&!p.cx&&p.id!==o.id);if(dup){S.oerr=`У клиента уже есть № ${num}: ${dup.nm}. Проверьте номер`;return render()}}
+const isNewCl=cl!=='Склад'&&!clients().includes(cl);
+const fields={inv:o.inv.trim(),cl,num,br:o.br.trim(),art:o.art.trim(),nm:o.nm.trim()||'Транспортер',nw,rp,qt:nw+rp,plan:o.plan};ZK.forEach(k=>fields[k]=o.z[k].trim());
+if(ed){const p=byId(o.id);const ch=[];for(const k in fields){if(k==='qt')continue;const a=p[k]==null?'':String(p[k]),b=String(fields[k]);if(a!==b){const f=v=>v===''?'—':k==='plan'?fdy(v):v;ch.push(`${LBL[k]}: ${f(a)} → ${f(b)}`)}}
+  if(ch.length){Object.assign(p,fields);p.h.push(ev('изменено — '+ch.join('; ')));touch(p)}S.ed=false;S.o=null;S.oerr='';S.toast={m:ch.length?`Сохранено, в истории: ${ch.length===1?'1 изменение':ch.length+' изм.'}`:'Изменений нет'};return render()}
+const id=Math.max(...P.map(p=>p.id))+1;const p=Object.assign({id,sdx:'',rd:'',sd:'',fill:'',st:0,pri:false,rq:null,cd:'',cx:null,msgs:[],h:[],sdt:[TODAY,'','','','','',''],flash:0},fields);p.h.push(ev('позиция создана'));P.push(p);touch(p);
+S.hl=id;const vis=rows().some(x=>x.id===id);const nt=(isNewCl?` Новый клиент «${cl}» добавлен в справочник.`:'');
+if(more){S.o=blankO({inv:fields.inv,cl,cnt:(o.cnt||0)+1});S.toast={m:`Добавлено: ${tag(p)}.${nt} Заполните следующую позицию этого счёта`}}
+else{S.of=false;S.o=null;S.toast={m:`Позиция добавлена: ${tag(p)}, стадия «Принят».${nt}`+(vis?'':' Она скрыта текущими фильтрами'),sa:!vis}}
+S.oerr='';render()}
+
+/* ---------- карточка позиции (сотрудники) ---------- */
+function stepper(p,can,client){const rt=(client?cRoute(p):route(p)).slice(0,6);const cur=Math.min(p.st,5);
+return `<div class="steps">${rt.map((s,i)=>{const done=p.st>=i;const cls='stp'+(done?' done':'')+(i===cur?' cur':'');const dd=done&&p.sdt[i]?`<span class="dd">${fd(p.sdt[i])}</span>`:'';const inner=`<span class="ln"></span><span class="dt"></span><span class="tx">${s}</span>${dd}`;const ac=i===cur?' aria-current="step"':'';
+return can?`<button data-a="setst" data-v="${i}" class="${cls}"${ac} aria-label="Стадия ${s}">${inner}</button>`:`<div class="${cls}"${ac}>${inner}</div>`}).join('')}</div>`}
+function thread(p,side){if(!p.msgs.length)return '';return `<div class="thread">${p.msgs.map(m=>`<div class="msg ${m.from}"><div class="sm">${m.from==='client'?(side==='client'?'Вы':esc(m.w)+' · клиент'):(side==='client'?'Менеджер '+esc(m.w):esc(m.w)+' · офис')} · ${fd(m.d)} ${m.tm}</div><div>${esc(m.x)}</div></div>`).join('')}</div>`}
+function vDetail(){const p=byId(S.d);if(!p){S.view=S.from;return paneMain()}const rt=route(p);const role=S.u.role;const adm=role==='admin';const can=!p.cx&&(adm||(role==='shift'&&p.st<6));
+const kv=(a,b,m)=>`<div><div class="k">${a}</div><div class="v${m?' data':''}">${esc(b===''||b==null?'—':b)}</div></div>`;
+const prevS=p.st>0&&(p.st<6||adm)?p.st-1:null;const r=p.rq;
+return `<button data-a="back" class="ghost">${ic('left')} ${S.from==='shop'?'Цех':'График'}</button>
+<section class="card pad" style="margin-top:10px">
+${S.toast?toastH():''}
+<div class="dh"><div style="min-width:0"><h2 class="h2">${numB(p)}${esc(p.nm)}</h2><div class="mu">${esc(p.cl)} · ${esc(p.br||'—')} · арт. <span class="data">${esc(p.art||'—')}</span> · ${qtyTxt(p)}</div></div>
+${adm&&!S.ed?`<div class="dact"><button data-a="edit">${ic('edit')} Изменить</button>${p.cx?'':`<button data-a="pri" class="${p.pri?'on-fl':''}">${ic('flag')} ${p.pri?'Снять «срочно»':'Срочно (офис)'}</button><button data-a="cxo" class="danger">${ic('ban')} Отменить позицию</button>`}</div>`:!adm&&prio(p)&&prod(p)?`<span class="pl on-fl">${ic('flag',13)} Приоритет${p.pri?': срочно (офис)':': просьба клиента'}</span>`:''}</div>
+${p.cx?`<div class="box x"><span>${ic('ban')} Позиция отменена: ${esc(p.cx.r)}${p.cx.d?' · '+fd(p.cx.d)+', '+esc(p.cx.w):''}</span>${adm?'<button data-a="uncx" class="sm-btn">Вернуть в работу</button>':''}</div>`:''}
+${S.cxo?`<div class="box x" style="display:block"><label class="lb" for="cxr" style="margin-top:0">Причина отмены — увидят офис и цех</label><input id="cxr" value="${esc(S.cxr)}" placeholder="Например: клиент отказался от ремонта">${S.cxe?`<div class="er">${esc(S.cxe)}</div>`:''}<div class="acts"><button data-a="cxok" class="danger solid">Отменить позицию</button><button data-a="cxno">Не отменять</button></div></div>`:''}
+${r&&r.st==='new'&&prod(p)?`<div class="box w"><span>${ic('flag')} Клиент просит в первую очередь${r.need?', нужен к '+fd(r.need):''} · просьба от ${fd(r.d)} ${r.tm}</span>${adm?'<span class="bb"><button data-a="rqok" class="pri sm-btn">Принять</button><button data-a="rqno" class="sm-btn">Отклонить</button></span>':'<span class="sm">решает офис</span>'}</div>`:''}
+${r&&r.st==='ok'&&prod(p)?`<div class="box g"><span>${ic('ok')} Приоритет по просьбе клиента, принят ${fd(r.ad)}${r.need?' · нужен к '+fd(r.need):''}</span>${adm?'<button data-a="rqoff" class="sm-btn">Снять приоритет</button>':''}</div>`:''}
+${S.ed?orderForm():`<div class="kv">${kv('Клиент',p.cl)}${kv('№ счёта',p.inv,1)}${kv('Номер клиента',p.num,1)}${kv('Дата выдачи (план)',fdy(p.plan)+(over(p)?' · просрочено':''))}${!adm?kv('Срок для клиента',p.cd?fdy(p.cd):''):''}${kv('Готов к отгрузке',fdy(p.rd))}${kv('Дата реализации',p.sd?fdy(p.sd):p.sdx)}</div>
+${adm&&prod(p)?`<div class="cdrow"><div><label class="lb" for="cdd">Срок для клиента</label><input type="date" id="cdd" value="${esc(S.cdd!=null?S.cdd:p.cd)}"></div><button data-a="cdsave">Сохранить срок</button><div class="sm">Клиент видит «ожидаем к …», только если дата впереди. План остаётся для офиса и цеха.</div></div>`:''}`}
+<div class="sh"><span class="h3">Стадия · ${stLabel(p)} · ${PCT[p.st]}%</span><span class="sm">${can?'нажмите на стадию или «Дальше»':p.cx?'позиция отменена':'только просмотр'}</span></div>
+${stepper(p,can)}
+${S.cf&&S.cf.id===p.id?`<div class="cfb">${S.cf.to===5?'Перевести в «Готов»? Клиент увидит «Готов, можно забирать».':`Перескочить сразу в «${rt[S.cf.to]}»? Пропущенные стадии отметятся сегодняшним днём.`}<div class="acts"><button data-a="cfok" class="pri">Да, перевести</button><button data-a="cfno">Отмена</button></div></div>`:''}
+${can?`<div class="acts">${prevS!=null?`<button data-a="prev">${ic('undo')} Вернуть: ${rt[prevS]}</button>`:''}${p.st<5?`<button data-a="next" data-f="${p.st}" class="pri">Дальше: ${rt[p.st+1]} ${ic('right')}</button>`:''}${p.st===5?(adm?`<button data-a="ship" class="pri">${ic('truck')} Отгрузить</button>`:'<span class="mu">Отгрузку отмечает офис</span>'):''}</div>`:''}
+${S.ed?'':`<h3 class="h3 mt">Замеры</h3><div class="kv">${ZK.filter(k=>k!=='al').map(k=>kv(LBL[k],p[k],k!=='jn'&&k!=='fs')).join('')}</div>${p.al?`<p class="alt"><span class="mu">Чередование:</span> ${esc(p.al)}</p>`:''}`}
+${p.msgs.length?`<h3 class="h3 mt">Вопросы клиента</h3>${thread(p,'staff')}${adm?`<div class="cm"><textarea id="rep" rows="2" placeholder="Ответ клиенту — он увидит его в кабинете">${esc(S.rep)}</textarea><button data-a="reply" class="pri">Ответить</button></div>`:''}`:''}
+<h3 class="h3 mt">История</h3>
+<div class="hist">${p.h.slice().reverse().map(h=>`<div><span class="mu">${fd(h.d)} ${h.tm} · ${esc(h.w)}</span> — ${esc(h.x)}</div>`).join('')}</div>
+${adm||role==='shift'?`<div class="cm"><input id="cm" placeholder="Комментарий для офиса и цеха" aria-label="Комментарий"><button data-a="comment">Добавить</button></div>${S.cerr?`<div class="er">${S.cerr}</div>`:''}`:''}
+</section>`}
+
+/* ---------- цех ---------- */
+function sCard(p){const pend=PEND[p.id];const cf=S.cf&&S.cf.id===p.id;const rt=route(p);let act;
+if(pend)act=`<div class="sa"><div class="sdone" role="status">${ic('ok')} <span><b>${rt[p.st]}</b> · записано, офис и клиент видят</span></div><button data-a="undo" data-v="${p.id}" class="sundo">Отменить</button></div>`;
+else if(cf)act=`<div class="scf"><div class="sm">Клиент увидит «Готов, можно забирать».</div><div class="sa"><button data-a="cfok" class="pri grow">${ic('ok')} Подтвердить: Готов</button><button data-a="cfno">Не сейчас</button></div></div>`;
+else act=`<div class="sa"><button data-a="snext" data-v="${p.id}" data-f="${p.st}" class="pri grow">Дальше: ${rt[p.st+1]} ${ic('right')}</button><button data-a="open" data-v="${p.id}" aria-label="Карточка позиции" class="sq">${ic('doc')}</button></div>`;
+return `<div class="card sc${pend?' hl':''}">
+<div class="mrow sm"><span>${esc(p.cl)}</span>${prio(p)?`<span class="fl">${ic('flag',13)} ${p.pri?'срочно (офис)':'просьба клиента'}</span>`:''}</div>
+<div class="mt-t">${numB(p)}${esc(p.nm)}</div>
+<div class="sm"><span class="data">шаг ${esc(p.sh||'—')} · ${esc(p.ty||'—')}</span> · ${qtyTxt(p)}${p.plan?' · '+(over(p)?`<span class="bad">план ${fd(p.plan)}, просрочено</span>`:'план '+fd(p.plan)):''}</div>
+<div class="prog">${pill(p)}<div class="bar"><i style="width:${PCT[p.st]}%"></i></div><span class="sm data">${PCT[p.st]}%</span></div>${act}</div>`}
+function vShop(){const act=P.filter(prod);const pr=act.filter(prio).length;const list=P.filter(p=>(prod(p)||PEND[p.id])&&(!S.sf||prio(p))).sort((a,b)=>prio(b)-prio(a)||over(b)-over(a)||ru(a.plan||'9999',b.plan||'9999')||a.id-b.id);
+return `<div class="phone">
+<div class="ph"><div><div class="h3">Цех</div><div class="sm">в производстве ${act.length} · ${fdy(TODAY)}</div></div><div class="seg"><button data-a="sf" data-v="" class="${!S.sf?'on':''}">Все</button><button data-a="sf" data-v="1" class="${S.sf?'on':''}" aria-label="Только приоритет">${ic('flag')} ${pr}</button></div></div>
+${list.map(sCard).join('')||(S.sf?'<div class="empty">Приоритетных позиций нет · <button data-a="sf" data-v="" class="lnk">показать все</button></div>':'<div class="empty">Позиций в производстве нет</div>')}
+</div>`}
+
+/* ---------- клиенты и доступы ---------- */
+function accCard(){const a=S.acc;const n=P.filter(p=>p.cl===a.name&&prod(p)).reduce((s,p)=>s+(p.qt||1),0);
+const msg=a.client?`Здравствуйте${a.nm?', '+a.nm:''}!\nГотовность ваших транспортёров теперь видна онлайн: стадия и ожидаемая дата по каждому. Сейчас в производстве — ${n} шт.\nВход: [адрес кабинета]\nЛогин — ваш номер: ${fmtPh(a.ph)}\nПароль: ${a.pw}\nНужен вход агроному или механику — ответьте на это сообщение.\n${S.u.nm}, КД-Групп, ${fmtPh(S.u.ph)}`:`Доступ к графику производства КД-Групп.\nВход: [адрес кабинета]\nЛогин: ${fmtPh(a.ph)}\nПароль: ${a.pw}`;
+return `<div class="acc"><div style="font-size:13px">${a.isNew?'Доступ создан':'Пароль сброшен'} · ${esc(a.name)}</div><div class="b1" style="font-size:15px;margin-top:4px">Логин <span class="data">${fmtPh(a.ph)}</span> · пароль <span class="data">${a.pw}</span></div><textarea id="msg" rows="8" readonly aria-label="Сообщение для отправки">${esc(msg)}</textarea><div class="row2"><button data-a="copy">${ic('copy')} Скопировать сообщение</button><span id="cpst" style="font-size:12px">${esc(S.cp||'Вставьте в мессенджер клиента. Пароль виден один раз, дальше только сброс. Адрес кабинета подставится, когда выберем домен')}</span></div></div>`}
+function contact(u){const lst=u.last?'вход '+fd(u.last.slice(0,10))+' '+u.last.slice(11):'ещё не заходил';
+if(S.rc===u.ph)return `<span class="ct"><span class="sm">Сбросить пароль ${fmtPh(u.ph)}? Старый перестанет работать.</span><button data-a="resetok" data-v="${u.ph}" class="sm-btn danger">Да, сбросить</button><button data-a="resetno" class="sm-btn">Отмена</button></span>`;
+return `<span class="ct"><span class="data" style="font-size:13px">${fmtPh(u.ph)}</span><span class="sm">${esc(u.nm||'')}${u.nm?' · ':''}${lst}</span><button data-a="reset" data-v="${u.ph}" class="sm-btn">Сбросить пароль</button></span>`}
+function vAccess(){const cls=clients();const q=S.acq.trim().toLowerCase();const has=c=>U.some(u=>u.cl===c);
+let list=cls.filter(c=>!q||c.toLowerCase().includes(q)).sort((a,b)=>has(b)-has(a)||ru(a,b));const total=list.length;if(!S.aall&&!q)list=list.slice(0,12);
+const row=(l,r)=>`<div class="lrow">${l}<div class="r">${r}</div></div>`;const after=us=>S.acc&&us.some(u=>u.ph===S.acc.at)?accCard():'';
+return `<section class="card pad"><h2 class="h3">Выдать доступ клиенту</h2><p class="mu" style="margin:4px 0 0">Логин — номер телефона, пароль генерируется: слово и четыре цифры. Клиент видит только свои позиции.</p>
+<div class="agrid"><div><label class="lb" for="acl">Клиент</label><select id="acl"><option value="">Выберите клиента</option>${cls.map(c=>`<option${S.acl===c?' selected':''}>${esc(c)}</option>`).join('')}</select></div><div><label class="lb" for="anm">Имя контакта</label><input id="anm" value="${esc(S.anm)}" placeholder="Игорь Николаевич" autocomplete="off"></div><div><label class="lb" for="aph">Телефон</label><input id="aph" type="tel" value="${esc(S.aph)}" placeholder="8 900 123-45-67"></div><button data-a="grant" class="pri">Создать пароль</button></div>
+${S.aerr?`<div class="er">${esc(S.aerr)}</div>`:''}${S.acc&&S.acc.at==='form'?accCard():''}</section>
+<div class="sh"><h2 class="h3">Клиенты · ${cls.length}</h2><div class="search" style="flex:0 1 300px">${ic('search')}<input id="acq" value="${esc(S.acq)}" placeholder="Найти клиента" aria-label="Найти клиента"></div></div>
+${list.map(c=>{const us=U.filter(u=>u.cl===c);const pr=P.filter(p=>p.cl===c&&prod(p)).length,rd=P.filter(p=>p.cl===c&&p.st===5&&!p.cx).length,all=P.filter(p=>p.cl===c).length;
+return row(`<div><div style="font-size:14px">${esc(c)}</div><div class="sm">в производстве ${pr} · готовы ${rd} · всего в графике ${all}</div></div>`,(us.length?us.map(contact).join(''):'<span class="sm">доступа нет</span>')+`<button data-a="asopen" data-v="${esc(c)}" class="sm-btn">${ic('eye',14)} Глазами клиента</button>`)+after(us)}).join('')||'<div class="empty">Клиент не найден</div>'}
+${!S.aall&&!q&&total>12?`<button data-a="aall" class="wide-b">Показать всех клиентов (${total})</button>`:''}
+<h2 class="h3 mt">Сотрудники</h2>
+${U.filter(u=>u.role!=='client').map(u=>row(`<div><div style="font-size:14px">${esc(u.nm)} · ${RL[u.role]}</div><div class="sm">${esc(u.place)}</div></div>`,contact(Object.assign({},u,{nm:''})))+after([u])).join('')}`}
+
+/* ---------- кабинет клиента ---------- */
+function rqParts(p,ro){const r=p.rq;if(p.pri||!prod(p))return {line:'',btn:''};
+if(!r||r.st==='off'){if(ro)return {line:'',btn:''};if(S.rqf===p.id)return {line:`<div class="rqf"><label class="lb" for="rqd">Нужен к (необязательно)</label><input type="date" id="rqd" value="${esc(S.rqd)}" min="${TODAY}"><div class="acts"><button data-a="rqsend" data-v="${p.id}" class="pri">Отправить просьбу</button><button data-a="rqcancel">Отмена</button></div><div class="sm" style="margin-top:8px">Офис посмотрит и ответит здесь же.</div></div>`,btn:''};return {line:'',btn:`<button data-a="rqopen" data-v="${p.id}">${ic('flag')} Попросить в первую очередь</button>`}}
+if(r.st==='new')return {line:`<div class="rqs">${ic('flag',14)} Просьба отправлена ${fd(r.d)}${r.need?', нужен к '+fd(r.need):''} · ждёт ответа офиса ${ro?'':`<button data-a="rqwd" data-v="${p.id}" class="lnk">Отозвать</button>`}</div>`,btn:''};
+if(r.st==='ok')return {line:`<div class="rqs ok">${ic('ok',14)} Офис принял просьбу ${fd(r.ad)} — позиция в приоритете</div>`,btn:''};
+return {line:`<div class="rqs no">Офис не может ускорить эту позицию, менеджер свяжется. ${ro?'':`<button data-a="rqopen" data-v="${p.id}" class="lnk">Попросить снова</button>`}</div>`,btn:''}}
+function qSheet(kind){return `<div class="qs"><label class="lb" for="qtx">${kind==='pickup'?'Сообщение менеджеру об отгрузке':'Вопрос менеджеру'}</label><textarea id="qtx" rows="3">${esc(S.qt)}</textarea>${S.qerr?`<div class="er">${esc(S.qerr)}</div>`:''}<div class="acts"><button data-a="qsend" class="pri">Отправить менеджеру</button><button data-a="qcancel">Отмена</button></div><div class="sm">Ответ появится здесь же. Срочно — звоните: <a href="tel:${MGR.ph}" class="data">${fmtPh(MGR.ph)}</a></div></div>`}
+function cCard(p,ro){const cn=cRoute(p);const st=p.st;const pr=prod(p);const since=pr?p.sdt[st]:'';
+const now=p.cx?'Отменена — менеджер свяжется':st===6?`Отгружен${p.sd?' '+fdy(p.sd):''}`:st===5?`Готов, можно забирать${p.rd?' · с '+fd(p.rd):''}`:'Сейчас: '+cn[st].toLowerCase();
+const eta=pr?(p.cd&&p.cd>=TODAY?`Ожидаем к ${fd(p.cd)}`:'Срок уточняет менеджер'):'';const rq=rqParts(p,ro);
+return `<article class="card cc${st===5&&!p.cx?' rdy':''}">
+<div class="cct"><div class="cc-n">${numB(p)}${esc(p.nm)}</div>${prio(p)&&pr?`<span class="pl on-fl">${ic('flag',13)} В приоритете</span>`:''}</div>
+<div class="sm" style="margin-top:2px">${esc(p.br||'')}${p.art?(p.br?' · ':'')+'арт. <span class="data">'+esc(p.art)+'</span>':''} · ${qtyTxt(p)}</div>
+<div class="now">${esc(now)}${since?`<span class="mu" style="font-weight:400"> · с ${fd(since)}</span>`:''}</div>${eta?`<div class="eta">${eta}</div>`:''}
+${!p.cx?`<div class="prog"><div class="bar"><i style="width:${PCT[st]}%"></i></div><span class="sm data">${PCT[st]}%</span></div>`:''}
+${!p.cx&&st<6?`<div class="csteps">${stepper(p,false,true)}</div>`:''}
+${rq.line}${thread(p,'client')}
+${ro?'':S.qs===p.id?qSheet('q'):`<div class="cact">${rq.btn}<button data-a="qopen" data-v="${p.id}">${ic('msg')} Вопрос по транспортёру</button></div>`}
+</article>`}
+function vMine(){const cl=S.as||S.u.cl;const ro=!!S.as;const my=P.filter(p=>p.cl===cl);
+const g={work:my.filter(prod).sort((a,b)=>b.st-a.st),ready:my.filter(p=>p.st===5&&!p.cx).sort((a,b)=>ru(b.rd||'',a.rd||'')),done:my.filter(p=>p.st===6&&!p.cx).sort((a,b)=>ru(b.sd||'',a.sd||'')),cx:my.filter(p=>p.cx)};
+const tabs=[['work','В производстве'],['ready','Готовы'],['done','Отгружены']].concat(g.cx.length?[['cx','Отменены']]:[]);const list=g[S.ct]||[];const invs=uniq(list.map(invLabel));
+return `<div class="mine">
+${ro?`<div class="asb">${ic('eye')} <span>Вы смотрите кабинет глазами клиента <b>${esc(cl)}</b>. Кнопки клиента здесь не работают.</span><button data-a="asx" class="sm-btn">Вернуться к доступам</button></div>`:''}
+<h2 class="h2">Ваши транспортёры</h2><div class="mu">${esc(cl)} · статус меняется, как только производство отмечает стадию</div>
+${g.ready.length?`<section class="readyb"><div class="rbh">${ic('ok',20)} Можно забирать: ${g.ready.length}</div><div class="rbl">${g.ready.slice(0,4).map(p=>`<div>${numB(p)}${esc(p.nm)} <span class="sm">· готов${p.rd?' с '+fd(p.rd):''}</span></div>`).join('')}${g.ready.length>4?`<div class="sm">и ещё ${g.ready.length-4}</div>`:''}</div>${ro?'':S.qs==='pickup'?qSheet('pickup'):'<button data-a="pickup" class="pri">Договориться об отгрузке</button>'}</section>`:''}
+<div class="seg ctabs" role="group" aria-label="Группы позиций">${tabs.map(([k,t])=>`<button data-a="ct" data-v="${k}" class="${S.ct===k?'on':''}">${t} · ${g[k].length}</button>`).join('')}</div>
+${invs.map(i=>`<div class="inv">${esc(i)}</div>${list.filter(p=>invLabel(p)===i).map(p=>cCard(p,ro)).join('')}`).join('')||`<div class="empty">${S.ct==='work'?'Сейчас в производстве ничего нет':'Здесь пока пусто'}</div>`}
+<div class="mgr">${ic('phone',14)} <span>Менеджер КД-Групп: ${esc(MGR.nm)}, <a href="tel:${MGR.ph}" class="data">${fmtPh(MGR.ph)}</a></span></div></div>`}
+
+/* ---------- сборка страницы ---------- */
+const FOOT='<p class="foot">Прототип: все 282 строки «Графика производства 2026», названия клиентов изменены. Стадии позиций в работе, сроки для клиента, просьбы, имена сотрудников и телефоны — для показа. Изменения живут до перезагрузки страницы.</p>';
+function paneMain(){const v=S.view;return v==='grid'?vGrid():v==='shop'?vShop():v==='access'?vAccess():v==='mine'?vMine():vDetail()}
+function paneHTML(){if(!S.u)return vLogin();return bar()+'<main>'+paneMain()+'</main>'}
+function duoHead(){const l=DUO.L.u,r=DUO.R.u;const rc=r&&r.role==='client';return `<div class="card duoh"><div class="dl"><div class="b1">${ic('screens')} Показ: два экрана</div><div class="sm">Слева офис, справа телефон ${rc?'клиента':'цеха'}. Нажмите что-нибудь справа — слева это появится сразу, без звонка. Сейчас в графике: ${esc(l?l.nm:'—')} (офис), ${esc(r?(rc?r.cl:r.nm):'—')} (${rc?'клиент':'цех'}).</div></div><div class="dr"><div class="seg" role="group" aria-label="Кто справа"><button data-a="duor" data-v="shift" class="${r&&r.role==='shift'?'on':''}">Справа: цех</button><button data-a="duor" data-v="client" class="${rc?'on':''}">Справа: клиент</button></div><button data-a="duox">Выйти из показа</button></div></div>`}
+function render(){const ae=document.activeElement;let fid=null,fpn=null,ss=null;if(ae&&app.contains(ae)&&ae.id){fid=ae.id;const pn=ae.closest('[data-pane]');fpn=pn?pn.dataset.pane:null;try{ss=ae.selectionStart}catch(e){}}
+const keep=S;let h;
+if(DUO){S=DUO.L;const l=paneHTML();S=DUO.R;const r=paneHTML();S=keep;h=`<div class="wrap wide">${duoHead()}<div class="duo"><section class="pane cq" data-pane="L">${l}</section><section class="pane cq pr" data-pane="R">${r}</section></div>${FOOT}</div>`}
+else h=`<div class="wrap"><div class="cq">${paneHTML()}</div>${FOOT}</div>`;
+app.innerHTML=h;
+if(fid){const sc=fpn?app.querySelector('[data-pane="'+fpn+'"]'):app;const el=sc&&sc.querySelector('#'+fid);if(el){try{el.focus({preventScroll:true});if(ss!=null)el.setSelectionRange(ss,ss)}catch(e){}}}
+placePop();
+const tops=DUO?[DUO.L,DUO.R]:[S];tops.forEach(s=>{if(s.top){s.top=false;const y=s.sy||0;s.sy=0;if(!DUO){try{scrollTo(0,y)}catch(e){}}else{const pn=app.querySelector('[data-pane="'+(s===DUO.R?'R':'L')+'"]');if(pn&&s===DUO.R)pn.scrollTop=y}}})}
+function login(u){S.u=u;S.view=HOME[u.role];S.cols=COLS0[u.role];S.lerr='';S.top=true;u.last=TODAY+' '+hm()}
+function doLogin(){const ph=normPh(S.lph);if(!ph){S.lerr='Нужен мобильный номер: 10 цифр после +7';return render()}const pw=String(S.lpw||'').trim();const u=U.find(x=>x.ph===ph&&x.pw===pw);if(!u){S.lerr=/[а-яё]/i.test(pw)?'Пароль набирается латиницей — переключите раскладку и введите снова':'Неверный телефон или пароль. Пароль — из сообщения КД-Групп';return render()}login(u);sync();render()}
+function startDuo(right){S=fresh();login(U[0]);const L=S;S=fresh();login(right==='client'?U[3]:U[1]);DUO={L,R:S};CUR='L';S=L}
+function grant(){const cl=$('acl').value;const raw=$('aph').value;const ph=normPh(raw);S.acl=cl;S.aph=raw;S.anm=$('anm').value;
+if(!cl){S.aerr='Выберите клиента';return render()}if(!ph){S.aerr='Нужен мобильный номер: 10 цифр после +7';return render()}
+const ex=U.find(u=>u.ph===ph);if(ex){S.aerr=`Этот телефон уже заведён${ex.cl?' у клиента '+ex.cl:''} — сбросьте ему пароль в списке ниже`;return render()}
+const pw=gen();U.push({ph,pw,role:'client',nm:S.anm.trim(),cl,last:''});S.aerr='';S.aph='';S.acc={ph,pw,name:cl,nm:S.anm.trim(),client:true,isNew:true,at:'form'};S.anm='';S.cp='';sync();render()}
+function copy(){const ta=$('msg');const done=m=>{S.cp=m;const s=$('cpst');if(s)s.textContent=m};const fb=()=>{ta.select();done('Текст выделен — нажмите Cmd+C (Ctrl+C)')};try{navigator.clipboard.writeText(ta.value).then(()=>done('Скопировано — вставьте в мессенджер клиента'),fb)}catch(err){fb()}}
+async function exportCsv(){const cols=visCols();const rs=sorted(rows());const q=v=>{v=String(v==null?'':v);return /[;"\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+const lines=[cols.map(c=>q(c.t||'Приоритет')).join(';')].concat(rs.map(p=>cols.map(c=>q(c.v(p)==='нет'?'':c.v(p))).join(';')));
+try{await DL.save({filename:'grafik-proizvodstva-'+TODAY+'.csv',data:'﻿'+lines.join('\r\n')});S.toast={m:`Файл передан на сохранение: ${rs.length} строк`}}catch(e){S.toast={m:e&&e.code==='declined'?'Сохранение отменено':'Не получилось сохранить файл в этом окне'}}render()}
+const navReset=()=>{S.d=null;S.toast=null;S.fp=null;S.mf=false;S.of=false;S.ed=false;S.o=null;S.cf=null;S.cxo=false;S.hl=null;S.acc=null;S.as=null;S.qs=null;S.rqf=null;S.cdd=null;S.rc=null;S.top=true};
+
+app.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t||!app.contains(t))return;pick(t);const a=t.dataset.a,v=t.dataset.v;const p=S.d?byId(S.d):null;
+switch(a){
+case 'demo':{const u=U[+t.dataset.i];S.lph=fmtPh(u.ph);S.lpw=u.pw;doLogin();break}
+case 'duo':startDuo(v);render();break;
+case 'duor':{const ns=fresh();const keep=S;S=ns;login(v==='client'?U[3]:U[1]);S=keep;DUO.R=ns;render();break}
+case 'duox':S=DUO.L;DUO=null;CUR=null;S.top=true;render();break;
+case 'out':if(DUO){DUO[CUR]=fresh();S=DUO[CUR]}else S=fresh();render();break;
+case 'pwv':S.pwv=!S.pwv;render();break;
+case 'policy':S.pol=!S.pol;render();break;
+case 'nav':navReset();S.view=v;render();break;
+case 'cols':S.cols=v;S.fp=null;render();break;
+case 'chip':S.chip=v;S.lim=50;if(S.view!=='grid'){navReset();S.view='grid'}render();break;
+case 'mf':S.mf=!S.mf;S.fp=null;S.fsq='';render();break;
+case 'fp':S.fp=S.fp===v?null:v;S.fsq='';render();break;
+case 'fclose':S.fp=null;S.fsq='';render();break;
+case 'fall':case 'fnone':{const c=col(S.fp),f=c.fv||c.v,all=uniq(P.map(f));const shown=[...root().querySelectorAll('.fpop input[data-fv]')].map(x=>x.dataset.fv);const set=S.f[c.k]?new Set(S.f[c.k]):new Set(all);if(S.fsq.trim()){S.f[c.k]=new Set(a==='fall'?shown:[]);render();break}shown.forEach(x=>a==='fall'?set.add(x):set.delete(x));if(set.size===all.length)delete S.f[c.k];else S.f[c.k]=set;render();break}
+case 'frm':delete S.f[v];render();break;
+case 'fclr':S.f={};render();break;
+case 'sort':S.sort=v?{k:S.fp,dir:v}:null;render();break;
+case 'more':S.lim=(S.lim||50)+50;render();break;
+case 'tx':S.toast=null;render();break;
+case 'showall':S.f={};S.chip='all';S.q='';S.toast=null;render();break;
+case 'xls':if(DL)exportCsv();break;
+case 'open':if(S.view!=='detail'){S.from=S.view;S.sy0=DUO?(root().scrollTop||0):scrollY}S.d=+v;S.view='detail';S.toast=null;S.cf=null;S.ed=false;S.o=null;S.cxo=false;S.cerr='';S.cdd=null;S.rep='';S.top=true;render();break;
+case 'back':S.view=S.from;S.d=null;S.toast=null;S.cf=null;S.ed=false;S.o=null;S.cxo=false;S.top=true;S.sy=S.sy0;render();break;
+case 'next':if(p.st!==+t.dataset.f){S.toast={m:`Позицию уже изменили: сейчас «${stLabel(p)}». Проверьте и нажмите снова`};render();break}askStage(p,p.st+1);break;
+case 'prev':doStage(p,p.st-1);break;
+case 'setst':askStage(p,+v);break;
+case 'ship':doStage(p,6);break;
+case 'cfok':{const q=byId(S.cf.id),to=S.cf.to;if(S.view==='shop'){if(setStage(q,to))PEND[q.id]=Date.now()+6000;S.cf=null;tick();render()}else doStage(q,to);break}
+case 'cfno':S.cf=null;render();break;
+case 'snext':{const q=byId(+v);if(q.st!==+t.dataset.f){render();break}if(q.st+1===5){S.cf={id:q.id,to:5};render();break}if(setStage(q,q.st+1))PEND[q.id]=Date.now()+6000;S.cf=null;tick();render();break}
+case 'undo':{const id=+v;const q=byId(id);undoStage(id);S.toast=S.view==='shop'?null:{m:`Отменено: ${tag(q)} снова «${stLabel(q)}»`};render();break}
+case 'sf':S.sf=v;render();break;
+case 'neworder':S.of=!S.of;S.o=S.of?blankO():null;S.oerr='';S.toast=null;render();break;
+case 'ocancel':S.of=false;S.ed=false;S.o=null;S.oerr='';render();break;
+case 'osave':saveOrder(v==='more');break;
+case 'edit':S.ed=true;S.o=editO(p);S.oerr='';S.toast=null;render();break;
+case 'pri':p.pri=!p.pri;p.h.push(ev(p.pri?'срочно (офис)':'«срочно» снято'));touch(p);render();break;
+case 'cxo':S.cxo=true;S.cxr='';S.cxe='';render();break;
+case 'cxno':S.cxo=false;render();break;
+case 'cxok':{const r=String(S.cxr||'').trim();if(!r){S.cxe='Напишите причину — её увидят офис и цех';render();break}p.cx={r,d:TODAY,w:who()};p.h.push(ev('позиция отменена: '+r));S.cxo=false;touch(p);S.toast={m:'Позиция отменена. Её можно вернуть в работу'};render();break}
+case 'uncx':p.cx=null;p.h.push(ev('позиция возвращена в работу'));touch(p);S.toast={m:'Позиция снова в работе'};render();break;
+case 'rqok':p.rq=Object.assign({},p.rq,{st:'ok',ad:TODAY});p.h.push(ev('просьба клиента принята — приоритет'));touch(p);S.toast={m:'Просьба принята: позиция поднялась в списке цеха, клиент видит «В приоритете»'};render();break;
+case 'rqno':p.rq=Object.assign({},p.rq,{st:'no',ad:TODAY});p.h.push(ev('просьба клиента отклонена'));touch(p);S.toast={m:'Просьба отклонена — клиент увидит, что менеджер свяжется'};render();break;
+case 'rqoff':p.rq=null;p.h.push(ev('приоритет по просьбе клиента снят'));touch(p);render();break;
+case 'cdsave':{const d=S.cdd!=null?S.cdd:p.cd;p.cd=d;S.cdd=null;p.h.push(ev(d?'срок для клиента: '+fdy(d):'срок для клиента убран'));touch(p);S.toast={m:d?(d>=TODAY?`Клиент видит «ожидаем к ${fd(d)}»`:'Дата в прошлом — клиент видит «срок уточняет менеджер»'):'Срок убран — клиент видит «срок уточняет менеджер»'};render();break}
+case 'comment':{const x=$('cm').value.trim();if(!x){S.cerr='Напишите комментарий';render();break}S.cerr='';p.h.push(ev('комментарий: '+x));touch(p);render();break}
+case 'reply':{const x=String(S.rep||'').trim();if(!x)break;p.msgs.push({from:'office',w:who(),d:TODAY,tm:hm(),x});p.h.push(ev('ответ клиенту: '+x));S.rep='';touch(p);S.toast={m:'Ответ отправлен — клиент видит его в кабинете'};render();break}
+case 'grant':grant();break;
+case 'reset':S.rc=v;render();break;
+case 'resetno':S.rc=null;render();break;
+case 'resetok':{const u=U.find(x=>x.ph===v);u.pw=gen();S.rc=null;S.acc={ph:u.ph,pw:u.pw,name:u.role==='client'?u.cl:u.nm,nm:u.role==='client'?u.nm:'',client:u.role==='client',isNew:false,at:u.ph};S.cp='';sync();render();break}
+case 'copy':copy();break;
+case 'aall':S.aall=true;render();break;
+case 'asopen':navReset();S.as=v;S.view='mine';S.ct='work';render();break;
+case 'asx':navReset();S.view='access';render();break;
+case 'ct':S.ct=v;S.qs=null;S.rqf=null;render();break;
+case 'rqopen':S.rqf=+v;S.rqd='';S.qs=null;render();break;
+case 'rqcancel':S.rqf=null;render();break;
+case 'rqsend':{const q=byId(+v);q.rq={need:S.rqd||'',d:TODAY,tm:hm(),st:'new'};q.h.push(ev('просит в первую очередь'+(S.rqd?', нужен к '+fd(S.rqd):'')));S.rqf=null;touch(q);render();break}
+case 'rqwd':{const q=byId(+v);q.rq=null;q.h.push(ev('отозвал просьбу «в первую очередь»'));touch(q);render();break}
+case 'qopen':{const q=byId(+v);S.qs=q.id;S.rqf=null;S.qerr='';S.qt=`Вопрос по транспортёру ${q.br?q.br+' ':''}${q.nm}${q.num?', наш № '+q.num:''}${/ЦБ-/.test(q.inv||'')?', счёт '+q.inv:''}: `;render();const ta=$('qtx');if(ta){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length)}break}
+case 'pickup':{const rd=P.filter(x=>x.cl===S.u.cl&&x.st===5&&!x.cx);S.qs='pickup';S.qerr='';S.qt=`Хотим забрать готовые: ${rd.map(x=>x.num?'№ '+x.num:x.nm).join(', ')}. Когда можно приехать?`;render();break}
+case 'qcancel':S.qs=null;S.qerr='';render();break;
+case 'qsend':{const x=String(S.qt||'').trim();if(x.length<5){S.qerr='Напишите вопрос';render();break}const q=S.qs==='pickup'?P.filter(y=>y.cl===S.u.cl&&y.st===5&&!y.cx)[0]:byId(S.qs);if(!q)break;q.msgs.push({from:'client',w:S.u.cl,d:TODAY,tm:hm(),x});q.h.push(ev('вопрос клиента: '+x));S.qs=null;S.qt='';touch(q);render();break}
+}});
+app.addEventListener('submit',e=>{e.preventDefault();pick(e.target);if(e.target.id==='lf'){S.lph=$('lph').value;S.lpw=$('lpw').value;doLogin()}});
+app.addEventListener('input',e=>{const t=e.target,id=t.id;pick(t);
+const clr=k=>{if(S[k]){S[k]='';const er=root().querySelector('.er');if(er)er.remove()}};
+if(id==='q'){S.q=t.value;S.lim=50;render();return}
+if(id==='fsq'){S.fsq=t.value;render();return}
+if(id==='acq'){S.acq=t.value;render();return}
+if(id==='lph'){S.lph=t.value;clr('lerr');return}
+if(id==='lpw'){S.lpw=t.value;clr('lerr');const h=$('lhint');if(h)h.hidden=!/[а-яё]/i.test(t.value);return}
+if(id==='aph'){S.aph=t.value;clr('aerr');return}
+if(id==='anm'){S.anm=t.value;return}
+if(id==='cm'){clr('cerr');return}
+if(id==='cxr'){S.cxr=t.value;return}
+if(id==='cdd'){S.cdd=t.value;return}
+if(id==='rep'){S.rep=t.value;return}
+if(id==='qtx'){S.qt=t.value;clr('qerr');return}
+if(id==='rqd'){S.rqd=t.value;return}
+if(S.o&&t.dataset.o){const k=t.dataset.o;S.o[k]=t.value;clr('oerr');if(k==='art'){artLookup();render()}else if(k==='cl')render();return}
+if(S.o&&t.dataset.z){S.o.z[t.dataset.z]=t.value;return}});
+app.addEventListener('change',e=>{const t=e.target;pick(t);
+if(t.dataset&&t.dataset.fv!==undefined){const c=col(S.fp),f=c.fv||c.v,all=uniq(P.map(f));if(S.fsq.trim()){S.f[c.k]=new Set([...root().querySelectorAll('.fpop input[data-fv]')].filter(x=>x.checked).map(x=>x.dataset.fv));render();return}const set=S.f[c.k]?new Set(S.f[c.k]):new Set(all);if(t.checked)set.add(t.dataset.fv);else set.delete(t.dataset.fv);if(set.size===all.length)delete S.f[c.k];else S.f[c.k]=set;render();return}
+if(t.id==='ssh'){if(t.value==='')delete S.f.sh;else if(t.value!=='multi')S.f.sh=new Set([t.value]);render();return}
+if(t.id==='acl'){S.acl=t.value;return}});
+app.addEventListener('toggle',e=>{if(e.target.id==='zbox'){pick(e.target);if(S.o)S.o.zopen=e.target.open}},true);
+app.addEventListener('keydown',e=>{const t=e.target;pick(t);
+if(e.key==='Escape'&&(S.fp||S.mf)){S.fp=null;S.mf=false;render();return}
+if(e.key!=='Enter')return;if(t.matches&&t.matches('[data-a]:not(button)')){e.preventDefault();t.click();return}
+if(t.id==='cm'){const b=root().querySelector('[data-a="comment"]');if(b)b.click()}else if(t.id==='aph'){grant()}});
+addEventListener('resize',()=>placePop());
+(function(){const h=(location.hash||'').slice(1);const m={admin:0,shift:1,master:2,client:3};if(h in m)login(U[m[h]]);else if(h==='duo'||h==='duo-client')startDuo(h==='duo'?'shift':'client')})();
+render();
+(async()=>{try{if(window.claude&&typeof window.claude.use==='function'){DL=await window.claude.use('downloads');if(DL)render()}}catch(e){DL=null}})();
+</script>
+
+</body></html>
