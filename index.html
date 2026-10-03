@@ -526,7 +526,7 @@ const CHIPS={all:()=>true,prod,ready:p=>p.st===5&&!p.cx,ship:p=>p.st===6&&!p.cx,
 function rows(skip){const q=S.q.trim().toLowerCase();const ch=CHIPS[S.chip]||CHIPS.all;return P.filter(p=>{if(!ch(p))return false;if(q&&![ccode(p.cl),p.cl,p.nm,p.art,p.inv,p.br,p.num].join(' ').toLowerCase().includes(q))return false;for(const k in S.f){if(k===skip)continue;const c=col(k);if(!S.f[k].has((c.fv||c.v)(p)))return false}return true})}
 const grp=p=>p.cx?3:p.st<5?0:p.st===5?1:2;
 function cmpDef(a,b){const ga=grp(a);return ga-grp(b)||(ga===0?(prio(b)-prio(a)||over(b)-over(a)||ru(a.plan||'9999',b.plan||'9999')):ga===1?ru(b.rd||'',a.rd||''):ru(b.sd||'',a.sd||''))||a.id-b.id}
-function sorted(a){if(!S.sort)return a.sort(cmpDef);const c=col(S.sort.k),d=S.sort.dir==='asc'?1:-1;const val=p=>c.dt?(p[c.k]||''):c.s?c.s(p):c.v(p);return a.sort((x,y)=>{const vx=val(x),vy=val(y);const ex=vx===''||vx==='—',ey=vy===''||vy==='—';if(ex!==ey)return ex?1:-1;return d*ru(vx,vy)||x.id-y.id})}
+function sorted(a){if(!S.sort)return S.cols==='x'?a.sort((x,y)=>x.id-y.id):a.sort(cmpDef);const c=col(S.sort.k),d=S.sort.dir==='asc'?1:-1;const val=p=>c.dt?(p[c.k]||''):c.s?c.s(p):c.v(p);return a.sort((x,y)=>{const vx=val(x),vy=val(y);const ex=vx===''||vx==='—',ey=vy===''||vy==='—';if(ex!==ey)return ex?1:-1;return d*ru(vx,vy)||x.id-y.id})}
 function fvSort(c){if(c.dt)return (a,b)=>{const k=v=>/^\d\d\.\d{4}$/.test(v)?v.slice(3)+v.slice(0,2):'0';return ru(k(b),k(a))};return ru}
 
 /* ---------- вход ---------- */
@@ -564,7 +564,7 @@ const chipDefs=[['all','Все',P.length],['prod','В производстве',
 const steps=uniq(P.map(p=>p.sh||'—')).sort(ru);const shv=S.f.sh?[...S.f.sh]:null;
 const sums={qt:0,nw:0,rp:0};rs.forEach(p=>{sums.qt+=p.qt||0;sums.nw+=p.nw||0;sums.rp+=p.rp||0});
 let sumRow='',lead=0;cols.forEach(c=>{if(sums[c.k]==null&&!sumRow)lead++;else if(sums[c.k]!=null)sumRow+=`<th class="s">${sums[c.k]}</th>`;else sumRow+='<th></th>'});
-const sumHead=lead?`<th colspan="${lead}">Показано ${rs.length} из ${P.length}${sums.qt!=null&&cols.some(c=>c.n)?' · итоги по видимым строкам':''}</th>`:'';
+const sumHead=lead?`<th colspan="${lead}">Показано ${rs.length} из ${P.length}${S.cols==='x'&&!S.sort?' · порядок строк как в Excel':''}${sums.qt!=null&&cols.some(c=>c.n)?' · итоги по видимым строкам':''}</th>`:'';
 const lim=S.lim||50;
 return `${role!=='shift'?vToday():''}<div class="tools">
 <div class="search">${ic('search')}<input id="q" value="${esc(S.q)}" placeholder="Код или название клиента, номер, артикул, наименование, счёт" aria-label="Поиск по графику"></div>
