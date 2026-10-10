@@ -135,10 +135,6 @@ button.cll:hover{color:var(--kd-ink);text-decoration-color:currentColor}
 .tl button{justify-content:flex-start;border:none;background:transparent;min-height:30px;padding:2px 6px;margin-inline:-6px;font-weight:400;font-size:13px;white-space:normal;text-align:left;gap:8px}
 .tl button:hover{background:var(--surface-2)}
 .tl .tm{font-family:var(--font-data);color:var(--ink-2);font-size:12px;flex:none}
-.kpis{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-content:start}
-.kpis button{flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:0;min-height:52px;padding:6px 12px;font-weight:400;font-size:12.5px;color:var(--ink-2);white-space:normal;text-align:left}
-.kpis b{font-size:18px;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
-.kpis .w b{color:var(--warn)}.kpis .x b{color:var(--bad)}
 .new{display:inline-block;font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:var(--kd);color:var(--on-kd);margin-left:4px;white-space:nowrap}
 /* таблица */
 .gwrap{position:relative}
@@ -275,7 +271,8 @@ button.stp:hover .dt{border-color:var(--kd)}
 .sa{display:flex;gap:8px;align-items:center}
 .grow{flex:1}
 .phone .sa button,.pr .sa button{min-height:48px;font-size:16px;font-weight:600}
-.phone .sa .pri,.pr .sa .pri{background:var(--kd-deep);border-color:var(--kd-deep)}
+.phone .sa .pri,.pr .sa .pri{background:var(--kd);border-color:var(--kd)}
+.phone .sa .pri:hover,.pr .sa .pri:hover{background:var(--kd-deep);border-color:var(--kd-deep)}
 .sq{width:48px;padding:0;flex:none}
 .sdone{flex:1;display:flex;gap:8px;align-items:center;min-height:48px;padding:0 12px;border-radius:var(--r);background:var(--kd-tint);color:var(--kd-ink);font-size:14px}
 .sundo{min-height:48px}
@@ -409,13 +406,618 @@ iframe.vimg{background:#fff}
   .csteps .stp:not(.cur) .tx,.csteps .stp .dd{visibility:hidden}
   .fpop{position:static;width:auto;max-height:none;margin-bottom:12px;box-shadow:none}
   .fvals{max-height:50vh}
-  .kpis{grid-template-columns:1fr 1fr}
   .dact{width:100%}
 }
+/* доводка 08.10: кнопки, панель, быстрые фильтры, «Сегодня», шапка */
+button{transition:background-color .15s,border-color .15s,color .15s,box-shadow .15s,transform .1s}
+.tools button,.legw>button,.chip,.dact button,.acts button{box-shadow:0 1px 2px rgb(22 22 22 / .05)}
+.tools>button:not(.pri):hover,.legw>button:hover,.chip:not(.on):hover{border-color:var(--ink-3)}
+
+.pri{box-shadow:0 1px 2px rgb(0 85 47 / .25),inset 0 1px 0 rgb(255 255 255 / .12);font-weight:600}
+.tools .legw>button{min-height:40px}
+.tools .seg{box-shadow:0 1px 2px rgb(22 22 22 / .05)}
+.tools .seg button+button{border-left:1px solid var(--line)}
+.tools .seg button.on{font-weight:600}
+.legw>button.on{background:var(--kd-tint);border-color:var(--kd);color:var(--kd-ink)}
+.tools .pri{margin-left:auto;padding-inline:18px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--kd);box-shadow:0 0 0 3px var(--kd-tint)}
+.search input{height:40px}
+.chips{align-items:center;gap:8px;margin:14px 0 12px}
+.chip{min-height:34px;padding:0 6px 0 14px;gap:8px;background:var(--surface)}
+.chip .n{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:22px;padding:0 7px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
+.chip.on .n{background:var(--surface);color:var(--kd-ink)}
+.chip.t-bad .n{background:var(--bad-tint);color:var(--bad)}
+.chip.t-warn .n{background:var(--warn-tint);color:var(--warn)}
+.chip.t-prog .n{background:var(--prog-tint);color:var(--prog)}
+.chip.on{font-weight:600}
+.csep{width:1px;height:22px;background:var(--line-strong);margin:0 4px;flex:none}
+.today{padding:16px 18px;gap:10px 24px}
+.today .th{padding-bottom:2px}
+.tl{gap:2px}
+.tl button{min-height:34px;border-radius:8px}
+.tl .tall{margin-top:4px;color:var(--kd-ink);font-weight:500;font-size:13px;gap:6px}
+.tl .tall:hover{background:var(--kd-tint)}
+.top{padding-bottom:12px}
+.nav{padding-left:14px;margin-left:4px;border-left:1px solid var(--line)}
+.tab{font-weight:500}
+.tab:not(.on):hover{color:var(--ink)}
+.tab.on{font-weight:600}
+.ava{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--kd-tint);color:var(--kd-ink);font-size:13px;font-weight:600;flex:none;letter-spacing:.02em}
+.top>.ghost:last-child{color:var(--ink-2);min-width:40px;padding:0 10px}
+.top>.ghost:last-child:hover{color:var(--bad);background:var(--bad-tint)}
+thead tr.sumr th .sl{float:right;font-weight:600;color:var(--ink-2);text-transform:none;padding-right:6px}
+thead tr.sumr th b{font-weight:600;color:var(--ink)}
+thead tr.sumr th.s{font-weight:600}
+@container (max-width:1180px){.tools .search{flex-basis:100%}}
+@container (max-width:720px){.nav{padding-left:0;margin-left:0;border-left:none}.csep{display:none}.tneed .ic{display:none}
+  .tools>*{order:4}.tools .search{order:0}.tools select.auto{order:1;flex:1 1 140px;width:auto}.tools .pri{order:2;margin-left:0}.tools .seg{order:3}}
+/* кабинет клиента, 08.10: сводка-плитки, позиция в три строки, стадии списком с датами, две колонки на компьютере */
+.wrap.cw{max-width:1180px}
+.mine{max-width:none;margin:0}
+.mhd{margin:4px 0 14px}
+.mh1{font-size:22px;font-weight:650;margin:0;line-height:1.25;text-wrap:balance}
+.mgrid{display:flex;flex-direction:column;gap:12px}
+.mside{display:contents}
+.readyb{order:1;margin:0}.mmain{order:2;min-width:0}.mside2>*{order:3}
+.readyb .rbh{font-size:16px}
+.readyb .rbl{gap:6px;margin:10px 0 12px}
+.readyb .num{background:var(--surface)}
+.pri.wide{width:100%;min-height:44px}
+.cstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));grid-auto-flow:column;gap:8px}
+.cstats button{flex-direction:column;align-items:flex-start;gap:0;min-height:62px;padding:8px 12px;font-weight:400;font-size:12.5px;color:var(--ink-2);border-color:var(--line);box-shadow:0 1px 2px rgb(22 22 22 / .05);white-space:normal;text-align:left}
+.cstats b{font-size:22px;line-height:1.15;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.cstats button:hover{border-color:var(--ink-3)}
+.cstats button.on{background:var(--kd-tint);border-color:var(--kd);color:var(--kd-ink)}
+.cstats button.on b{color:var(--kd-ink)}
+.cstats button.rd:not(.on) b{color:var(--kd-ink)}
+.clh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:18px 0 2px;min-height:32px}
+.inv{margin:10px 0 6px}
+.cc.col{padding:0}
+.cc{padding:0 0 14px}
+.cc>div{padding:0 14px}
+.cth{display:flex;flex-direction:column;align-items:stretch;gap:4px;min-height:0;padding:10px 14px 12px!important;border-radius:14px}
+.cth:hover{background:var(--surface-2)}
+.cc:not(.col) .cth{padding-bottom:6px!important}
+.c1{display:flex;align-items:center;gap:8px;min-width:0;font-size:13px;color:var(--ink-2)}
+.ck{flex:1 1 0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ck .num{margin-right:6px}
+.c1 .pl{flex:none}
+.c1>.ic:last-child{flex:none;color:var(--ink-3);transition:transform .15s}
+.cth[aria-expanded="true"] .c1>.ic:last-child{transform:rotate(180deg)}
+.csz{font-size:17px;font-weight:600;color:var(--ink);line-height:1.3;overflow-wrap:anywhere}
+.cc:not(.col) .csz{font-size:20px}
+.cseg{display:flex;align-items:center;gap:3px;margin-top:4px}
+.cseg i{flex:1;height:5px;border-radius:3px;background:var(--line)}
+.cseg i.d{background:var(--kd)}
+.cseg span{font-size:12px;color:var(--ink-2);margin-left:8px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.ctl{list-style:none;margin:12px 0 4px;padding:0;position:relative}
+.ctl li{position:relative;display:flex;align-items:center;gap:10px;min-height:32px;font-size:14px;color:var(--ink-3)}
+.ctl li::before{content:"";position:absolute;left:8px;top:-8px;height:16px;width:2px;background:var(--line-strong)}
+.ctl li:first-child::before{display:none}
+.ctl li.d::before,.ctl li.c::before{background:var(--kd)}
+.ctl b{position:relative;z-index:1;display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:2px solid var(--line-strong);background:var(--surface);flex:none;color:var(--on-kd)}
+.ctl li.d{color:var(--ink-2)}
+.ctl li.d b{background:var(--kd);border-color:var(--kd)}
+.ctl li.c{color:var(--ink);font-weight:600}
+.ctl li.c b{border-color:var(--kd);box-shadow:0 0 0 4px var(--kd-tint)}
+.ctl em{margin-left:auto;font-style:normal;font-size:12.5px;font-weight:400;color:var(--ink-2);text-align:right;font-variant-numeric:tabular-nums}
+.ctl li.c em{color:var(--kd-ink)}
+.cact{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px;margin-top:14px}
+.cact button{min-height:42px;white-space:normal;line-height:1.2}
+.mgc{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.mgt{flex:1;min-width:0}
+.mgc .ava{width:40px;height:40px}
+a.abtn{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:var(--r);border:1px solid var(--kd);color:var(--kd-ink);background:var(--surface);font-size:14px;font-weight:500;text-decoration:none;white-space:nowrap;flex:none;box-shadow:0 1px 2px rgb(22 22 22 / .05)}
+a.abtn:hover{background:var(--kd-tint)}
+.nfc{margin-top:0}
+@container (min-width:900px){
+  .mgrid{display:grid;grid-template-columns:minmax(0,1fr) 340px;grid-template-areas:"main side";gap:20px;align-items:start}
+  .mmain{grid-area:main}
+  .mside{display:flex;flex-direction:column;gap:12px;grid-area:side}
+  .mside2{grid-area:side}
+  .mgrid:has(.readyb) .mside:first-child{grid-row:1}
+  .mgrid .mside:first-child:empty{display:none}
+  .mgrid{grid-template-rows:auto 1fr}
+  .mmain{grid-row:1/3}
+  .mside:first-child{grid-area:auto;grid-column:2;grid-row:1}
+  .mside2{grid-area:auto;grid-column:2;grid-row:2;position:sticky;top:16px}
+  .mgrid:not(:has(.readyb)) .mside2{grid-row:1/3}
+}
+.mgc{flex-wrap:wrap}.mgc .abtn{flex:1 1 100%;justify-content:center}.mgc .ava{display:inline-flex}
+/* уведомления на почту в правой колонке кабинета */
+.nfc{padding:14px 16px}
+.nfh{align-items:flex-start}
+.nfi{display:inline-flex!important;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:var(--kd-tint);color:var(--kd-ink);flex:none}
+.nfh .b1{line-height:1.3}
+.nfq{display:flex;gap:8px;margin-top:12px}
+.nfq input{flex:1;min-width:0}
+.nfq .pri{flex:none}
+.nfmore{display:inline-block;margin-top:10px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.tgl{flex:none;position:relative;width:44px;min-height:26px;height:26px;padding:0;border-radius:999px;border:none;background:var(--line-strong);box-shadow:none!important;margin-top:4px}
+.tgl i{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgb(0 0 0 / .25);transition:transform .18s}
+.tgl.on{background:var(--kd)}
+.tgl.on i{transform:translateX(18px)}
+.tgl:hover{background:var(--ink-3)}.tgl.on:hover{background:var(--kd-deep)}
+.nfsum{margin:12px 0 0;display:flex;flex-direction:column;gap:8px;font-size:13.5px}
+.nfsum>div{display:grid;grid-template-columns:78px minmax(0,1fr);gap:8px}
+.nfsum dt{color:var(--ink-2);font-size:12.5px;padding-top:1px}
+.nfsum dd{margin:0;overflow-wrap:anywhere}
+.nfedit{width:100%;margin-top:14px}
+.nfopen .lb{margin-top:14px}
+.nfs .lb{margin-bottom:8px}
+.nfo{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r);margin-bottom:6px;cursor:pointer;transition:border-color .15s,background-color .15s}
+.nfo:hover{border-color:var(--ink-3)}
+.nfo.on{border-color:var(--kd);background:var(--kd-tint)}
+.nfo input{width:18px;height:18px;margin:1px 0 0;flex:none;accent-color:var(--kd)}
+.nfo>span{display:flex;flex-direction:column;gap:1px;font-size:14px}
+.nfo b{font-weight:600}
+.nfst{display:flex;flex-direction:column;gap:0;margin:-2px 0 8px 12px;padding:4px 0 4px 16px;border-left:2px solid var(--kd)}
+.nfc2{display:flex;gap:10px;align-items:center;min-height:36px;font-size:14px;cursor:pointer}
+.nfc2 input{width:18px;height:18px}
+.nfc2 .num{margin-right:6px}
+.nfseg{width:100%}.nfseg button{flex:1}
+.nfpl{display:flex;flex-direction:column;margin-top:8px;max-height:260px;overflow:auto}
+.nfpv{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.nfpv summary{cursor:pointer;font-size:13.5px;font-weight:500;color:var(--kd-ink)}
+.nfpv .mail{margin-top:10px}
+@container (min-width:900px){.mside2:has(.nfopen){position:static}}
+/* цех списком-очередью, 08.10 */
+.shop .ph{margin-bottom:14px}
+.sgrp{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden}
+.sgh{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.sgt{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:600}
+.sgn{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:22px;padding:0 7px;border-radius:999px;font-size:12px;font-weight:600;background:var(--surface-2);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.sg-p .sgh{background:var(--warn-tint)}.sg-p .sgt{color:var(--warn)}.sg-p .sgn{background:var(--surface);color:var(--warn)}
+.sg-o .sgt{color:var(--bad)}.sg-o .sgn{background:var(--bad-tint);color:var(--bad)}
+.shd,.sopen{display:grid;grid-template-columns:22px minmax(0,2.2fr) minmax(0,1.3fr) 64px 120px;gap:12px;align-items:center}
+.shd{grid-template-columns:22px minmax(0,2.2fr) minmax(0,1.3fr) 64px 120px 236px;padding:6px 16px;font-size:12px;color:var(--ink-2);background:var(--surface-2);border-bottom:1px solid var(--line)}
+.srow{display:grid;grid-template-columns:minmax(0,1fr) 236px;gap:12px;align-items:center;padding:0 16px 0 0;border-bottom:1px solid var(--line)}
+.srow:last-child{border-bottom:none}
+.srow.hl{background:var(--kd-row)}
+.srow.cfr{background:var(--warn-tint)}
+.sopen{min-height:64px;padding:8px 0 8px 16px;border:none;border-radius:0;background:transparent;text-align:left;font-weight:400;white-space:normal;justify-content:stretch;box-shadow:none!important}
+.sopen:hover{background:transparent}
+.srow:hover{background:var(--surface-2)}
+.srow.hl:hover{background:var(--kd-row)}
+.sfl{display:flex;justify-content:center}
+.snm{display:flex;flex-direction:column;gap:2px;min-width:0}
+.s1{display:flex;align-items:center;min-width:0;white-space:nowrap}
+.s1 b{font-size:15.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis}
+.s1 .num{flex:none}
+.s2{font-size:12.5px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sty{display:flex;flex-direction:column;gap:1px;font-size:13px;min-width:0}
+.sty .sm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--font-ui)}
+.spl{font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.spl.bad{color:var(--bad);font-weight:600}
+.sst .pl{font-size:12.5px}
+.sact{display:flex;gap:8px;align-items:center;justify-content:flex-end}
+.sdx{display:none}
+.shop .ph{flex-wrap:wrap}.shop .ph .seg{flex:none}
+.phone .sact .snx{flex:1;min-height:44px;font-size:14.5px;font-weight:600;justify-content:space-between;padding:0 12px 0 14px;background:var(--kd);border-color:var(--kd);box-shadow:0 1px 2px rgb(0 85 47 / .2)}
+.phone .sact .snx:hover{background:var(--kd-deep);border-color:var(--kd-deep)}
+.sbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.snx span{overflow:hidden;text-overflow:ellipsis}
+.sclip{width:44px;min-height:44px;padding:0;flex:none;color:var(--ink-2)}
+.sclip.has{color:var(--kd-ink);border-color:var(--kd);background:var(--kd-tint)}
+.sact .sdone{flex:1;min-height:44px;font-size:13.5px;padding:0 10px}
+.sact .sundo{min-height:44px;flex:none;padding:0 12px}
+.scf .snx{font-size:13.5px}
+@container (max-width:1000px){
+  .shd{display:none}
+  .sopen{grid-template-columns:18px minmax(0,1fr) auto;grid-template-areas:"f n st" "f t pl";row-gap:4px;column-gap:10px;min-height:0;padding:10px 0 10px 12px}
+  .sfl{grid-area:f;align-self:start;padding-top:3px}.snm{grid-area:n}.sst{grid-area:st;justify-self:end}.sty{grid-area:t;flex-direction:row;gap:6px;color:var(--ink-2);font-size:12.5px}.spl{grid-area:pl;justify-self:end;font-size:12.5px}
+  .srow{grid-template-columns:minmax(0,1fr) 200px;padding-right:12px}
+}
+@container (max-width:620px){
+  .srow{grid-template-columns:minmax(0,1fr);padding:0 12px 12px 0}
+  .sact{padding-left:40px}
+  .sty .sm{display:none}
+  .sdx,.shint{display:inline}.shint{display:none}
+  .sopen{padding-bottom:8px}
+  .s1 b{font-size:15px}
+  .sgh{padding:10px 12px}
+}
+/* крупнее шрифт, плотнее отступы (08.10, по просьбе Ильи) */
+body{font-size:16px}
+.sm{font-size:13.5px}
+.mu{font-size:14px}
+table{font-size:14px}
+.hb{font-size:13px}
+.shop .h2{font-size:22px}
+.sgt{font-size:17px}
+.sgh{padding:9px 16px}
+.sgh .sm{font-size:13.5px}
+.sgrp{margin-bottom:10px}
+.shd{font-size:13px}
+.sopen{min-height:56px;padding-top:5px;padding-bottom:5px}
+.snm,.sty{row-gap:0;line-height:1.25}
+.sty{column-gap:6px}
+.s1 b{font-size:17px}
+.s2{font-size:14px}
+.sty{font-size:14.5px}
+.sty .sm{font-size:13.5px}
+.spl{font-size:15px}
+.sst .pl{font-size:13.5px}
+.phone .sact .snx{font-size:16px}
+/* ещё крупнее (08.10, второй шаг) */
+body{font-size:17px}
+.sm{font-size:14.5px}
+.mu{font-size:15px}
+table{font-size:15px}
+.hb{font-size:14px}
+button{font-size:15px}
+.chip{font-size:14px}
+.shop .h2{font-size:24px}
+.sgt{font-size:18px}
+.sgh .sm{font-size:14.5px}
+.shd{font-size:14px}
+.s1 b{font-size:19px}
+.s2{font-size:15px}
+.sty{font-size:15.5px}
+.sty .sm{font-size:14.5px}
+.spl{font-size:16px}
+.sst .pl{font-size:14.5px}
+.phone .sact .snx{font-size:17px}
+/* главная: «Сегодня из Брянска» и панель крупнее (08.10) */
+.today .h3{font-size:18px}
+.today .th .sm{font-size:15px}
+.tdt{font-size:14.5px}
+.tl button{font-size:16px;min-height:38px}
+.tl .tm{font-size:14.5px}
+.tl .tall{font-size:15.5px}
+.tools .seg button{font-size:15px}
+.chip{font-size:15px;min-height:38px}
+.chip .n{font-size:13.5px;height:24px}
+thead tr.sumr th{font-size:14px}
+.pl{font-size:13.5px}
+/* главная: ещё шаг крупнее (08.10) */
+.today .h3{font-size:20px}
+.today .th .sm{font-size:16px}
+.tdt{font-size:15.5px}
+.tl button{font-size:17.5px;min-height:42px}
+.tl .tm{font-size:15.5px}
+.tl .tall{font-size:16.5px}
+
+/* «Сегодня из Брянска», вариант 2 (08.10, вторая редакция): лента слева, «Требует решения» справа, общая сетка строк */
+.today{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:6px 0;padding:18px 22px 14px}
+.today .th{align-items:center;gap:8px 12px;padding-bottom:8px}
+.today .th .h3{display:inline-flex;align-items:center;gap:8px}
+.today .th .sm{color:var(--ink-2)}
+.tdate{display:inline-flex;align-items:center;min-height:30px;padding:0 12px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);font-size:15.5px;font-weight:500;font-variant-numeric:tabular-nums}
+.today.col .th .sm b{color:var(--ink);font-weight:600}.today.col .th .sm b.x{color:var(--bad)}.today.col .th .sm b.w{color:var(--warn)}
+.tl{display:grid;grid-template-columns:66px minmax(0,1fr) auto 14px auto minmax(72px,auto);column-gap:10px;row-gap:0;align-content:start;padding-right:24px}
+.tl>*{grid-column:1/-1}
+.tneed{display:flex;flex-direction:column;padding-left:24px;border-left:1px solid var(--line)}
+.tsh{display:flex;align-items:center;gap:8px;min-height:40px;padding:0 8px;border-bottom:1px solid var(--line);font-size:16px;font-weight:600;color:var(--ink-2)}
+.tsh .n{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:24px;padding:0 8px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.tl .ev,.tl .tall,.tneed button{position:relative;min-height:58px;margin:0;padding:6px 8px;border:none;border-radius:10px;background:transparent;box-shadow:none;font-weight:400;text-align:left;white-space:normal}
+.tl .ev+.ev::before,.tl .ev+.tall::before,.tneed button+button::before{content:'';position:absolute;left:8px;right:8px;top:0;height:1px;background:var(--line);transition:opacity .15s}
+.tl .ev:hover::before,.tl .ev:hover+.ev::before,.tl .ev:hover+.tall::before,.tl .tall:hover::before,.tneed button:hover::before,.tneed button:hover+button::before,.tneed button.on::before,.tneed button.on+button::before{opacity:0}
+.tl .ev:hover,.tneed button:hover{background:var(--surface-2)}
+.tl .ev{display:grid;grid-template-columns:subgrid;align-items:center;font-size:17.5px;line-height:1.3}
+.tl .tm{font-size:15.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.tl .evt{font-weight:600;min-width:0}
+.trn{display:contents;font-size:15px;color:var(--ink-2)}
+.trn>span:first-child{justify-self:end;white-space:nowrap;font-size:15px;color:var(--ink-2)}
+.trn .pl{justify-self:start}
+.trn .ic{color:var(--ink-3);flex:none}
+.tl .evw{font-size:15px;color:var(--ink-3);text-align:right;white-space:nowrap}
+.tl .tall{display:flex;align-items:center;justify-content:flex-start;gap:6px;width:auto;max-width:none;align-self:stretch;color:var(--kd-ink);font-size:16.5px;font-weight:500}
+.tl .tall:hover{background:var(--kd-tint)}
+.tempty{display:flex;align-items:center;min-height:58px;padding:6px 8px;color:var(--ink-2);font-size:16px;line-height:1.45}
+.tneed button{display:grid;grid-template-columns:62px minmax(0,1fr) 20px;align-items:center;column-gap:14px;font-size:16.5px;color:var(--ink);line-height:1.3}
+.tneed button.on{background:var(--kd-tint)}
+.tneed .cnt{display:inline-flex;align-items:center;justify-content:center;min-width:62px;height:44px;padding:0 10px;border-radius:999px;background:var(--surface-2);color:var(--ink-3);font-size:28px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.tneed .x .cnt{background:var(--bad-tint);color:var(--bad)}
+.tneed .w .cnt{background:var(--warn-tint);color:var(--warn)}
+.tneed .g .cnt{background:var(--kd-tint);color:var(--kd-ink)}
+.tneed .b .cnt{background:var(--prog-tint);color:var(--prog)}
+.tneed [data-z] .lbl{color:var(--ink-3)}
+.tneed .ic{color:var(--ink-3);opacity:0;transform:translateX(-4px);transition:opacity .15s,transform .15s}
+.tneed button:hover .ic,.tneed button:focus-visible .ic{opacity:1;transform:none;color:var(--kd-ink)}
+.tneed [data-z] .ic{display:none}
+.today.col .th .sm{flex:1 1 200px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.today.col .th .tdt{flex:none}
+@container (max-width:900px){.today{grid-template-columns:minmax(0,1fr)}.tl{padding-right:0}.tneed{padding-left:0;border-left:none;margin-top:14px}}
+@container (max-width:720px){.today{padding:16px 14px 12px}.today .th{display:grid;grid-template-columns:minmax(0,1fr) auto;row-gap:6px;align-items:center}.today .th .h3{grid-column:1;grid-row:1}.today .th .tdt{grid-column:2;grid-row:1;margin-left:0;padding-inline:8px}.today .th .tdate{grid-column:1;grid-row:2;justify-self:start}.today:not(.col) .th .sm{display:none}.today.col .th .sm{grid-column:1/-1;grid-row:3;white-space:normal}.tdt .tdl{display:none}
+  .tl{display:flex;flex-direction:column}.tl .ev{grid-template-columns:48px minmax(0,1fr) auto;grid-template-areas:"tm nm w" "tm tr tr";column-gap:12px;row-gap:6px;padding-block:10px}.tl .tm{grid-area:tm}.tl .evt{grid-area:nm}.trn{grid-area:tr;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.tl .evw{grid-area:w}.tl .tlx{display:none}.tneed button{grid-template-columns:56px minmax(0,1fr)}.tneed .cnt{min-width:56px;height:40px;font-size:24px}}
+.tools .seg button{font-size:16px}
+.tools>button,.tools .legw>button{font-size:16px}
+.chip{font-size:16px;min-height:40px}
+.chip .n{font-size:14px}
+thead tr.sumr th{font-size:15px}
+.pl{font-size:14px}
+/* карточка позиции: две колонки — работа слева, учёт и история справа (08.10) */
+.dgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;margin-top:10px;align-items:start}
+.dside{display:flex;flex-direction:column;gap:14px;min-width:0}
+.dcard{padding:16px 18px}
+.dtop{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.dtop>.pl{flex:none;font-size:15px;padding:5px 14px}
+.dk{font-size:15px;color:var(--ink-2);display:flex;align-items:center}
+.dttl{font-size:28px;font-weight:650;margin:8px 0 4px;line-height:1.2}
+.dsec{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.dsec>.h3,.dcard>.h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.dsec .sh{margin:0 0 14px}
+.dsa{margin-top:18px}.dsa .pri{min-height:46px;padding-inline:22px;font-size:16px}
+.k{font-size:14px;color:var(--ink-2)}
+.v{font-size:17px;font-weight:500}
+.dkv{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px 18px;margin-top:0}
+.dkv>div{padding:10px 12px;border-radius:var(--r);background:var(--surface-2)}
+.dempty{margin-top:12px;font-size:14.5px;color:var(--ink-2)}
+.dbt{display:flex;flex-wrap:wrap;gap:8px}
+.dbt>button{flex:1 1 auto}
+.dmw{position:relative}
+.dmb{width:44px;padding:0}
+.dmenu{position:absolute;right:0;top:calc(100% + 6px);z-index:20;padding:6px;min-width:230px;box-shadow:0 10px 30px rgb(0 0 0 / .16)}
+.dmenu button{width:100%;justify-content:flex-start}
+.dcard .box{margin-top:12px}
+.dacc{display:flex;flex-direction:column}
+.dacc>div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
+.dacc>div:last-child{border-bottom:none}
+.dacc .v{text-align:right;font-size:16px}
+.dcd{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.dcd .lb{margin-top:0}
+.dcdr{display:flex;gap:8px}.dcdr input{flex:1;min-width:0}
+.dcd .sm{margin-top:6px}
+.dhist{margin-top:12px;max-height:420px;overflow:auto}
+.dhist>div{display:flex;flex-direction:column;gap:2px;padding:9px 0;font-size:15px}
+.dcard .cm{margin-top:0}
+@container (min-width:960px){.dgrid{grid-template-columns:minmax(0,1fr) 360px}}
+/* на узком экране «где позиция сейчас» — первым, над карточкой */
+@container (max-width:959px){.dside{display:contents}.dnow{order:-1}}
+/* правая панель карточки позиции, 08.10 */
+.dhr{display:flex;align-items:center;gap:8px;flex:none}
+.dhr>.pl{font-size:15px;padding:5px 14px}
+.dnow{background:var(--kd-tint);border-color:var(--kd)}
+.dnow.late{background:var(--bad-tint);border-color:var(--bad-line)}
+.dnt{font-size:20px;font-weight:650;line-height:1.25}
+.dnow>div:not(.dnt){font-size:15.5px;margin-top:2px}
+.dnow .bad{font-weight:600}
+.dtg{padding:6px 10px}
+.tgr{display:flex;width:100%;justify-content:space-between;align-items:center;gap:12px;padding:10px 8px;border:none;border-radius:10px;background:transparent;text-align:left;white-space:normal;font-weight:400;min-height:56px;box-shadow:none!important}
+.tgr+.tgr{border-top:1px solid var(--line);border-radius:0}
+.tgr:hover{background:var(--surface-2)}
+.tgr>span:first-child{display:flex;flex-direction:column;gap:1px;min-width:0}
+.tgr b{font-weight:600;font-size:16px;display:inline-flex;align-items:center;gap:6px}
+.tgr .tgl{margin-top:0;pointer-events:none}
+.dacc{display:flex;flex-direction:column}
+.arow{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:44px;padding:8px 0;margin:0;width:100%;box-sizing:border-box;font-size:inherit;border:none;border-bottom:1px solid var(--line);border-radius:0;background:transparent;text-align:left;font-weight:400;white-space:normal;box-shadow:none!important}
+.dacc>.arow:last-child{border-bottom:none}
+button.arow:hover{background:var(--surface-2);box-shadow:0 0 0 6px var(--surface-2)!important;border-radius:2px}
+.arow .k{flex:none;font-size:14px}
+.arow .ro{margin-left:auto;text-align:right;font-size:14px}
+.arow .v{text-align:right;font-size:16px;margin-left:auto}
+.arow .v.bad{color:var(--bad)}
+.arow>.ic{flex:none;color:var(--ink-3);opacity:0;transition:opacity .15s}
+button.arow:hover>.ic,button.arow:focus-visible>.ic{opacity:1}
+.aadd{margin-left:auto;color:var(--kd-ink);font-weight:500}
+.aed{flex-direction:column;align-items:stretch;gap:6px;background:var(--surface-2);border-radius:8px;padding:10px 8px}
+.aer{display:flex;gap:6px}.aer input{flex:1;min-width:0}.aer .sm-btn{min-height:40px;width:40px;padding:0}
+.clh2{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px}
+.clh2 .h3{margin:0!important;min-width:0}
+.dcard .arow{cursor:default}
+.dcard button.arow{cursor:pointer}
+.chs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chs .chip{min-height:32px;font-size:14px;padding:0 12px}
+.hft{display:flex;gap:4px;flex-wrap:wrap;margin:-2px 0 10px}
+.hft button{min-height:32px;padding:0 10px;font-size:14px;border-radius:999px;border-color:var(--line);box-shadow:none}
+.hft button span{color:var(--ink-3);font-weight:600;font-size:12.5px}
+.hft button.on{background:var(--kd-tint);border-color:var(--kd);color:var(--kd-ink)}
+.dhist{max-height:none;overflow:visible;margin-top:0;display:flex;flex-direction:column;gap:8px}
+.dhist>div{padding:0}
+.hcm{background:var(--kd-tint);border-radius:12px 12px 12px 4px;padding:8px 12px;font-size:15.5px}
+.hcm .sm{color:var(--kd-ink)}
+.hsy{display:flex;gap:8px;align-items:flex-start;font-size:14.5px;color:var(--ink)}
+.hic{flex:none;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--surface-2);color:var(--ink-2);margin-top:2px}
+.h-ml .hic{background:var(--prog-tint);color:var(--prog)}
+.h-st .hic{background:var(--kd-tint);color:var(--kd-ink)}
+.hmore{margin-top:10px}
+.dhist>div{border-bottom:none;padding:0}
+.dhist>.hsy{flex-direction:row;align-items:flex-start;gap:10px;font-size:14.5px}
+.dhist>.hcm{display:block;padding:8px 12px}
+.hcmin{margin-top:12px!important;padding-top:12px;border-top:1px solid var(--line)}
+/* шрифт как на главной — для «Цеха», «Клиентов и доступов», карточки клиента (08.10) */
+.tab{font-size:16px}
+.h3{font-size:18px}
+.b1{font-size:16px}
+.lb{font-size:15px}
+.sm-btn{font-size:14px;min-height:34px}
+.lrow{font-size:16.5px}
+.lrow .sm{font-size:14.5px}
+.mt-t{font-size:18px}
+.sc .mrow{font-size:14.5px}
+.ckp div{font-size:14.5px}.ckp b{font-size:22px}
+.cpr{font-size:16px}
+.inv{font-size:14px}
+.lrow button.cll{font-size:17px;font-weight:500}
+.lrow .data{font-size:15.5px!important}
+.lrow .mu{font-size:15.5px}
+/* единые размеры как на главной (08.10): заголовок 20, строка 17.5, вторичный 16, кнопки 16, подписи колонок 14, числа 28 */
+.h3{font-size:20px}
+.tab{font-size:16px}
+.lb{font-size:16px}
+.sm-btn{font-size:16px;min-height:40px;padding:0 14px}
+.b1{font-size:17.5px}
+/* клиенты и доступы */
+.lrow{font-size:17.5px}
+.lrow button.cll{font-size:17.5px;font-weight:600}
+.lrow .sm,.lrow .mu{font-size:16px}
+.lrow .data{font-size:16px!important}
+/* цех — список */
+.shop .h2{font-size:20px}
+.sgt{font-size:20px}
+.sgh .sm{font-size:16px}
+.shd{font-size:14px}
+.s1 b{font-size:17.5px}
+.s2,.sty,.spl{font-size:16px}
+.sty .sm{font-size:16px}
+.sst .pl{font-size:14px}
+.phone .sact .snx{font-size:16px}
+/* цех — карточки */
+.mt-t{font-size:17.5px}
+.sc .sm,.sc .mrow{font-size:16px}
+.phone .sa button{font-size:16px}
+/* карточка клиента */
+.ckp div{font-size:16px}.ckp b{font-size:28px}
+.cpr{font-size:17.5px}.cpr .sm{font-size:16px}
+.inv{font-size:16px}
+/* карточка позиции */
+.dsec>.h3,.dcard>.h3{font-size:20px}
+.dnt{font-size:20px}
+.dnow>div:not(.dnt){font-size:16px}
+.k,.arow .k,.arow .ro{font-size:16px}
+.v,.arow .v{font-size:17.5px}
+.dempty,.hsy,.dhist>.hsy{font-size:16px}
+.hcm{font-size:17.5px}
+.tgr b{font-size:17.5px}
+.hft button{font-size:16px}
+.chs .chip{font-size:16px}
+/* шапка цеха и все переключатели-сегменты — как на главной */
+.seg button{font-size:16px;min-height:40px}
+.shop .ph .sm{font-size:16px}
+.shop .h2{font-size:22px}
+/* сотрудники: роли и возможности (08.10) */
+.stl{min-width:0}
+.stn{font-size:17.5px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.stn .pl{font-weight:500}
+.empf{margin:12px 0}
+.empg{grid-template-columns:repeat(3,minmax(0,1fr))}
+.rolg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.rolg .nfo{margin:0}
+.nfo.dis{opacity:.5;cursor:not-allowed}
+.capg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:4px 16px}
+.cap{align-items:flex-start;min-height:52px;padding:6px 0}
+.cap input{margin-top:3px}
+.cap>span{display:flex;flex-direction:column}
+.cap b{font-weight:600;font-size:16px}
+@container (max-width:720px){.empg,.rolg{grid-template-columns:minmax(0,1fr)}}
+/* уведомления: переключатели всегда видны, подтверждение адреса (08.10) */
+.nsws{margin-top:10px;border-top:1px solid var(--line)}
+.nsw{padding:10px 0;min-height:60px}
+.nsw:disabled{opacity:1;cursor:default}
+.nsw:disabled .tgl{opacity:.6}
+.nfpk{margin-top:4px}
+.nfcons{margin-top:8px}
+.nfpend{margin-top:12px;padding:12px 14px;border-radius:var(--r);background:var(--warn-tint);border:1px solid var(--warn-line);font-size:16px}
+.nfpend .sm{margin-top:4px}
+.nfpb{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.nfst2{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;font-size:16px}
+.nfok{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--kd);color:var(--on-kd)}
+.nflast{margin-top:10px}
+.nfx{display:flex;width:100%;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;padding:10px 12px;min-height:56px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface-2);text-align:left;font-weight:400;white-space:normal;box-shadow:none!important}
+.nfx:hover{border-color:var(--ink-3)}
+.nfx>span{display:flex;flex-direction:column;gap:1px}
+.nfx b{font-weight:600;font-size:16px}
+.nfx>.ic{flex:none;color:var(--ink-2);transition:transform .15s}
+.nfx[aria-expanded="true"]>.ic{transform:rotate(180deg)}
+.nfx[aria-expanded="true"]{border-bottom-left-radius:0;border-bottom-right-radius:0}
+.nfx+.nsws{margin-top:0;border:1px solid var(--line);border-top:none;border-radius:0 0 var(--r) var(--r);padding:0 12px}
+.nfcol{margin-top:8px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* шапка (08.10): белая плашка, вкладки переключателем, пользователь капсулой с меню, прилипает при прокрутке */
+.top{position:sticky;top:8px;z-index:20;gap:16px;flex-wrap:nowrap;margin:0 0 16px;padding:10px 10px 10px 16px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 1px 2px rgb(22 22 22 / .04),0 8px 24px -14px rgb(22 22 22 / .22)}
+.top::before{content:'';position:absolute;left:-12px;right:-12px;bottom:100%;height:12px;background:var(--bg);margin-bottom:1px}
+.brand{gap:12px;flex:none}
+.bmk{width:5px;height:32px;border-radius:3px;background:var(--kd);flex:none}
+.top .bt{margin-top:3px;font-size:13.5px;color:var(--ink-2)}
+.nav{flex:0 1 auto;gap:2px;padding:3px;margin-left:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2)}
+.tab{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 18px;border-radius:9px;color:var(--ink-2);font-weight:500;white-space:nowrap}
+.tab:not(.on):hover{color:var(--ink);background:transparent}
+.tab.on{background:var(--surface);color:var(--kd-ink);font-weight:600;box-shadow:0 1px 2px rgb(22 22 22 / .12),0 0 0 1px var(--line)}
+.tbn{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:21px;padding:0 6px;border-radius:999px;background:var(--warn-tint);color:var(--warn);font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.umw{position:relative;margin-left:auto;flex:none}
+.ucap{display:flex;align-items:center;gap:10px;min-height:48px;padding:4px 12px 4px 4px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:400;text-align:left;box-shadow:none}
+.ucap:hover,.ucap[aria-expanded="true"]{border-color:var(--line-strong);background:var(--surface-2)}
+.ucap .ava{width:38px;height:38px}
+.ucap .who{display:flex;flex-direction:column;margin:0;text-align:left;line-height:1.25;flex:none;min-width:0}
+.ucap .b1{font-size:16px;font-weight:600}
+.ucap .sm{font-size:14px;color:var(--ink-2)}
+.ucap>.ic{color:var(--ink-3);transition:transform .15s}
+.ucap[aria-expanded="true"]>.ic{transform:rotate(180deg)}
+.umenu{position:absolute;right:0;top:calc(100% + 8px);z-index:40;min-width:270px;padding:6px;display:flex;flex-direction:column;box-shadow:0 10px 30px rgb(0 0 0 / .16)}
+.umh{display:flex;flex-direction:column;gap:2px;padding:10px 12px 12px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.umh b{font-size:16.5px}
+.umh .sm{font-size:14.5px;color:var(--ink-2)}
+.umo{justify-content:flex-start;gap:10px;min-height:44px;padding:0 12px;border:none;background:transparent;box-shadow:none;color:var(--bad);font-weight:500;font-size:16px}
+.umo:hover{background:var(--bad-tint)}
+.toast.stk{top:calc(var(--toph,0px) + 16px)}
+.mside2{top:calc(var(--toph,0px) + 24px)}
+@container (max-width:960px){.top{flex-wrap:wrap;top:4px;gap:8px;padding:8px 8px 8px 12px;border-radius:14px}.nav{order:3;flex-basis:100%;margin-left:0;overflow-x:auto}.nav{overflow:visible}.tab{flex:1 1 0;min-width:0;justify-content:center;padding:0 8px;gap:6px}.tab .tlg{display:none}.ucap{padding:3px;min-height:0}.ucap .who,.ucap>.ic{display:none}.bmk{height:26px}}
+/* кнопки (08.10): «трек» с лёгким жидким стеклом, белые кнопки с тенью, серые фильтры; цвета состояний сохранены */
+:root{--trk:#e7ebe8;--trk-h:#dde3df;--gl-a:rgb(255 255 255 / .96);--gl-b:rgb(255 255 255 / .8);--gl-la:rgb(255 255 255 / .72);--gl-lb:rgb(255 255 255 / .36);--gl-hi:rgb(255 255 255 / .95);--spring:cubic-bezier(.3,1.45,.45,1)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--trk:#212824;--trk-h:#29312c;--gl-a:rgb(58 68 62 / .95);--gl-b:rgb(44 52 47 / .8);--gl-la:rgb(80 92 85 / .7);--gl-lb:rgb(60 70 64 / .4);--gl-hi:rgb(255 255 255 / .1)}}
+:root[data-theme="dark"]{--trk:#212824;--trk-h:#29312c;--gl-a:rgb(58 68 62 / .95);--gl-b:rgb(44 52 47 / .8);--gl-la:rgb(80 92 85 / .7);--gl-lb:rgb(60 70 64 / .4);--gl-hi:rgb(255 255 255 / .1)}
+button{transition:background-color .15s,border-color .15s,color .15s,box-shadow .2s,scale .25s var(--spring)}
+.seg,.nav{display:inline-flex;gap:2px;padding:3px;border:none;border-radius:12px;background:var(--trk);overflow:visible;box-shadow:inset 0 1px 2px rgb(22 22 22 / .07)}
+.tools .seg{box-shadow:inset 0 1px 2px rgb(22 22 22 / .07)}
+.seg.gl,.nav.gl{position:relative}
+.seg button,.nav .tab{position:relative;z-index:1;min-height:38px;padding:0 16px;border:none;border-radius:9px;background:transparent;box-shadow:none;color:var(--ink-2);font-weight:500}
+.tools .seg button+button{border-left:none}
+.seg button:hover,.nav .tab:not(.on):hover{background:transparent;color:var(--ink)}
+.seg button.on,.nav .tab.on{background:var(--surface);color:var(--kd-ink);font-weight:600;box-shadow:0 1px 2px rgb(22 22 22 / .12)}
+.seg.gl button.on,.nav.gl .tab.on{background:transparent;box-shadow:none}
+.thumb{position:absolute;left:0;top:3px;width:0;height:38px;border-radius:9px;z-index:0;pointer-events:none;will-change:transform;transform-origin:50% 50%;background:linear-gradient(180deg,var(--gl-a),var(--gl-b));box-shadow:0 1px 2px rgb(22 22 22 / .12),0 6px 14px -8px rgb(22 22 22 / .3),inset 0 1px 0 var(--gl-hi),0 0 0 .5px rgb(22 22 22 / .07);transition:transform .44s cubic-bezier(.32,1.22,.52,1),scale .26s cubic-bezier(.3,1.35,.5,1),background .26s,box-shadow .26s}
+.thumb.lift{scale:1.06;background:linear-gradient(180deg,var(--gl-la),var(--gl-lb));box-shadow:0 10px 24px -10px rgb(22 22 22 / .4),inset 0 1px 0 var(--gl-hi),inset 0 -1px 1px rgb(22 22 22 / .06),0 0 0 .5px rgb(22 22 22 / .1)}
+.tools>button:not(.pri),.legw>button,.dhr>button,.dact button:not(.pri),.acts button:not(.pri){border-color:transparent;box-shadow:0 0 0 1px var(--line),0 1px 2px rgb(22 22 22 / .06),inset 0 1px 0 var(--gl-hi)}
+.tools>button:not(.pri):hover,.legw>button:hover,.dhr>button:hover,.dact button:not(.pri):hover,.acts button:not(.pri):hover{background:var(--surface);border-color:transparent;scale:1.03;box-shadow:0 0 0 1px var(--line-strong),0 6px 14px -8px rgb(22 22 22 / .3),inset 0 1px 0 var(--gl-hi)}
+.legw>button.on{border-color:var(--kd);box-shadow:0 0 0 1px var(--kd),0 1px 2px rgb(22 22 22 / .06)}
+.chip{border-color:transparent;background:var(--trk);box-shadow:none}
+.chip:not(.on):hover{background:var(--trk-h);border-color:transparent;scale:1.03}
+.chip .n{background:var(--surface)}
+.chip.on{border-color:transparent;background:linear-gradient(180deg,var(--gl-a),var(--gl-b));color:var(--kd-ink);box-shadow:0 0 0 1.5px var(--kd),0 6px 14px -8px rgb(0 85 47 / .4),inset 0 1px 0 var(--gl-hi)}
+.chip.on .n{background:var(--kd-tint);color:var(--kd-ink)}
+.pri{background:linear-gradient(180deg,#3f9a6c,var(--kd));border-color:transparent;box-shadow:0 1px 2px rgb(0 85 47 / .3),0 8px 18px -10px rgb(0 85 47 / .6),inset 0 1px 0 rgb(255 255 255 / .28),inset 0 -1px 0 rgb(0 0 0 / .08)}
+.pri:hover{background:linear-gradient(180deg,var(--kd),var(--kd-deep));border-color:transparent;scale:1.03}
+.tools>button:active,.legw>button:active,.chip:active,.pri:active,.dhr>button:active,.dact button:active,.acts button:active{scale:.97}
+.tools .search input,.tools select{height:44px}
+.tools>button,.tools .legw>button{min-height:44px}
+.tl .tall:hover{background:var(--surface-2)}
+@media (prefers-reduced-motion:reduce){.thumb{transition:none}button,button:hover,button:active{scale:none!important}}
+/* переключатель темы (08.10): одна иконка, по нажатию трек раскрывается влево, после выбора сворачивается */
+.top .thw{margin-left:auto;flex:none}
+.top .thw+.umw{margin-left:0}
+.thw{display:inline-flex;align-items:center;padding:3px;border-radius:12px;background:transparent;box-shadow:none;transition:background-color .3s,box-shadow .3s}
+.thw.open{background:var(--trk);box-shadow:inset 0 1px 2px rgb(22 22 22 / .07)}
+.thw button{width:40px;min-height:38px;padding:0;margin-left:2px;border:none;border-radius:9px;background:transparent;box-shadow:none;color:var(--ink-3);overflow:hidden;transition:width .45s var(--spring),margin .45s var(--spring),opacity .25s,scale .35s var(--spring),background .25s,box-shadow .25s,color .2s}
+.thw button:first-child{margin-left:0}
+.thw button .ic{flex:none}
+.thw button.on{color:var(--kd-ink);background:linear-gradient(180deg,var(--gl-a),var(--gl-b));box-shadow:0 0 0 1px var(--line),0 1px 2px rgb(22 22 22 / .1),0 6px 14px -8px rgb(22 22 22 / .3),inset 0 1px 0 var(--gl-hi)}
+.thw:not(.open) button:not(.on){width:0;margin-left:0;opacity:0;scale:.5;pointer-events:none}
+.thw:not(.open) button.on:hover{scale:1.06}
+.thw.open button:not(.on):hover{color:var(--ink);background:rgb(255 255 255 / .45)}
+.thw.open button.on{box-shadow:0 1px 2px rgb(22 22 22 / .12),0 6px 14px -8px rgb(22 22 22 / .3),inset 0 1px 0 var(--gl-hi),0 0 0 .5px rgb(22 22 22 / .07)}
+.thw button:active{scale:.94}
+@container (max-width:720px){.thw button{width:36px;min-height:34px}}
+@media (prefers-reduced-motion:reduce){.thw button{transition:none}}
+/* проверка 10.10, пакет 1: вёрстка */
+.toast.stk{position:fixed;left:50%;top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateX(-50%);width:max-content;max-width:min(640px,calc(100vw - 32px));z-index:35;margin:0;border:1px solid var(--line);box-shadow:0 10px 30px rgb(0 0 0 / .18)}
+[data-pane] .toast.stk{position:sticky;top:8px;bottom:auto;left:auto;transform:none;width:auto;max-width:none;z-index:5;margin-bottom:10px}
+.legp{z-index:19;max-height:calc(100dvh - var(--toph,70px) - 32px);overflow:auto;overscroll-behavior:contain}
+@container (max-width:900px){.legw{position:static}.legp{left:0;right:0;width:auto;max-width:460px}.tools{position:relative}}
+.toast{flex-wrap:nowrap;align-items:center}.toast>span:first-child{flex:1 1 auto;min-width:0}.toast .tb{flex:none;flex-wrap:wrap;justify-content:flex-end}
+.pills .chip{white-space:normal;text-align:left;max-width:100%;height:auto;padding-block:5px;line-height:1.3}
+.stp{justify-content:flex-start}
+@container (max-width:480px){.steps{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:16px}.stp:nth-child(3n+1) .ln{display:none}.stp .tx{font-size:12px;letter-spacing:0;min-height:0}.csteps .steps{grid-template-columns:repeat(6,minmax(0,1fr));row-gap:0}.csteps .stp:nth-child(3n+1):not(:first-child) .ln{display:block}}
+.mnm{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-height:1.3}
+.ml1{align-items:flex-start}
+.ml1 .num{min-width:52px;text-align:center}
+.ml2{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+@media (pointer:coarse){
+  .seg button::after,.nav .tab::after{content:'';position:absolute;inset:-3px 0}
+  .thw button{width:44px;min-height:44px}
+  .fbt button.lnk{min-height:44px;padding:0 8px;display:inline-flex;align-items:center}
+  .fvals label,.colg label{min-height:40px}
+  .fsort button{min-height:44px}
+  .chip{position:relative}.chip::after{content:'';position:absolute;inset:-6px 0}
+  .pw button{top:0;bottom:0;min-height:0}
+  input:not([type=checkbox]):not([type=radio]):not([type=file]),.search input{min-height:44px;height:44px}
+  select{height:44px}
+  textarea{min-height:44px;height:auto}
+}
 </style>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><g id="medo"><g transform="translate(0.000000,411.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none"> <path d="M4260 3075 l265 -265 107 0 c60 0 108 3 108 8 0 4 -116 123 -258 265 l-257 257 -115 0 -115 0 265 -265z M4290 3332 c0 -4 116 -123 258 -265 l257 -257 125 0 125 0 -265 265 -265 265 -117 0 c-65 0 -118 -3 -118 -8z M4570 3335 c0 -2 117 -122 260 -265 l261 -260 132 0 132 0 -265 265 -265 265 -127 0 c-71 0 -128 -2 -128 -5z M5110 3075 l265 -265 139 0 139 0 -24 28 -24 27 31 -27 30 -28 1137 0 c1346 0 1323 1 1497 -83 209 -101 339 -314 369 -605 26 -254 -71 -520 -242 -661 -62 -51 -215 -130 -280 -143 -57 -12 -900 -26 -1057 -18 l-95 5 -2 505 -2 505 -253 0 -253 0 -3 -305 -2 -305 462 -462 c255 -255 458 -463 453 -463 -6 0 -212 203 -460 450 l-450 450 -3 -127 -3 -127 328 -328 328 -329 500 4 c275 3 518 8 540 11 54 9 177 44 223 63 20 9 64 26 97 38 145 53 358 222 460 367 60 84 160 271 170 318 3 14 14 59 26 100 112 406 33 883 -196 1188 -86 114 -206 222 -320 288 -27 15 -55 33 -62 40 -6 6 -24 16 -40 21 -15 6 -68 27 -118 46 -90 34 -189 61 -275 73 -25 4 -776 9 -1670 11 l-1625 4 265 -266z m430 -140 c13 -14 21 -25 18 -25 -2 0 -15 11 -28 25 -13 14 -21 25 -18 25 2 0 15 -11 28 -25z M250 3322 c0 -4 353 -360 785 -792 432 -432 785 -779 785 -772 0 8 -52 93 -116 190 -63 97 -171 263 -238 367 -68 105 -135 204 -149 220 -13 17 -24 32 -24 35 0 7 -99 160 -316 488 l-180 272 -273 0 c-151 0 -274 -3 -274 -8z M2884 3222 c-102 -153 -164 -251 -164 -260 0 -4 -12 -20 -26 -37 -14 -16 -55 -77 -90 -135 -35 -58 -73 -116 -83 -130 -10 -14 -44 -68 -76 -120 -32 -52 -81 -131 -110 -175 -29 -44 -76 -118 -105 -165 -29 -47 -78 -124 -109 -171 -160 -247 -211 -328 -216 -341 -7 -17 348 -378 372 -378 7 0 17 10 22 23 5 12 27 47 50 77 l41 54 -28 31 -27 30 27 -24 c16 -14 30 -23 31 -20 2 2 34 51 70 109 36 58 74 116 84 130 11 14 50 76 89 138 38 62 76 124 84 137 8 12 37 58 64 101 27 44 77 122 111 174 34 52 69 108 79 124 14 22 20 26 27 15 5 -8 9 -382 9 -831 l0 -818 255 0 255 0 0 1285 0 1285 -282 0 -283 0 -71 -108z M10490 3323 c-245 -39 -485 -142 -633 -273 l-54 -46 188 -189 189 -189 27 25 c16 14 51 38 78 54 28 15 52 29 54 31 2 2 -2 12 -10 21 -13 17 -13 17 7 1 19 -17 23 -16 84 10 l65 27 500 0 500 0 80 -27 c219 -74 378 -245 434 -465 44 -171 46 -365 7 -496 -8 -26 -12 -47 -10 -47 10 0 -49 -116 -78 -153 -50 -67 -119 -136 -168 -170 -25 -17 -51 -37 -57 -43 -7 -7 -50 -27 -95 -44 -46 -18 -86 -35 -90 -39 -4 -3 84 -98 196 -210 l203 -203 40 21 c107 54 295 220 360 316 15 22 38 54 52 70 13 17 42 68 63 115 21 47 43 94 48 105 104 217 120 716 32 976 -81 238 -189 395 -380 555 -71 60 -221 151 -260 159 -11 2 -33 10 -49 18 -34 17 -133 49 -228 73 -62 16 -125 19 -570 20 -275 1 -511 -1 -525 -3z M250 3158 l0 -130 951 -947 c523 -520 957 -947 963 -948 6 -2 33 32 59 74 l48 77 -760 755 c-417 416 -872 867 -1010 1003 l-251 247 0 -131z M3970 3188 l0 -108 135 -135 135 -135 100 0 c55 0 100 3 100 8 0 4 -106 113 -235 242 l-235 235 0 -107z M250 2864 l0 -122 258 -255 257 -256 5 87 c3 48 9 87 14 87 5 0 32 -37 60 -81 28 -45 65 -103 81 -129 17 -26 59 -96 95 -154 36 -58 74 -120 85 -137 11 -17 230 -238 486 -492 l466 -461 47 73 46 74 -857 853 c-472 470 -900 895 -950 945 l-93 90 0 -122z M3970 2900 l0 -90 87 0 86 0 -19 22 c-10 13 -49 53 -86 91 l-68 68 0 -91z M9728 2926 c-32 -36 -58 -68 -58 -73 0 -4 85 -93 189 -197 l188 -188 19 27 c11 15 38 49 61 74 l42 47 -187 187 c-103 103 -189 187 -192 187 -3 0 -31 -29 -62 -64z M9619 2777 c-15 -23 -34 -56 -42 -73 l-16 -30 210 -210 c123 -123 209 -202 209 -192 0 10 14 52 31 95 l30 77 -188 188 c-103 103 -192 188 -198 188 -5 0 -22 -19 -36 -43z M250 2570 l0 -115 253 -253 c138 -138 255 -252 260 -252 4 0 7 48 7 108 l0 107 -260 260 -260 260 0 -115z M9529 2603 c-6 -16 -20 -53 -31 -83 l-19 -55 232 -228 c128 -125 234 -226 236 -224 1 2 7 48 13 103 l10 99 -207 207 c-115 114 -211 208 -216 208 -4 0 -12 -12 -18 -27z M9452 2353 c-6 -27 -14 -65 -18 -87 l-7 -38 312 -311 c171 -170 314 -308 317 -304 3 3 -3 23 -15 44 -39 71 -59 129 -66 192 l-7 63 -246 244 c-135 134 -248 244 -252 244 -3 0 -11 -21 -18 -47z M250 2280 l0 -105 260 -260 260 -260 0 105 0 105 -260 260 -260 260 0 -105z M3977 2313 c-4 -3 -7 -25 -7 -47 0 -40 5 -46 255 -296 211 -211 255 -251 255 -230 0 36 11 48 45 52 29 3 19 15 -230 266 -258 261 -288 285 -318 255z M4170 2312 c0 -4 116 -123 258 -265 l258 -258 88 3 88 3 -264 262 -263 263 -82 0 c-46 0 -83 -3 -83 -8z M4450 2312 c0 -4 116 -123 258 -265 l257 -257 98 0 c53 0 97 4 97 8 0 4 -117 123 -259 265 l-259 257 -96 0 c-53 0 -96 -3 -96 -8z M4751 2303 c8 -9 124 -128 258 -265 l244 -248 103 0 c57 0 104 3 104 8 0 4 -116 123 -258 265 l-257 257 -104 0 c-96 0 -102 -1 -90 -17z M5032 2311 c2 -5 117 -125 256 -265 l253 -256 117 0 117 0 -265 265 -265 265 -108 0 c-62 0 -107 -4 -105 -9z M5310 2312 c0 -4 116 -123 258 -265 l257 -257 118 0 c64 0 117 3 117 8 0 4 -116 123 -258 265 l-257 257 -118 0 c-64 0 -117 -3 -117 -8z M5602 2303 c8 -10 116 -119 241 -243 l227 -224 0 129 0 130 -113 113 -112 112 -128 0 c-120 0 -127 -1 -115 -17z M5880 2313 c0 -11 173 -183 183 -183 4 0 6 42 5 93 l-3 92 -92 3 c-51 1 -93 -1 -93 -5z M9430 2044 l0 -99 588 -588 588 -588 102 -6 c56 -3 102 -4 102 -1 0 3 -1323 1327 -1376 1377 -2 2 -4 -40 -4 -95z M250 1991 l0 -93 251 -256 c138 -142 255 -258 260 -260 5 -2 9 38 9 90 l0 93 -260 260 -260 260 0 -94z M3970 2010 l0 -75 252 -252 c139 -139 253 -253 255 -253 2 0 3 33 3 73 l0 72 -255 255 -255 255 0 -75z M9444 1787 c3 -12 10 -47 17 -76 20 -96 33 -111 426 -503 l388 -387 60 -15 c74 -19 134 -26 140 -16 6 9 -1010 1020 -1025 1020 -8 0 -10 -8 -6 -23z M250 1690 l0 -95 258 -255 257 -255 3 90 3 89 -261 261 -260 260 0 -95z M3970 1719 l0 -65 440 -439 440 -440 60 -3 c33 -2 60 1 60 5 0 4 -225 233 -500 508 l-500 500 0 -66z M1250 1682 c0 -8 10 -28 23 -45 22 -30 133 -209 252 -404 49 -80 93 -131 235 -275 96 -98 177 -178 181 -178 3 0 25 30 49 66 l43 66 -392 392 c-215 215 -391 385 -391 378z M250 1400 l0 -85 260 -260 260 -260 0 85 0 85 -260 260 -260 260 0 -85z M3972 1410 l3 -65 291 -288 292 -288 56 3 56 3 -350 350 -351 350 3 -65z M10270 1401 c0 -6 142 -153 315 -326 l315 -315 105 0 c58 0 105 4 105 8 0 4 -121 128 -269 274 l-268 266 -58 7 c-61 8 -156 42 -212 77 -19 11 -33 15 -33 9z M6480 1260 l1 -125 113 -115 c63 -63 145 -146 183 -183 l69 -68 122 3 122 3 -305 305 -305 305 0 -125z M9610 1346 c0 -54 224 -295 350 -377 34 -22 64 -38 66 -37 2 2 -91 98 -206 213 -116 116 -210 206 -210 201z M11385 1300 c-27 -5 -71 -9 -97 -9 -27 -1 -48 -4 -48 -8 0 -5 104 -111 230 -236 199 -198 233 -227 252 -221 13 3 56 20 96 37 l73 30 -208 209 c-142 142 -214 208 -228 207 -11 -1 -42 -5 -70 -9z M4620 1289 c0 -6 42 -52 93 -103 51 -50 168 -164 259 -253 l165 -163 69 0 69 0 -265 265 -265 265 -62 0 c-39 0 -63 -4 -63 -11z M5160 1035 l265 -265 80 1 80 0 -270 265 -270 264 -75 0 -75 0 265 -265z M5190 1292 c0 -4 116 -123 258 -265 l257 -257 88 0 c48 0 87 2 87 5 0 6 -138 144 -382 383 l-145 142 -82 0 c-44 0 -81 -3 -81 -8z M5480 1288 c0 -7 115 -126 255 -266 l255 -253 43 3 42 3 3 54 3 55 -208 208 -208 208 -92 0 c-66 0 -93 -4 -93 -12z M5760 1292 c0 -9 303 -312 313 -312 4 0 7 46 7 102 l0 102 -57 58 -57 58 -103 0 c-57 0 -103 -3 -103 -8z M6040 1291 c0 -13 29 -35 37 -28 7 8 -15 37 -28 37 -5 0 -9 -4 -9 -9z M10930 1024 l265 -266 99 6 c54 3 101 8 104 11 4 3 -108 120 -248 260 l-255 255 -115 0 -115 0 265 -266z M11200 1034 l255 -255 70 5 c39 3 88 11 109 17 l39 11 -239 239 -239 239 -125 0 -125 0 255 -256z M3970 1124 l0 -69 143 -143 143 -143 67 3 66 3 -210 209 -209 209 0 -69z M250 1107 l0 -72 138 -138 138 -138 72 3 72 3 -210 207 -210 207 0 -72z M6480 960 l0 -110 36 -40 36 -40 122 0 121 0 -150 150 c-82 83 -153 150 -157 150 -5 0 -8 -49 -8 -110z M3970 835 l0 -65 67 0 67 0 -64 65 c-35 36 -66 65 -67 65 -2 0 -3 -29 -3 -65z M1800 814 c32 -45 55 -62 67 -50 7 7 -76 96 -90 96 -4 0 6 -21 23 -46z"/> </g></g></defs></svg>
-<div id="app"><p class="mu" style="padding:16px">Загружаю прототип…</p></div>
+<div id="app"><p class="mu" style="padding:16px">Загрузка…</p></div>
 <input type="file" id="fup" accept="image/*,application/pdf" multiple hidden tabindex="-1" aria-hidden="true">
 <script src="data.js"></script>
 <script>
@@ -430,8 +1032,14 @@ const NAV={admin:[['grid','График'],['shop','Цех'],['access','Клие�
 const HOME={admin:'grid',shift:'grid',master:'grid',client:'mine'};
 const COLS0={admin:'x',shift:'a',master:'z',client:'x'};
 const W=['lenta','kolos','pole','zerno','niva','sever','luch','klen','grad','rosa'];
-const I={search:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/>',flag:'<path d="M5 21V4"/><path d="M5 4h12l-2.5 4.5L17 13H5"/>',left:'<path d="M19 12H5"/><path d="M11 18l-6-6 6-6"/>',right:'<path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>',out:'<path d="M14 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2"/><path d="M10 12h11"/><path d="M18 9l3 3-3 3"/>',plus:'<path d="M12 5v14M5 12h14"/>',x:'<path d="M17 7L7 17M7 7l10 10"/>',chev:'<path d="M7 10l5 5 5-5"/>',filter:'<path d="M4 5h16l-6 7.5V18l-4 2v-7.5z"/>',alert:'<path d="M12 9v4M12 17h.01"/><path d="M10.3 4.2L2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/>',truck:'<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>',copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',phone:'<path d="M5 4h3.5l2 5-2.4 1.5a11 11 0 0 0 5.4 5.4L15 13.5l5 2V19a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/>',ok:'<circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/>',spark:'<path d="M12 3l1.9 4.6 4.6 1.9-4.6 1.9L12 16l-1.9-4.6-4.6-1.9 4.6-1.9z"/>',doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',clip:'<path d="M21.4 11.1l-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/>',cols:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9.5 4v16M14.5 4v16"/>',sliders:'<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',msg:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/>',edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/>',ban:'<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>',eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',screens:'<rect x="2" y="4" width="13" height="12" rx="2"/><rect x="17" y="7" width="5" height="11" rx="1.5"/><path d="M6 20h5"/>',dl:'<path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/>',undo:'<path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'};
+const I={more:'<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>',list:'<path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/>',grid:'<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',search:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/>',flag:'<path d="M5 21V4"/><path d="M5 4h12l-2.5 4.5L17 13H5"/>',left:'<path d="M19 12H5"/><path d="M11 18l-6-6 6-6"/>',right:'<path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>',out:'<path d="M14 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2"/><path d="M10 12h11"/><path d="M18 9l3 3-3 3"/>',plus:'<path d="M12 5v14M5 12h14"/>',x:'<path d="M17 7L7 17M7 7l10 10"/>',chev:'<path d="M7 10l5 5 5-5"/>',filter:'<path d="M4 5h16l-6 7.5V18l-4 2v-7.5z"/>',alert:'<path d="M12 9v4M12 17h.01"/><path d="M10.3 4.2L2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/>',truck:'<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>',copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',phone:'<path d="M5 4h3.5l2 5-2.4 1.5a11 11 0 0 0 5.4 5.4L15 13.5l5 2V19a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/>',ok:'<circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/>',spark:'<path d="M12 3l1.9 4.6 4.6 1.9-4.6 1.9L12 16l-1.9-4.6-4.6-1.9 4.6-1.9z"/>',doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',clip:'<path d="M21.4 11.1l-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/>',cols:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9.5 4v16M14.5 4v16"/>',sliders:'<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',msg:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/>',edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/>',ban:'<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>',eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',screens:'<rect x="2" y="4" width="13" height="12" rx="2"/><rect x="17" y="7" width="5" height="11" rx="1.5"/><path d="M6 20h5"/>',dl:'<path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/>',undo:'<path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'};
 const ic=(n,s=16)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]}</svg>`;
+I.moon='<path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/>';I.mon='<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>';
+let THM=(()=>{try{return localStorage.getItem('kd-erp-theme')||'auto'}catch(e){return 'auto'}})();
+const applyThm=()=>{const r=document.documentElement;if(THM==='light'||THM==='dark')r.dataset.theme=THM;else delete r.dataset.theme};applyThm();
+const THL={light:'Светлая тема',dark:'Тёмная тема',auto:'Тема как на компьютере'};
+const thmSw=()=>`<div class="thw" role="group" aria-label="Тема оформления">${[['light','sun'],['dark','moon'],['auto','mon']].map(([k,n])=>`<button type="button" data-thm="${k}" class="${THM===k?'on':''}" aria-pressed="${THM===k}" aria-label="${THL[k]}" title="${THL[k]}">${ic(n,18)}</button>`).join('')}</div>`;
+const thmClose=()=>app.querySelectorAll('.thw.open').forEach(w=>w.classList.remove('open'));
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ru=(a,b)=>String(a).localeCompare(String(b),'ru',{numeric:true});
 const uniq=a=>[...new Set(a)];
@@ -445,7 +1053,7 @@ function cRoute(p){return p.rp>0?CR:CRN}
 const prod=p=>p.st<5&&!p.cx;
 const over=p=>prod(p)&&!!p.plan&&p.plan<TODAY;
 const prio=p=>!!p.pri||!!(p.rq&&p.rq.st==='ok');
-const rqNew=p=>!!(p.rq&&p.rq.st==='new');
+const rqNew=p=>!!(p.rq&&p.rq.st==='new'&&prod(p));
 const unans=p=>p.msgs.length>0&&p.msgs[p.msgs.length-1].from==='client';
 const isFlash=p=>!!p.flash&&Date.now()-p.flash<15000;
 /* цвет строки как в Excel: зелёный и красный — по стадии, голубой — отметка офиса */
@@ -547,6 +1155,8 @@ const C=[
 {k:'di',t:'ø прутка (с резиной)',w:108,g:'z',v:p=>p.di||'—',mono:1},
 {k:'al',t:'Чередование',w:260,g:'z',v:p=>p.al||'—'}
 ];
+/* шрифт таблицы 15 px (08.10) — колонки шире пропорционально */
+C.forEach(c=>{if(c.w)c.w=Math.round(c.w*(c.k==='nm'||c.k==='art'?1.3:1.1))});
 const col=k=>C.find(c=>c.k===k);
 const LBL={inv:'№ счёта',cl:'Клиент',num:'Номер клиента',br:'Бренд с/х',art:'Артикул',nm:'Наименование',nw:'Новый',rp:'Восстановить',plan:'План',sh:'Шаг',ty:'Тип',be:'Кол-во ремней',ln:'Длина',jn:'Соединение',wd:'Ширина',pl:'Пластина',rv:'ø заклёпки',fs:'Крепеж ср. ремня',ba:'Кол-во прутков',di:'ø прутка',al:'Чередование'};
 const ZK=['sh','ty','be','ln','jn','wd','pl','rv','fs','ba','di','al'];
@@ -565,14 +1175,15 @@ function flagCell(p){let h='';if(prio(p))h+=`<span class="fl" title="Приор�
 
 /* ---------- состояние; в режиме показа у каждой половины своё ---------- */
 const TDK='kd-erp-today-collapsed';let TD0=false;try{TD0=localStorage.getItem(TDK)==='1'}catch(e){}
-const fresh=()=>({tdc:TD0,u:null,view:'login',q:'',hid:[],cpop:false,ex:{},nfo:false,nf:null,nfx:'',atc:null,chip:'all',f:{},fp:null,fsq:'',sort:null,mf:false,lim:50,d:null,from:'grid',toast:null,of:false,o:null,oerr:'',ed:false,cf:null,cxo:false,cxr:'',cxe:'',cdd:null,rep:'',acc:null,aerr:'',aph:'',anm:'',acl:'',acq:'',aall:false,rc:null,cp:'',ct:'work',sf:'',lph:'',lpw:'',lerr:'',pwv:false,pol:false,cerr:'',hl:null,top:false,sy:0,sy0:0,as:null,qs:null,qt:'',qerr:'',rqf:null,rqd:''});
+let SV0='l';try{SV0=localStorage.getItem('kd-erp-shopview')==='c'?'c':'l'}catch(e){}
+const fresh=()=>({sv:SV0,tdc:TD0,u:null,view:'login',q:'',hid:[],cpop:false,ex:{},nfo:false,nf:null,nfx:'',atc:null,chip:'all',f:{},fp:null,fsq:'',sort:null,mf:false,lim:50,d:null,from:'grid',toast:null,of:false,o:null,oerr:'',ed:false,cf:null,cxo:false,cxr:'',cxe:'',cdd:null,rep:'',acc:null,aerr:'',aph:'',anm:'',acl:'',acq:'',aall:false,rc:null,cp:'',ct:'work',sf:'',lph:'',lpw:'',lerr:'',pwv:false,pol:false,cerr:'',hl:null,top:false,sy:0,sy0:0,as:null,qs:null,qt:'',qerr:'',rqf:null,rqd:''});
 let S=fresh(),DUO=null,CUR=null;
 const PEND={},UNDO={};
 let DL=null,TK=null;
 const app=document.getElementById('app');
 function pick(el){if(!DUO){CUR=null;return}const pn=el&&el.closest?el.closest('[data-pane]'):null;CUR=pn?pn.dataset.pane:'L';S=DUO[CUR]}
 const root=()=>DUO&&CUR?app.querySelector('[data-pane="'+CUR+'"]'):app;
-const $=id=>{const r=root();return r?r.querySelector('#'+id):null};
+let INACT=false;const USED=new Set();const $=id=>{if(INACT)USED.add(id);const r=root();return r?r.querySelector('#'+id):null};
 const who=()=>S.u.role==='client'?S.u.cl:S.u.nm;
 const ev=x=>({d:TODAY,tm:hm(),w:who(),r:S.u.role,x});
 function touch(p){if(S.u.role!=='admin')p.flash=Date.now();sync();tick()}
@@ -581,26 +1192,39 @@ function touch(p){if(S.u.role!=='admin')p.flash=Date.now();sync();tick()}
 let BC=null;const TAB=Math.random().toString(36).slice(2);
 /* новая вкладка спрашивает текущее состояние; отвечают только вкладки, где уже что-то меняли, — иначе свежая вкладка затёрла бы чужие правки */
 let LIVE=false;
-try{BC=new BroadcastChannel('kd-erp-prototype');BC.onmessage=e=>{const m=e.data;if(!m||m.from===TAB)return;if(m.hello){if(LIVE)sync();return}if(!Array.isArray(m.P))return;LIVE=true;P.splice(0,P.length,...m.P);U.splice(0,U.length,...m.U);if(Array.isArray(m.CL)){CL.clear();m.CL.forEach(([k,v])=>CL.set(k,v))}render()};BC.postMessage({from:TAB,hello:1})}catch(e){BC=null}
+try{BC=new BroadcastChannel('kd-erp-prototype');BC.onmessage=e=>{const m=e.data;if(!m||m.from===TAB)return;if(m.hello){if(LIVE)sync();return}if(!Array.isArray(m.P))return;LIVE=true;P.splice(0,P.length,...m.P);U.splice(0,U.length,...m.U);if(Array.isArray(m.CL)){CL.clear();m.CL.forEach(([k,v])=>CL.set(k,v))}(DUO?[DUO.L,DUO.R]:[S]).forEach(s=>{if(s.u){const nu=U.find(x=>x.ph===s.u.ph);if(nu)s.u=nu}});renderSoft()};BC.postMessage({from:TAB,hello:1})}catch(e){BC=null}
+const NEED={next:'stage',prev:'stage',setst:'stage',snext:'stage',undo:'stage',cfok:()=>S.cf&&S.cf.to===6?'ship':'stage',ship:'ship',
+  neworder:'edit',osave:'edit',edit:'edit',cxo:'edit',cxok:'edit',uncx:'edit',ie:'edit',iesave:'edit',pri:'edit',blue:'edit',cdsave:'edit',
+  attup:'att',atb:'att',atp:'att',atd:'att',atundo:'att',rqok:'cl',rqno:'cl',rqoff:'cl',reply:'cl',
+  grant:'acc',reset:'acc',resetok:'acc',stnew:'acc',stedit:'acc',stsave:'acc',csave:'acc',asopen:'acc',aall:'acc',nav:v=>v==='access'?'acc':null};
+function denied(a,v){if(!S.u)return null;const n=NEED[a];const k=typeof n==='function'?n(v):n;return k&&!can_(k)?k:null}
+const ONCE=new Set(['next','prev','setst','ship','snext','cfok','undo','atundo','osave','neworder','rqok','rqno','rqoff','uncx','cxok','grant','reset','resetok','stsave','comment','reply','csave','cdsave','nfsave','nfquick','qsend','rqsend','pickup','iesave']);
+let PD=false,COMP=false,RQ=false;function renderSoft(){if(PD||COMP){RQ=true;return}render()}
+function flushSoft(){if(RQ&&!PD&&!COMP){RQ=false;render()}}let ONCE_T=0;
 function sync(){LIVE=true;if(!BC)return;try{BC.postMessage({from:TAB,P,U,CL:[...CL]})}catch(e){}}
-function tick(){clearTimeout(TK);const now=Date.now();const ts=Object.values(PEND).concat(P.filter(isFlash).map(p=>p.flash+15000)).filter(t=>t>now);if(!ts.length)return;TK=setTimeout(()=>{const n=Date.now();for(const k in PEND)if(PEND[k]<=n)delete PEND[k];render();tick()},Math.min(...ts)-now+60)}
+function tick(){clearTimeout(TK);const now=Date.now();const ts=Object.values(PEND).concat(P.filter(isFlash).map(p=>p.flash+15000)).filter(t=>t>now);if(!ts.length)return;TK=setTimeout(()=>{const n=Date.now();for(const k in PEND)if(PEND[k]<=n)delete PEND[k];renderSoft();tick()},Math.min(...ts)-now+60)}
 
 /* ---------- стадии ---------- */
 function setStage(p,to){if(!p||to<0||to>6||to===p.st)return false;
-  UNDO[p.id]={st:p.st,rd:p.rd,sd:p.sd,sdx:p.sdx,sdt:p.sdt.slice()};const from=p.st;p.st=to;
+  const u={st:p.st,rd:p.rd,sd:p.sd,sdx:p.sdx,sdt:p.sdt.slice(),to,w:who()};UNDO[p.id]=u;const from=p.st;p.st=to;
   if(to>from){for(let i=from+1;i<=to;i++)p.sdt[i]=TODAY}else{for(let i=to+1;i<7;i++)p.sdt[i]=''}
   if(to>=5){if(!p.rd)p.rd=TODAY}else p.rd='';
   if(to===6)p.sd=TODAY;else{p.sd='';p.sdx=''}
-  p.h.push(ev(route(p)[from]+' → '+route(p)[to]));mailLog(p,from,to);touch(p);return true}
+  p.h.push(ev(route(p)[from]+' → '+route(p)[to]));const hn=p.h.length;mailLog(p,from,to);if(p.h.length>hn)u.mail=p.h[p.h.length-1];touch(p);return true}
 /* письма клиенту: в прототипе ничего не отправляется — только запись в журнал позиции */
 const EMRE=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const NFM={ready:'Когда транспортёр готов к отгрузке',all:'О каждом этапе',off:'Не присылать'};
+const NFM={ready:'Когда транспортёр готов к отгрузке',all:'О каждом этапе',pick:'Только выбранные этапы',off:'Не присылать'};
+/* этапы для писем — общие названия для обеих цепочек стадий (с разборкой и без) */
+const NFST=[[1,'Взят в работу'],[2,'Материал или разборка'],[3,'Подготовка к сборке'],[4,'Сборка'],[5,'Готов к отгрузке'],[6,'Отгружен']];
+const nfStages=r=>r.nf==='pick'?(r.ns||[]):r.nf==='all'?[1,2,3,4,5,6]:r.nf==='ready'?[5]:[];
 const mTit=p=>p.num?'Транспортёр № '+p.num:'Транспортёр «'+p.nm+'»';
 const mWhat=(p,to)=>to===5?'готов к отгрузке':to===6?'отгружен':'перешёл в стадию „'+cRoute(p)[to]+'“';
-function mailLog(p,from,to){const r=CL.get(p.cl);if(!r||!r.em||r.nf==='off'||p.cx||to<=from)return;const rdy=from<5&&to>=5;if(r.nf!=='all'&&!rdy)return;
-  p.h.push({d:TODAY,tm:hm(),w:'система',r:'sys',x:`Письмо клиенту: «${mTit(p)} ${mWhat(p,r.nf==='all'?to:5)}» → ${r.em}`})}
-function undoStage(id){const u=UNDO[id],p=byId(id);if(!u||!p)return;const from=p.st;Object.assign(p,{st:u.st,rd:u.rd,sd:u.sd,sdx:u.sdx,sdt:u.sdt});delete UNDO[id];delete PEND[id];p.h.push(ev('отменено: '+route(p)[from]+' → '+route(p)[p.st]));touch(p)}
-function askStage(p,to){if(to===p.st)return render();if(to===5||to-p.st>1){S.cf={id:p.id,to};return render()}doStage(p,to)}
+function mailLog(p,from,to){const r=CL.get(p.cl);if(!r||!r.em||!r.ok||r.nf==='off'||p.cx||to<=from)return;if(Array.isArray(r.np)&&!r.np.includes(p.id))return;
+  const ss=nfStages(r);let hit=0;for(let i=to;i>from;i--)if(ss.includes(i)){hit=i;break}if(!hit)return;
+  p.h.push({d:TODAY,tm:hm(),w:'система',r:'sys',x:`Письмо клиенту: «${mTit(p)} ${mWhat(p,hit)}» → ${r.em}`})}
+function undoStage(id){const u=UNDO[id],p=byId(id);if(!u||!p)return false;if(p.st!==u.to||u.w!==who()){delete UNDO[id];delete PEND[id];return false}
+  if(u.mail){const i=p.h.findIndex(x=>x.x===u.mail.x&&x.tm===u.mail.tm&&x.d===u.mail.d);if(i>=0)p.h.splice(i,1)}const from=p.st;Object.assign(p,{st:u.st,rd:u.rd,sd:u.sd,sdx:u.sdx,sdt:u.sdt});delete UNDO[id];delete PEND[id];p.h.push(ev('отменено: '+route(p)[from]+' → '+route(p)[p.st]));touch(p);return true}
+function askStage(p,to){if(to===p.st)return render();if(to===5||to-p.st>1||(to<p.st&&p.st>=5)){S.cf={id:p.id,to,from:p.st};return render()}doStage(p,to)}
 function doStage(p,to){const from=p.st;if(!setStage(p,to))return render();S.cf=null;S.toast={m:`${tag(p)}: ${route(p)[from]} → ${route(p)[to]}`+(S.u.role==='shift'?'. Офис и клиент видят без звонка':''),u:p.id};render()}
 
 /* ---------- выборка графика ---------- */
@@ -613,7 +1237,7 @@ function fvSort(c){if(c.dt)return (a,b)=>{const k=v=>/^\d\d\.\d{4}$/.test(v)?v.s
 
 /* ---------- вход ---------- */
 function vLogin(){const cyr=/[а-яё]/i.test(S.lpw);return `<div class="login"><div class="card pad lc">
-<div class="brand"><div style="min-width:0">${logo(32)}<div class="sm" style="margin-top:6px">Статус заказов и график производства</div></div><span class="tag">прототип</span></div>
+<div class="brand"><div style="min-width:0">${logo(32)}<div class="sm" style="margin-top:6px">Статус заказов и график производства</div></div></div>
 <form id="lf" novalidate>
 <label class="lb" for="lph">Телефон</label><input id="lph" type="tel" inputmode="tel" autocomplete="username" value="${esc(S.lph)}" placeholder="8 900 123-45-67">
 <label class="lb" for="lpw">Пароль из сообщения КД-Групп</label><div class="pw"><input id="lpw" type="${S.pwv?'text':'password'}" autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false" value="${esc(S.lpw)}" placeholder="слово-1234"><button type="button" data-a="pwv" aria-label="${S.pwv?'Скрыть пароль':'Показать пароль'}">${S.pwv?'Скрыть':'Показать'}</button></div>
@@ -627,18 +1251,25 @@ ${S.pol?`<div class="polb">Здесь будет политика обработ
 <div class="demo"><div class="sm">Демо-вход по ролям</div><div class="dg">${[0,1,2,3].map(i=>`<button data-a="demo" data-i="${i}">${RL[U[i].role]}</button>`).join('')}
 <button data-a="duo" data-v="shift" class="duo-b">${ic('screens')} Показ: офис и цех на одном экране</button><button data-a="duo" data-v="client" class="duo-b">${ic('screens')} Показ: офис и клиент на одном экране</button></div></div>
 </div></div>`}
-function bar(){const u=S.u,c=u.role==='client';return `<header class="top"><div class="brand"><div>${logo(22)}<div class="sm bt">${c?'статус заказа':'график производства'} · прототип</div></div></div>${NAV[u.role].length>1?`<nav class="nav" aria-label="Разделы">${NAV[u.role].map(([k,t])=>`<button data-a="nav" data-v="${k}" class="tab${S.view===k||(S.view==='detail'&&S.from===k)||(S.view==='client'&&S.cfrom&&S.cfrom.view===k)?' on':''}">${t}</button>`).join('')}</nav>`:''}<div class="who"><div class="b1">${esc(c?u.cl:u.nm)}</div><div class="sm">${c?esc(u.nm)+' · клиент':RL[u.role]} · <span class="data">${fmtPh(u.ph)}</span></div></div><button data-a="out" class="ghost" aria-label="Выйти" title="Выйти">${ic('out',18)}</button></header>`}
-function toastH(){const t=S.toast;return `<div class="toast${S.view==='shop'?' stk':''}" role="status"><span>${esc(t.m)}</span><span class="tb">${t.u?`<button data-a="undo" data-v="${t.u}" class="sm-btn">${ic('undo',14)} Отменить</button>`:''}${t.ua?`<button data-a="atundo" class="sm-btn">${ic('undo',14)} Вернуть</button>`:''}${t.sa?'<button data-a="showall" class="sm-btn">Показать</button>':''}<button data-a="tx" class="sm-btn ghost" aria-label="Скрыть">${ic('x',14)}</button></span></div>`}
+function bar(){const u=S.u,c=u.role==='client';const role=c?esc(u.cl):RL[u.role];const ini=esc(u.nm.split(/\s+/).map(w=>w[0]).join('').slice(0,2));
+const nb=k=>k==='access'?P.filter(p=>rqNew(p)||unans(p)).length:0;
+const tab=([k,t])=>{const b=nb(k);const on=S.view===k||(S.view==='detail'&&S.from===k)||(S.view==='client'&&S.cfrom&&S.cfrom.view===k);return `<button data-a="nav" data-v="${k}" class="tab${on?' on':''}"${on?' aria-current="page"':''}>${t.replace(' и доступы','<span class="tlg"> и доступы</span>')}${b?`<span class="tbn" title="Просьбы и вопросы клиентов без ответа">${b}</span>`:''}</button>`};
+return `<header class="top"><div class="brand"><span class="bmk" aria-hidden="true"></span><div>${logo(22)}<div class="sm bt">${c?'статус заказа':'график производства'}</div></div></div>${NAV[u.role].length>1?`<nav class="nav" aria-label="Разделы">${NAV[u.role].map(tab).join('')}</nav>`:''}${thmSw()}<div class="umw"><button data-a="um" class="ucap" aria-expanded="${!!S.um}" aria-haspopup="menu" aria-label="${esc(u.nm)}, меню"><span class="ava" aria-hidden="true">${ini}</span><span class="who"><span class="b1">${esc(u.nm)}</span><span class="sm">${role}</span></span>${ic('chev',16)}</button>${S.um?`<div class="card umenu" role="menu"><div class="umh"><b>${esc(u.nm)}</b><span class="sm">${role}</span><span class="sm data">${fmtPh(u.ph)}</span></div><button data-a="out" role="menuitem" class="umo">${ic('out',18)} Выйти</button></div>`:''}</div></header>`}
+function toastH(){const t=S.toast;return `<div class="toast stk" role="status"><span>${esc(t.m)}</span><span class="tb">${t.u?`<button data-a="undo" data-v="${t.u}" class="sm-btn">${ic('undo',14)} Отменить</button>`:''}${t.ua?`<button data-a="atundo" class="sm-btn">${ic('undo',14)} Вернуть</button>`:''}${t.sa?'<button data-a="showall" class="sm-btn">Показать</button>':''}<button data-a="tx" class="sm-btn ghost" aria-label="Скрыть">${ic('x',14)}</button></span></div>`}
 
 /* ---------- «Сегодня из Брянска» ---------- */
 function vToday(){const evs=[];P.forEach(p=>p.h.forEach(h=>{if(h.d===TODAY&&h.r==='shift')evs.push({p,h})}));evs.sort((a,b)=>ru(b.h.tm,a.h.tm));
 const n=f=>P.filter(f).length;const rdyToday=n(p=>p.st===5&&p.sdt[5]===TODAY&&!p.cx);
-const k=(v,ch,label,cls)=>`<button data-a="chip" data-v="${ch}" class="${cls||''}"><b>${v}</b>${label}</button>`;
-const tg=`<button data-a="tdc" class="ghost sm-btn tdt" aria-expanded="${!S.tdc}">${S.tdc?'Развернуть':'Свернуть'} ${ic('chev',14)}</button>`;
-if(S.tdc)return `<section class="card today col" aria-label="Сегодня из Брянска"><div class="th"><span class="h3">${ic('sun')} Сегодня из Брянска</span><span class="sm">отметок цеха ${evs.length} · готово ${rdyToday} · просрочено ${n(over)} · просьбы ${n(rqNew)} · вопросы ${n(unans)}</span>${tg}</div></section>`;
-return `<section class="card today" aria-label="Сегодня из Брянска"><div class="th"><span class="h3">${ic('sun')} Сегодня из Брянска</span><span class="sm">${fd(TODAY)} · отметки руководителя производства, без звонков</span>${tg}</div>
-<div class="tl">${evs.slice(0,5).map(({p,h})=>`<button data-a="open" data-v="${p.id}"><span class="tm">${h.tm}</span><span>${esc(tag(p))} · <b>${esc(h.x)}</b> <span class="sm">· ${esc(h.w)}</span>${isFlash(p)&&h===p.h[p.h.length-1]?' <span class="new">только что</span>':''}</span></button>`).join('')||'<div class="sm">Отметок из цеха сегодня пока нет. Они появятся здесь сами, когда руководитель производства нажмёт «Дальше».</div>'}${evs.length>5?`<button data-a="chip" data-v="today" class="sm">и ещё ${evs.length-5} — показать все изменения сегодня</button>`:''}</div>
-<div class="kpis">${k(rdyToday,'ready','готово сегодня')}${k(n(over),'over','просрочено по плану','x')}${k(n(rqNew),'rq','просьбы клиентов ждут решения','w')}${k(n(unans),'msg','вопросы клиентов без ответа')}</div></section>`}
+const k=(v,ch,label,cls)=>`<button data-a="chip" data-v="${ch}" class="${cls||''}${S.chip===ch?' on':''}"${v?'':' data-z="1"'}><b>${v}</b><span>${label}</span>${ic('right',16)}</button>`;
+const tg=`<button data-a="tdc" class="ghost sm-btn tdt" aria-expanded="${!S.tdc}"><span class="tdl">${S.tdc?'Развернуть':'Свернуть'}</span> ${ic('chev',14)}</button>`;
+if(S.tdc)return `<section class="card today col" aria-label="Сегодня из Брянска"><div class="th"><span class="h3">${ic('sun')} Сегодня из Брянска</span><span class="tdate">${fd(TODAY)}</span><span class="sm">отметок цеха <b>${evs.length}</b> · просрочено <b class="${n(over)?'x':''}">${n(over)}</b> · просьбы <b class="${n(rqNew)?'w':''}">${n(rqNew)}</b> · готово <b>${rdyToday}</b> · вопросы <b>${n(unans)}</b></span>${tg}</div></section>`;
+const stc=(p,x)=>{const i=route(p).indexOf(x);return i===5?'s5':i===6?'s6':i>=1?'sp':'s0'};
+const trn=(p,x)=>{const q=x.split(' → ');return q.length===2?`<span class="trn"><span>${esc(q[0])}</span>${ic('right',14)}<span class="pl ${stc(p,q[1])}">${esc(q[1])}</span></span>`:`<span class="trn">${esc(x)}</span>`};
+const row=({p,h})=>`<button class="ev" data-a="open" data-v="${p.id}"><span class="tm">${h.tm}</span><span class="evt">${esc(tag(p))}${isFlash(p)&&h===p.h[p.h.length-1]?' <span class="new">только что</span>':''}</span>${trn(p,h.x)}<span class="evw">${esc(h.w)}</span></button>`;
+const a=(v,ch,label,cls)=>`<button data-a="chip" data-v="${ch}" class="${v?cls:''}${S.chip===ch?' on':''}"${v?'':' data-z="1"'}><span class="cnt">${v}</span><span class="lbl">${label}</span>${ic('right',18)}</button>`;
+return `<section class="card today" aria-label="Сегодня из Брянска"><div class="th"><span class="h3">${ic('sun')} Сегодня из Брянска</span><span class="tdate">${fd(TODAY)}</span><span class="sm">по отметкам цеха, без звонков</span>${tg}</div>
+<div class="tl"><div class="tsh">Отметки цеха${evs.length?`<span class="n">${evs.length}</span>`:''}</div>${evs.slice(0,5).map(row).join('')||'<div class="tempty">Отметок из цеха сегодня пока нет. Они появятся здесь сами, когда руководитель производства нажмёт «Дальше».</div>'}${evs.length?`<button data-a="chip" data-v="today" class="tall">${evs.length>5?'И ещё '+(evs.length-5)+': все изменения за сегодня':'Все изменения за сегодня<span class="tlx"> в графике</span>'} ${ic('right',14)}</button>`:''}</div>
+<div class="tneed"><div class="tsh">Требует решения</div>${a(n(over),'over','просрочено по плану','x')}${a(n(rqNew),'rq','просьбы клиентов ждут решения','w')}${a(rdyToday,'ready','готово сегодня','g')}${a(n(unans),'msg','вопросы клиентов без ответа','b')}</div></section>`}
 
 /* ---------- график ---------- */
 function vGrid(){const role=S.u.role;const rs=sorted(rows());const cols=visCols();const w=cols.reduce((s,c)=>s+c.w,0);const nf=Object.keys(S.f).length;const n=f=>P.filter(f).length;
@@ -646,7 +1277,7 @@ const chipDefs=[['all','Все',P.length],['prod','В производстве',
 const steps=uniq(P.map(p=>p.sh||'—')).sort(ru);const shv=S.f.sh?[...S.f.sh]:null;
 const sums={qt:0,nw:0,rp:0};rs.forEach(p=>{sums.qt+=p.qt||0;sums.nw+=p.nw||0;sums.rp+=p.rp||0});
 let sumRow='',lead=0;cols.forEach(c=>{if(sums[c.k]==null&&!sumRow)lead++;else if(sums[c.k]!=null)sumRow+=`<th class="s">${sums[c.k]}</th>`;else sumRow+='<th></th>'});
-const sumHead=lead?`<th colspan="${lead}">Показано ${rs.length} из ${P.length}${excel()&&!S.sort?' · порядок строк как в Excel':''}${sums.qt!=null&&cols.some(c=>c.n)?' · итоги по видимым строкам':''}</th>`:'';
+const sumHead=lead?`<th colspan="${lead}">Показано <b class="data">${rs.length}</b> из ${P.length}${sumRow.includes('class="s"')?'<span class="sl">Итого</span>':''}</th>`:'';
 const lim=S.lim||50;
 return `${role!=='shift'?vToday():''}<div class="tools">
 <div class="search">${ic('search')}<input id="q" value="${esc(S.q)}" placeholder="Код или название клиента, номер, артикул, наименование, счёт" aria-label="Поиск по графику"></div>
@@ -657,7 +1288,7 @@ ${colVis('sh')?`<select id="ssh" class="auto" aria-label="Шаг">${shv&&shv.len
 ${DL?`<button data-a="xls" title="Видимые строки и колонки в файл CSV — откроется в Excel">${ic('dl')} Выгрузить в Excel</button>`:''}
 ${role==='admin'?`<button data-a="neworder" class="pri">${ic('plus')} Заказ</button>`:''}
 </div>
-<div class="chips" role="group" aria-label="Быстрые фильтры">${chipDefs.map(([k,t,c])=>`<button data-a="chip" data-v="${k}" class="chip${S.chip===k?' on':''}${['over','rq','prio'].includes(k)?' warn':''}">${t} <span class="n">${c}</span></button>`).join('')}</div>
+<div class="chips" role="group" aria-label="Быстрые фильтры">${chipDefs.map(([k,t,c],i)=>{const att=['over','prio','rq','msg','today'].includes(k);const first=att&&!['over','prio','rq','msg','today'].includes((chipDefs[i-1]||[])[0]);return `${first?'<span class="csep" aria-hidden="true"></span>':''}<button data-a="chip" data-v="${k}" class="chip${S.chip===k?' on':''}${k==='over'?' t-bad':['rq','prio'].includes(k)?' t-warn':k==='msg'?' t-prog':''}" aria-pressed="${S.chip===k}">${t} <span class="n">${c}</span></button>`}).join('')}</div>
 ${nf?`<div class="pills">${Object.keys(S.f).map(k=>{const c=col(k);const v=[...S.f[k]];const s=v.length?(v.length>2?v.slice(0,2).join(', ')+' и ещё '+(v.length-2):v.join(', ')):'ничего';return `<button data-a="frm" data-v="${k}" class="chip on">${c.t||'Приоритет'}: ${esc(s)} ${ic('x',14)}</button>`}).join('')}${nf>1?'<button data-a="fclr" class="lnk sm">Сбросить все фильтры</button>':''}</div>`:''}
 ${S.toast?toastH():''}${S.of?orderForm():''}
 <div class="gwrap">${S.fp||S.mf?fpop():''}
@@ -668,7 +1299,7 @@ ${S.toast?toastH():''}${S.of?orderForm():''}
 <div class="mu tot">Позиций ${rs.length}${colVis('qt')?' · штук '+sums.qt:''}${colVis('nw')?' · новых '+sums.nw:''}${colVis('rp')?' · восстановить '+sums.rp:''}${role==='master'?' · только просмотр':''}</div>`}
 /* телефон: плотный список — строка 1: флажок, № клиента, наименование, стадия; строка 2: значения выбранных колонок */
 const MV={cc:p=>ccode(p.cl),cl:p=>p.cl,inv:p=>p.inv&&'сч. '+p.inv,br:p=>p.br,art:p=>p.art&&'арт. '+p.art,qt:p=>p.qt+' шт.',nw:p=>p.nw&&'нов. '+p.nw,rp:p=>p.rp&&'восст. '+p.rp,plan:p=>p.plan&&'план '+fd(p.plan),rd:p=>p.rd&&'готов '+fd(p.rd),sd:p=>p.sd?'реализ. '+fd(p.sd):p.sdx,sh:p=>p.sh&&'шаг '+p.sh,ty:p=>p.ty,be:p=>p.be&&p.be+' рем.',ln:p=>p.ln&&'L '+p.ln,jn:p=>p.jn,wd:p=>p.wd&&'ш. '+p.wd,pl:p=>p.pl&&'пл. '+p.pl,rv:p=>p.rv&&'закл. '+p.rv,fs:p=>p.fs,ba:p=>p.ba&&p.ba+' пр.',di:p=>p.di&&'ø '+p.di,al:p=>p.al};
-function mRow(p,cols){const l2=cols.filter(c=>MV[c.k]).map(c=>{const t=MV[c.k](p);return t?(c.k==='plan'&&over(p)?`<span class="bad">${esc(t)}</span>`:esc(t)):''}).filter(Boolean).join(' · ');
+function mRow(p,cols){const l2=cols.filter(c=>MV[c.k]).sort((a,b)=>over(p)?(b.k==='plan')-(a.k==='plan'):0).map(c=>{const t=MV[c.k](p);return t?(c.k==='plan'&&over(p)?`<span class="bad">${esc(t)}</span>`:esc(t)):''}).filter(Boolean).join(' · ');
 return `<div class="mli${p.cx?' cxr':p.st===5?' rdy':p.st===6?' shp':''}${excel()&&xc(p)?' x'+xc(p):''}${S.hl===p.id||isFlash(p)?' hl':''}" data-a="open" data-v="${p.id}" role="button" tabindex="0"><div class="ml1">${flagCell(p)}${numB(p)}<span class="mnm">${esc(p.nm)}</span>${pill(p)}</div>${l2?`<div class="ml2">${l2}</div>`:''}</div>`}
 function fpop(){if(!S.fp){return `<div class="card fpop" role="dialog" aria-label="Фильтры"><div class="fph"><span class="h3">Фильтры по колонкам</span><button data-a="mf" class="ghost sm-btn" aria-label="Закрыть">${ic('x',16)}</button></div><div class="flist">${visCols().map(c=>`<button data-a="fp" data-v="${c.k}" class="frow"><span>${c.t||'Приоритет'}</span><span class="sm">${S.f[c.k]?S.f[c.k].size+' выбрано':'все'}</span></button>`).join('')}</div><div class="fok"><button data-a="mf" class="pri">Готово</button></div></div>`}
 const c=col(S.fp),f=c.fv||c.v;const base=rows(c.k);const cnt={};base.forEach(p=>{const x=f(p);cnt[x]=(cnt[x]||0)+1});const sel=S.f[c.k];
@@ -723,7 +1354,13 @@ const MB=1048576;let AID=0,VW=null,UPC=null;const ATT={},ATTU={};
 const FUP=document.getElementById('fup');
 const att=id=>ATT[id]||(ATT[id]={f:[]});
 const fmtB=n=>n>=MB?(n/MB).toFixed(1).replace('.',',')+' МБ':Math.max(1,Math.round(n/1024))+' КБ';
-const canAtt=()=>!!S.u&&(S.u.role==='admin'||S.u.role==='shift');
+/* возможности сотрудника: набор по роли, можно поправить галочками */
+const CAPS=[['stage','Двигает стадии','«Дальше», «Вернуть» в цехе и карточке'],['ship','Отмечает отгрузку','кнопка «Отгрузить» у готовых'],['edit','Создаёт и правит позиции','«+ Заказ», «Изменить», отмена позиции'],['att','Прикрепляет бланк и фото','скрепка в цехе и карточке'],['cl','Отвечает клиентам','просьбы и вопросы из кабинета'],['acc','Клиенты и доступы','выдаёт пароли, заводит сотрудников']];
+const RCAPS={admin:['stage','ship','edit','att','cl','acc'],shift:['stage','att'],master:[]};
+const RDESC={admin:'офис: всё, включая доступы',shift:'Брянск: стадии и фото из цеха',master:'только смотрит график'};
+const capsOf=u=>u?(Array.isArray(u.caps)?u.caps:RCAPS[u.role]||[]):[];
+const can_=k=>!!S.u&&capsOf(S.u).includes(k);
+const canAtt=()=>can_('att');
 const attTitle=p=>{const a=p.at;if(!a||!(a.b||a.n))return '';return a.b&&a.n?`Бланк и ${a.n} фото`:a.b?'Бланк':`${a.n} фото`};
 function attSync(p){const f=(ATT[p.id]||{f:[]}).f;p.at={b:f.some(x=>x.k==='b')?1:0,n:f.filter(x=>x.k==='p').length}}
 const rdU=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=()=>no({msg:'не удалось прочитать файл'});r.readAsDataURL(f)});
@@ -753,8 +1390,8 @@ return `<div class="sh"><h3 class="h3">Бланк и фото${a.length?` · ${a
 <div class="atbl">${bl?`${thumb(bl)}<div style="min-width:0"><div class="b1">Бланк</div><div class="sm atnm">${esc(bl.n)} · ${fmtB(bl.z)}</div>${can?`<div class="acts" style="margin-top:8px"><button data-a="atp" data-v="${bl.id}" class="sm-btn">Сделать фото</button><button data-a="atd" data-v="${bl.id}" class="sm-btn danger">Удалить</button></div>`:''}</div>`:`<div class="sm">Бланка нет${can?' — прикрепите файл и нажмите «В бланк»':''}</div>`}</div>
 ${ph.length?`<div class="agal">${ph.map(it=>`<div class="atl">${thumb(it)}<span class="sm atnm" title="${esc(it.n)}">${fmtB(it.z)}</span>${can?`<button data-a="atb" data-v="${it.id}" class="sm-btn">В бланк</button>`:''}</div>`).join('')}</div>`:''}
 ${!a.length&&!lost?`<div class="sm" style="margin-top:8px">${can?'Фото с телефона сожмутся до 300–500 КБ, PDF — до 10 МБ без сжатия.':'Пока ничего не прикреплено.'}</div>`:''}
-${lost?'<div class="sm" style="margin-top:8px">Файлы загружены в другой вкладке и здесь не видны: в прототипе они живут в памяти той страницы.</div>':''}
-<p class="sm" style="margin:12px 0 0">В прототипе файлы живут до перезагрузки страницы. В рабочей версии — на сервере.</p></div>`}
+
+</div>`}
 const vList=()=>{const a=att(VW.pid).f;const it=a.find(x=>x.id===VW.id);return it?(it.k==='b'?[it]:a.filter(x=>x.k==='p')):[]};
 function vStep(d){if(!VW)return;const l=vList();if(l.length<2)return;const i=l.findIndex(x=>x.id===VW.id);VW.id=l[(i+d+l.length)%l.length].id;render()}
 function viewer(){const l=vList();if(!l.length){VW=null;return ''}const i=Math.max(0,l.findIndex(x=>x.id===VW.id)),it=l[i];const u=(DUO&&VW.cur?DUO[VW.cur]:S).u;const can=!!u&&(u.role==='admin'||u.role==='shift');
@@ -766,30 +1403,74 @@ function stepper(p,can,client){const rt=(client?cRoute(p):route(p)).slice(0,6);c
 return `<div class="steps">${rt.map((s,i)=>{const done=p.st>=i;const cls='stp'+(done?' done':'')+(i===cur?' cur':'');const dd=done&&p.sdt[i]?`<span class="dd">${fd(p.sdt[i])}</span>`:'';const inner=`<span class="ln"></span><span class="dt"></span><span class="tx">${s}</span>${dd}`;const ac=i===cur?' aria-current="step"':'';
 return can?`<button data-a="setst" data-v="${i}" class="${cls}"${ac} aria-label="Стадия ${s}">${inner}</button>`:`<div class="${cls}"${ac}>${inner}</div>`}).join('')}</div>`}
 function thread(p,side){if(!p.msgs.length)return '';return `<div class="thread">${p.msgs.map(m=>`<div class="msg ${m.from}"><div class="sm">${m.from==='client'?(side==='client'?'Вы':esc(m.w)+' · клиент'):(side==='client'?'Менеджер '+esc(m.w):esc(m.w)+' · офис')} · ${fd(m.d)} ${m.tm}</div><div>${esc(m.x)}</div></div>`).join('')}</div>`}
-function vDetail(){const p=byId(S.d);if(!p){S.view=S.from;return paneMain()}const rt=route(p);const role=S.u.role;const adm=role==='admin';const can=!p.cx&&(adm||(role==='shift'&&p.st<6));
+/* разница в днях между датами ГГГГ-ММ-ДД */
+const dDays=(a,b)=>Math.round((new Date(a+'T12:00:00')-new Date(b+'T12:00:00'))/864e5);
+/* что видит клиент в кабинете — та же логика, что в cCard */
+function clientSees(p){if(p.cx)return 'Отменена — менеджер свяжется';if(p.st===6)return 'Отгружен'+(p.sd?' '+fdy(p.sd):'');if(p.st===5)return 'Готов, можно забирать';return cRoute(p)[p.st]+', '+(p.cd&&p.cd>=TODAY?'ожидаем к '+fd(p.cd):'срок уточняет менеджер')}
+/* строки «Учёта»: ключ, подпись, значение для показа, можно ли править на месте */
+function accRows(p,adm){const ed=adm&&!p.cx;return [
+  {k:'inv',t:'№ счёта',v:p.inv,ed,add:'+ добавить',m:1},
+  {k:'num',t:'Номер клиента',v:p.num,ed,add:'+ добавить',m:1},
+  {k:'plan',t:'План выдачи',v:p.plan?fdy(p.plan):'',raw:p.plan,ed,add:'+ указать',date:1,bad:over(p)},
+  {k:'cd',t:'Срок для клиента',v:p.cd?fdy(p.cd):'',raw:p.cd,ed:ed&&prod(p),add:'+ указать',date:1,hint:'клиент видит «ожидаем к …»'},
+  {k:'rd',t:'Готов к отгрузке',v:p.rd?fdy(p.rd):'',ro:'после стадии «Готов»'},
+  {k:'sd',t:'Дата реализации',v:p.sd?fdy(p.sd):(p.sdx||''),ro:'при отгрузке'}]}
+function accRow(p,r){if(S.ie===r.k&&r.ed)return `<div class="arow aed"><label class="k" for="iev">${r.t}</label><div class="aer"><input id="iev" ${r.date?'type="date"':'type="text"'} value="${esc(r.date?(r.raw||''):(r.v||''))}"${r.k==='num'?' inputmode="numeric"':''}><button data-a="iesave" class="pri sm-btn" aria-label="Сохранить">${ic('check',16)}</button><button data-a="iecx" class="sm-btn" aria-label="Отмена">${ic('x',16)}</button></div>${S.iee?`<div class="er">${esc(S.iee)}</div>`:r.hint?`<div class="sm">${r.hint}</div>`:''}</div>`;
+const has=r.v!==''&&r.v!=null;const val=has?`<span class="v${r.m?' data':''}${r.bad?' bad':''}">${esc(r.v)}${r.bad?' · просрочено':''}</span>`:r.ed?`<span class="aadd">${r.add}</span>`:`<span class="mu ro">${r.ro||'—'}</span>`;
+return r.ed?`<button class="arow" data-a="ie" data-v="${r.k}" title="Изменить"><span class="k">${r.t}</span>${val}</button>`:`<div class="arow"><span class="k">${r.t}</span>${val}</div>`}
+/* история: фильтр и классы записей */
+const hKind=h=>/^комментарий: /.test(h.x)?'cm':h.r==='sys'&&/^Письмо клиенту/.test(h.x)?'ml':/→|^отменено/.test(h.x)?'st':'ot';
+function histBlock(p,role){const all=p.h.slice().reverse();const f=S.hf||'all';const cnt=k=>all.filter(h=>hKind(h)===k).length;
+const list=f==='all'?all:all.filter(h=>hKind(h)===f);const lim=S.hall?list.length:5;
+const tabs=[['all','Всё',all.length],['cm','Комментарии',cnt('cm')],['st','Стадии',cnt('st')],['ml','Письма',cnt('ml')]].filter(([k,,n])=>k==='all'||n);
+return `<section class="card dcard"><h3 class="h3">История <span class="sgn">${p.h.length}</span></h3>
+${tabs.length>1?`<div class="hft" role="group" aria-label="Фильтр истории">${tabs.map(([k,t,n])=>`<button data-a="hf" data-v="${k}" class="${f===k?'on':''}" aria-pressed="${f===k}">${t} <span>${n}</span></button>`).join('')}</div>`:''}
+<div class="hist dhist">${list.slice(0,lim).map(h=>{const k=hKind(h);return k==='cm'?`<div class="hcm"><div class="sm">${esc(h.w)} · ${fd(h.d)} ${h.tm}</div><div>${esc(h.x.replace(/^комментарий: /,''))}</div></div>`:`<div class="hsy h-${k}"><span class="hic">${ic(k==='ml'?'mail':k==='st'?'right':'doc',13)}</span><span><span class="sm">${fd(h.d)} ${h.tm} · ${esc(h.w)}</span><br>${esc(h.x)}</span></div>`}).join('')||'<div class="sm">Записей нет</div>'}</div>
+${list.length>lim?`<button data-a="hall" class="lnk sm hmore">показать ещё ${list.length-lim}</button>`:''}
+${role==='admin'||role==='shift'?`<div class="cm hcmin"><input id="cm" placeholder="Комментарий для офиса и цеха" aria-label="Комментарий"><button data-a="comment">Добавить</button></div>${S.cerr?`<div class="er">${S.cerr}</div>`:''}`:''}</section>`}
+function clBlock(p){const cl=p.cl;if(cl==='Склад')return `<section class="card dcard"><h3 class="h3">Склад <span class="data sm">${ccode(cl)}</span></h3><div class="sm">Позиция для склада — клиент её не видит.</div></section>`;
+const u=U.find(x=>x.role==='client'&&x.cl===cl);const r=CL.get(cl)||{};const inv=invLabel(p)!=='Без номера счёта';
+const same=inv?P.filter(x=>x.cl===cl&&x.inv===p.inv&&x.id!==p.id):[];const act=P.filter(x=>x.cl===cl&&prod(x)).length;
+return `<section class="card dcard"><div class="clh2"><h3 class="h3">${esc(cl)} <span class="data sm">${ccode(cl)}</span></h3><button data-a="ccard" data-v="${esc(cl)}" class="lnk sm">карточка ${ic('right',13)}</button></div>
+<div class="arow"><span class="k">Контакт</span>${u?`<span class="v">${esc(u.nm||'')} · <a href="tel:${u.ph}" class="data">${fmtPh(u.ph)}</a></span>`:'<span class="mu">кабинет не выдан</span>'}</div>
+<div class="arow"><span class="k">Письма</span>${r.em&&r.nf!=='off'?(r.ok?`<span class="v">${esc(nfWhen(r))}</span>`:`<span class="v">${esc(nfWhen(r))} <span class="fl">· начнут приходить после подтверждения адреса</span></span>`):'<span class="mu">не подключены</span>'}</div>
+<div class="arow"><span class="k">Клиент видит</span><span class="v">${esc(clientSees(p))}</span></div>
+${same.length?`<div class="sm" style="margin-top:10px">В счёте ${esc(p.inv)} ещё:</div><div class="chs">${same.slice(0,8).map(x=>`<button data-a="open" data-v="${x.id}" class="chip">№ ${esc(x.num||'—')} · ${esc(route(x)[x.st])}</button>`).join('')}${same.length>8?`<span class="sm">и ещё ${same.length-8}</span>`:''}</div>`:''}
+<div class="sm" style="margin-top:10px">В работе у клиента: ${act}</div></section>`}
+function vDetail(){const p=byId(S.d);if(!p){S.view=S.from;return paneMain()}const rt=route(p);const role=S.u.role;const adm=role==='admin';const can=!p.cx&&can_('stage')&&(p.st<6||can_('ship'));
 const kv=(a,b,m)=>`<div><div class="k">${a}</div><div class="v${m?' data':''}">${esc(b===''||b==null?'—':b)}</div></div>`;
-const prevS=p.st>0&&(p.st<6||adm)?p.st-1:null;const r=p.rq;
-return `<button data-a="back" class="ghost">${ic('left')} ${S.from==='shop'?'Цех':S.from==='client'?'Клиент':'График'}</button>
-<section class="card pad" style="margin-top:10px">
-${S.toast?toastH():''}
-<div class="dh"><div style="min-width:0"><h2 class="h2">${numB(p)}${esc(p.nm)}</h2><div class="mu">${clLink(p.cl)} <span class="data">${ccode(p.cl)}</span> · ${esc(p.br||'—')} · арт. <span class="data">${esc(p.art||'—')}</span> · ${qtyTxt(p)}</div></div>
-${adm&&!S.ed?`<div class="dact"><button data-a="edit">${ic('edit')} Изменить</button>${p.cx?'':`<button data-a="pri" class="${p.pri?'on-fl':''}">${ic('flag')} ${p.pri?'Снять «срочно»':'Срочно (офис)'}</button><button data-a="blue" class="${p.blue?'on-b':''}" aria-pressed="${p.blue}"><span class="sw sw-b"></span> ${p.blue?'Снять голубую отметку':'Голубая отметка'}</button><button data-a="cxo" class="danger">${ic('ban')} Отменить позицию</button>`}</div>`:!adm&&prio(p)&&prod(p)?`<span class="pl on-fl">${ic('flag',13)} Приоритет${p.pri?': срочно (офис)':': просьба клиента'}</span>`:''}</div>
-${p.blue&&!adm?`<div class="box b"><span><span class="sw sw-b"></span> Голубая отметка офиса (как в Excel)</span></div>`:''}${p.cx?`<div class="box x"><span>${ic('ban')} Позиция отменена: ${esc(p.cx.r)}${p.cx.d?' · '+fd(p.cx.d)+', '+esc(p.cx.w):''}</span>${adm?'<button data-a="uncx" class="sm-btn">Вернуть в работу</button>':''}</div>`:''}
+const prevS=p.st>0&&(p.st<6||adm)?p.st-1:null;const r=p.rq;const nm=nmSplit(p);
+const zm=ZK.filter(k=>k!=='al');const zf=zm.filter(k=>p[k]!==''&&p[k]!=null),ze=zm.filter(k=>p[k]===''||p[k]==null);
+/* где позиция сейчас */
+const since=p.sdt[p.st];const dn=since?dDays(TODAY,since)+1:0;
+const now=p.cx?'Отменена':p.st===6?'Отгружен'+(p.sd?' '+fdy(p.sd):''):`${rt[p.st]}${dn>0?' · '+dn+'-й день':''}`;
+const pl=p.plan&&prod(p)?(p.plan<TODAY?`<div class="bad">План ${fd(p.plan)} — просрочено на ${dDays(TODAY,p.plan)} дн.</div>`:`<div>План ${fd(p.plan)} — осталось ${dDays(p.plan,TODAY)} дн.</div>`):p.plan||!prod(p)?'':'<div class="mu">План выдачи не указан</div>';
+const head=`<div class="dtop"><div class="dk">${numB(p)}${esc(nm.k)}</div>
+<div class="dhr">${pill(p)}${adm&&!S.ed?`<button data-a="edit">${ic('edit')} Изменить</button>${p.cx?'':`<div class="dmw"><button data-a="dmenu" aria-expanded="${!!S.dmenu}" aria-label="Ещё действия" class="dmb">${ic('more',18)}</button>${S.dmenu?`<div class="card dmenu"><button data-a="cxo" class="danger ghost">${ic('ban')} Отменить позицию…</button></div>`:''}</div>`}`:''}</div></div><h2 class="h2 dttl data">${esc(nm.z||p.nm)}</h2><div class="mu">${clLink(p.cl)} <span class="data">${ccode(p.cl)}</span> · ${esc(p.br||'—')} · арт. <span class="data">${esc(p.art||'—')}</span> · ${qtyTxt(p)}</div>`;
+const main=`<section class="card pad dmain">
+${S.toast?toastH():''}${head}
 ${S.cxo?`<div class="box x" style="display:block"><label class="lb" for="cxr" style="margin-top:0">Причина отмены — увидят офис и цех</label><input id="cxr" value="${esc(S.cxr)}" placeholder="Например: клиент отказался от ремонта">${S.cxe?`<div class="er">${esc(S.cxe)}</div>`:''}<div class="acts"><button data-a="cxok" class="danger solid">Отменить позицию</button><button data-a="cxno">Не отменять</button></div></div>`:''}
+${p.blue&&!adm?`<div class="box b"><span><span class="sw sw-b"></span> Голубая отметка офиса (как в Excel)</span></div>`:''}${p.cx?`<div class="box x"><span>${ic('ban')} Позиция отменена: ${esc(p.cx.r)}${p.cx.d?' · '+fd(p.cx.d)+', '+esc(p.cx.w):''}</span>${adm?'<button data-a="uncx" class="sm-btn">Вернуть в работу</button>':''}</div>`:''}
+${!adm&&prio(p)&&prod(p)?`<div class="box w"><span>${ic('flag')} Приоритет${p.pri?': срочно (офис)':': просьба клиента'}</span></div>`:''}
 ${r&&r.st==='new'&&prod(p)?`<div class="box w"><span>${ic('flag')} Клиент просит в первую очередь${r.need?', нужен к '+fd(r.need):''} · просьба от ${fd(r.d)} ${r.tm}</span>${adm?'<span class="bb"><button data-a="rqok" class="pri sm-btn">Принять</button><button data-a="rqno" class="sm-btn">Отклонить</button></span>':'<span class="sm">решает офис</span>'}</div>`:''}
 ${r&&r.st==='ok'&&prod(p)?`<div class="box g"><span>${ic('ok')} Приоритет по просьбе клиента, принят ${fd(r.ad)}${r.need?' · нужен к '+fd(r.need):''}</span>${adm?'<button data-a="rqoff" class="sm-btn">Снять приоритет</button>':''}</div>`:''}
-${S.ed?orderForm():`<div class="kv">${kv('Клиент',p.cl)}${kv('Код клиента',ccode(p.cl),1)}${kv('№ счёта',p.inv,1)}${kv('Номер клиента',p.num,1)}${kv('Дата выдачи (план)',fdy(p.plan)+(over(p)?' · просрочено':''))}${!adm?kv('Срок для клиента',p.cd?fdy(p.cd):''):''}${kv('Готов к отгрузке',fdy(p.rd))}${kv('Дата реализации',p.sd?fdy(p.sd):p.sdx)}</div>
-${adm&&prod(p)?`<div class="cdrow"><div><label class="lb" for="cdd">Срок для клиента</label><input type="date" id="cdd" value="${esc(S.cdd!=null?S.cdd:p.cd)}"></div><button data-a="cdsave">Сохранить срок</button><div class="sm">Клиент видит «ожидаем к …», только если дата впереди. План остаётся для офиса и цеха.</div></div>`:''}`}
-<div class="sh"><span class="h3">Стадия · ${stLabel(p)} · ${PCT[p.st]}%</span><span class="sm">${can?'нажмите на стадию или «Дальше»':p.cx?'позиция отменена':'только просмотр'}</span></div>
+${S.ed?orderForm():`<div class="dsec"><div class="sh"><span class="h3">Стадия · ${stLabel(p)} · ${PCT[p.st]}%</span><span class="sm">${can?'нажмите на стадию или «Дальше»':p.cx?'позиция отменена':'только просмотр'}</span></div>
 ${stepper(p,can)}
-${S.cf&&S.cf.id===p.id?`<div class="cfb">${S.cf.to===5?'Перевести в «Готов»? Клиент увидит «Готов, можно забирать».':`Перескочить сразу в «${rt[S.cf.to]}»? Пропущенные стадии отметятся сегодняшним днём.`}<div class="acts"><button data-a="cfok" class="pri">Да, перевести</button><button data-a="cfno">Отмена</button></div></div>`:''}
-${can?`<div class="acts">${prevS!=null?`<button data-a="prev">${ic('undo')} Вернуть: ${rt[prevS]}</button>`:''}${p.st<5?`<button data-a="next" data-f="${p.st}" class="pri">Дальше: ${rt[p.st+1]} ${ic('right')}</button>`:''}${p.st===5?(adm?`<button data-a="ship" class="pri">${ic('truck')} Отгрузить</button>`:'<span class="mu">Отгрузку отмечает офис</span>'):''}</div>`:''}
-${S.ed?'':`<h3 class="h3 mt">Замеры</h3><div class="kv">${ZK.filter(k=>k!=='al').map(k=>kv(LBL[k],p[k],k!=='jn'&&k!=='fs')).join('')}</div>${beltTxt(p.ty)?`<p class="alt"><span class="mu">Тип ремня:</span> ${esc(beltTxt(p.ty))}</p>`:''}${p.al?`<p class="alt"><span class="mu">Чередование:</span> ${esc(p.al)}</p>`:''}${attBlock(p)}`}
-${p.msgs.length?`<h3 class="h3 mt">Вопросы клиента</h3>${thread(p,'staff')}${adm?`<div class="cm"><textarea id="rep" rows="2" placeholder="Ответ клиенту — он увидит его в кабинете">${esc(S.rep)}</textarea><button data-a="reply" class="pri">Ответить</button></div>`:''}`:''}
-<h3 class="h3 mt">История</h3>
-<div class="hist">${p.h.slice().reverse().map(h=>`<div><span class="mu">${fd(h.d)} ${h.tm} · ${esc(h.w)}</span> — ${esc(h.x)}</div>`).join('')}</div>
-${adm||role==='shift'?`<div class="cm"><input id="cm" placeholder="Комментарий для офиса и цеха" aria-label="Комментарий"><button data-a="comment">Добавить</button></div>${S.cerr?`<div class="er">${S.cerr}</div>`:''}`:''}
-</section>`}
+${S.cf&&S.cf.id===p.id?`<div class="cfb">${S.cf.to<p.st?`Вернуть в «${rt[S.cf.to]}»? Отметка «${rt[p.st]}»${p.st===6?' и дата отгрузки сотрутся':' сотрётся'}, клиент снова увидит позицию в работе.`:S.cf.to===5?'Перевести в «Готов»? Клиент увидит «Готов, можно забирать».':`Перескочить сразу в «${rt[S.cf.to]}»? Пропущенные стадии отметятся сегодняшним днём.`}<div class="acts"><button data-a="cfok" class="pri">${S.cf.to<p.st?'Да, вернуть':'Да, перевести'}</button><button data-a="cfno">Отмена</button></div></div>`:''}
+${can?`<div class="acts dsa">${prevS!=null?`<button data-a="prev">${ic('undo')} Вернуть: ${rt[prevS]}</button>`:''}${p.st<5?`<button data-a="next" data-f="${p.st}" class="pri">Дальше: ${rt[p.st+1]} ${ic('right')}</button>`:''}${p.st===5?(can_('ship')?`<button data-a="ship" class="pri">${ic('truck')} Отгрузить</button>`:'<span class="mu">Отгрузку отмечает офис</span>'):''}</div>`:''}</div>
+<div class="dsec"><h3 class="h3">Замеры</h3><div class="kv dkv">${zf.map(k=>kv(LBL[k],p[k],k!=='jn'&&k!=='fs')).join('')}</div>${ze.length?`<div class="dempty">Не заполнено: ${ze.map(k=>LBL[k]).join(', ')}${adm?' · <button data-a="edit" class="lnk">заполнить</button>':''}</div>`:''}${beltTxt(p.ty)?`<p class="alt"><span class="mu">Тип ремня:</span> ${esc(beltTxt(p.ty))}</p>`:''}${p.al?`<p class="alt"><span class="mu">Чередование:</span> ${esc(p.al)}</p>`:''}</div>
+<div class="dsec">${attBlock(p)}</div>
+${p.msgs.length?`<div class="dsec"><h3 class="h3">Вопросы клиента</h3>${thread(p,'staff')}${adm?`<div class="cm"><textarea id="rep" rows="2" placeholder="Ответ клиенту — он увидит его в кабинете">${esc(S.rep)}</textarea><button data-a="reply" class="pri">Ответить</button></div>`:''}</div>`:''}`}
+</section>`;
+const side=`<aside class="dside">
+<section class="card dcard dnow${p.plan&&over(p)?' late':''}"><div class="dnt">${esc(now)}</div>${pl}${p.cl!=='Склад'?`<div class="sm" style="margin-top:4px">Клиент видит: «${esc(clientSees(p))}»</div>`:''}</section>
+${adm&&!p.cx?`<section class="card dcard dtg"><button class="tgr" data-a="pri" role="switch" aria-checked="${!!p.pri}"><span><b>Срочно (офис)</b><span class="sm">наверх списка в цехе, с флажком</span></span><span class="tgl${p.pri?' on':''}"><i></i></span></button><button class="tgr" data-a="blue" role="switch" aria-checked="${!!p.blue}"><span><b><span class="sw sw-b"></span> Голубая отметка</b><span class="sm">строка в графике голубая, как в Excel</span></span><span class="tgl${p.blue?' on':''}"><i></i></span></button></section>`:''}
+<section class="card dcard"><h3 class="h3">Учёт${adm&&!p.cx?' <span class="sm" style="font-weight:400">нажмите на строку, чтобы изменить</span>':''}</h3><div class="dacc">${accRows(p,adm).map(x=>accRow(p,x)).join('')}</div></section>
+${clBlock(p)}
+${histBlock(p,role)}
+</aside>`;
+return `<button data-a="back" class="ghost">${ic('left')} ${S.from==='shop'?'Цех':S.from==='client'?'Клиент':'График'}</button>
+<div class="dgrid">${main}${side}</div>`}
 
 /* ---------- карточка клиента (сотрудники): всё по клиенту по его коду ---------- */
 function vClient(){const c=S.cc;const r=clReg(c);const my=P.filter(p=>p.cl===c);const adm=S.u.role==='admin';const n=f=>my.filter(f).length;const live=my.filter(p=>!p.cx);
@@ -806,9 +1487,9 @@ return `<button data-a="cback" class="ghost">${ic('left')} ${back}</button>
 <div class="ckp">${t(n(prod),'в производстве')}${t(n(p=>p.st===5&&!p.cx),'готовы')}${t(n(p=>p.st===6&&!p.cx),'отгружены')}${t(n(p=>!!p.cx),'отменены')}${t(n(over),'просрочено по плану',n(over)?'x':'')}${t(sum('qt'),`штук: новых ${sum('nw')}, восст. ${sum('rp')}`)}${n(rqNew)?t(n(rqNew),'просьбы ждут решения','w'):''}${n(unans)?t(n(unans),'вопросы без ответа','w'):''}</div>
 <div class="cdrow"><div><label class="lb" for="c1">Код в 1С</label><input id="c1" value="${esc(r.c1)}" placeholder="${adm?'например 00-000123':'не указан'}" autocomplete="off"${adm?'':' readonly'}></div>
 <div style="flex:1 1 320px"><label class="lb" for="cnote">Заметка менеджера</label><input id="cnote" value="${esc(r.note)}" placeholder="${adm?'Контакт по оплате, особенности приёмки…':'нет заметки'}" autocomplete="off"${adm?'':' readonly'}></div>${adm?'<button data-a="csave">Сохранить</button>':''}</div>
-${adm?`<div class="cdrow"><div style="flex:1 1 260px"><label class="lb" for="cem">E-mail контакта для уведомлений</label><input id="cem" type="email" inputmode="email" value="${esc(r.em)}" placeholder="name@example.com" autocomplete="off"></div><div style="flex:1 1 260px"><label class="lb" for="cnf">Когда писать клиенту</label><select id="cnf">${['ready','all','off'].map(k=>`<option value="${k}"${r.nf===k?' selected':''}>${NFM[k]}</option>`).join('')}</select></div><div class="sm">Клиент может поменять это сам в кабинете. Почта необязательна. Без почты письма не уходят.</div></div>`:''}
+${adm?`<div class="cdrow"><div style="flex:1 1 260px"><label class="lb" for="cem">E-mail контакта для уведомлений</label><input id="cem" type="email" inputmode="email" value="${esc(r.em)}" placeholder="name@example.com" autocomplete="off"></div><div style="flex:1 1 260px"><label class="lb" for="cnf">Когда писать клиенту</label><select id="cnf">${['ready','all','pick','off'].map(k=>`<option value="${k}"${r.nf===k?' selected':''}>${NFM[k]}</option>`).join('')}</select></div><div class="sm">Клиент может поменять это сам в кабинете. Почта необязательна. Без почты письма не уходят.</div></div>`:''}
 <h3 class="h3 mt">Контакты и вход в кабинет</h3>
-<div class="ct" style="margin-top:6px">${us.length?us.map(contact).join(''):'<span class="sm">доступа нет</span>'}${adm?`<button data-a="asopen" data-v="${esc(c)}" class="sm-btn">${ic('eye',14)} Глазами клиента</button>`:''}</div>
+<div class="ct" style="margin-top:6px">${us.length?us.map(contact).join(''):'<span class="sm">доступа нет</span>'}${S.acc&&us.some(u=>u.ph===S.acc.at)?accCard():''}${adm?`<button data-a="asopen" data-v="${esc(c)}" class="sm-btn">${ic('eye',14)} Глазами клиента</button>`:''}</div>
 ${rep.length?`<h3 class="h3 mt">Повторяются · ${rep.length}</h3><div class="sm" style="margin-bottom:4px">одни и те же транспортёры приходят снова — подсказка для продаж и склада</div><div class="flist">${rep.slice(0,8).map(([a,x])=>`<div class="lrow"><div style="min-width:0"><span class="data">${esc(a)}</span> · ${esc(x.br||'—')} · ${esc(x.nm)}</div><div class="r sm">${x.n} ${x.n%10>=2&&x.n%10<=4&&(x.n%100<12||x.n%100>14)?'раза':'раз'} · ${x.q} шт.</div></div>`).join('')}</div>`:''}
 <h3 class="h3 mt">Позиции · ${my.length}</h3>
 <div class="cpl">${list.slice(0,lim).map(p=>`<button class="cpr" data-a="open" data-v="${p.id}"><span>${pill(p)}</span><span class="cn">${numB(p)}${esc(p.nm)}</span><span class="sm cd">${dt(p)}</span><span class="sm data ci">${esc(p.inv||'—')}</span></button>`).join('')}</div>
@@ -816,19 +1497,35 @@ ${list.length>lim?`<button data-a="cmore" class="wide-b">Показать ещё
 </section>`}
 
 /* ---------- цех ---------- */
+/* цех: список-очередь по срочности — «В первую очередь» → «Просрочено» → «По плану», одна строка на позицию */
+const sGrp=p=>prio(p)?'p':p.plan&&p.plan<TODAY?'o':'n';
+function sAct(p){const pend=PEND[p.id];const cf=S.cf&&S.cf.id===p.id;const rt=route(p);
+if(pend)return `<div class="sact"><span class="sdone" role="status">${ic('ok',16)} <span><b>${rt[p.st]}</b> · записано</span></span><button data-a="undo" data-v="${p.id}" class="sundo">Отменить</button></div>`;
+if(cf)return `<div class="sact scf"><button data-a="cfok" class="pri snx">${ic('ok',16)} Подтвердить: Готов</button><button data-a="cfno" class="sundo">Не сейчас</button></div>`;
+return `<div class="sact">${can_('stage')?`<button data-a="snext" data-v="${p.id}" data-f="${p.st}" class="pri snx" aria-label="Перевести № ${esc(p.num||'')} в стадию ${rt[p.st+1]}"><span><span class="sdx">Дальше: </span>${rt[p.st+1]}</span>${ic('right',16)}</button>`:''}${canAtt()?`<button data-a="attup" data-v="${p.id}" class="sclip${p.at&&(p.at.b||p.at.n)?' has':''}" aria-label="Прикрепить бланк или фото" title="${esc(attTitle(p)||'Прикрепить бланк или фото')}">${ic('clip',18)}</button>`:''}</div>`}
+function sRow(p){const nm=nmSplit(p);const pend=PEND[p.id];const late=p.plan&&p.plan<TODAY;
+return `<div class="srow${pend?' hl':''}${S.cf&&S.cf.id===p.id?' cfr':''}">
+<button class="sopen" data-a="open" data-v="${p.id}" aria-label="Карточка позиции № ${esc(p.num||'')}"><span class="sfl">${prio(p)?`<span class="fl" title="${p.pri?'срочно (офис)':'просьба клиента'}">${ic('flag',15)}</span>`:''}</span>
+<span class="snm"><span class="s1">${numB(p)}<b class="data">${esc(nm.z||p.nm)}</b></span><span class="s2">${esc(nm.k)} · ${esc(p.cl)}</span></span>
+<span class="sty data">шаг ${esc(p.sh||'—')} · ${esc(p.ty||'—')}<span class="sm">${qtyTxt(p)}</span></span>
+<span class="spl${late?' bad':''}">${p.plan?fd(p.plan):'—'}</span>
+<span class="sst">${pill(p)}</span></button>
+${sAct(p)}</div>`}
 function sCard(p){const pend=PEND[p.id];const cf=S.cf&&S.cf.id===p.id;const rt=route(p);let act;
 if(pend)act=`<div class="sa"><div class="sdone" role="status">${ic('ok')} <span><b>${rt[p.st]}</b> · записано, офис и клиент видят</span></div><button data-a="undo" data-v="${p.id}" class="sundo">Отменить</button></div>`;
 else if(cf)act=`<div class="scf"><div class="sm">Клиент увидит «Готов, можно забирать».</div><div class="sa"><button data-a="cfok" class="pri grow">${ic('ok')} Подтвердить: Готов</button><button data-a="cfno">Не сейчас</button></div></div>`;
-else act=`<div class="sa"><button data-a="snext" data-v="${p.id}" data-f="${p.st}" class="pri grow">Дальше: ${rt[p.st+1]} ${ic('right')}</button><button data-a="open" data-v="${p.id}" aria-label="Карточка позиции" class="sq">${ic('doc')}</button>${canAtt()?`<button data-a="attup" data-v="${p.id}" class="sq${p.at&&(p.at.b||p.at.n)?' has':''}" aria-label="Прикрепить бланк или фото" title="${esc(attTitle(p)||'Прикрепить бланк или фото')}">${ic('clip',20)}</button>`:''}</div>`;
+else act=`<div class="sa">${can_('stage')?`<button data-a="snext" data-v="${p.id}" data-f="${p.st}" class="pri grow">Дальше: ${rt[p.st+1]} ${ic('right')}</button>`:''}<button data-a="open" data-v="${p.id}" aria-label="Карточка позиции" class="sq">${ic('doc')}</button>${canAtt()?`<button data-a="attup" data-v="${p.id}" class="sq${p.at&&(p.at.b||p.at.n)?' has':''}" aria-label="Прикрепить бланк или фото" title="${esc(attTitle(p)||'Прикрепить бланк или фото')}">${ic('clip',20)}</button>`:''}</div>`;
 return `<div class="card sc${pend?' hl':''}">
 <div class="mrow sm"><span>${esc(p.cl)}</span>${prio(p)?`<span class="fl">${ic('flag',13)} ${p.pri?'срочно (офис)':'просьба клиента'}</span>`:''}</div>
 <div class="mt-t">${numB(p)}${esc(p.nm)}</div>
 <div class="sm"><span class="data">шаг ${esc(p.sh||'—')} · ${esc(p.ty||'—')}</span> · ${qtyTxt(p)}${p.plan?' · '+(over(p)?`<span class="bad">план ${fd(p.plan)}, просрочено</span>`:'план '+fd(p.plan)):''}</div>
 <div class="prog">${pill(p)}<div class="bar"><i style="width:${PCT[p.st]}%"></i></div><span class="sm data">${PCT[p.st]}%</span></div>${act}</div>`}
-function vShop(){const act=P.filter(prod);const pr=act.filter(prio).length;const list=P.filter(p=>(prod(p)||PEND[p.id])&&(!S.sf||prio(p))).sort((a,b)=>prio(b)-prio(a)||over(b)-over(a)||ru(a.plan||'9999',b.plan||'9999')||a.id-b.id);
-return `<div class="phone">
-<div class="ph"><div><div class="h3">Цех</div><div class="sm">в производстве ${act.length} · ${fdy(TODAY)}</div></div><div class="seg"><button data-a="sf" data-v="" class="${!S.sf?'on':''}">Все</button><button data-a="sf" data-v="1" class="${S.sf?'on':''}" aria-label="Только приоритет">${ic('flag')} ${pr}</button></div></div>
-${S.toast?toastH():''}${list.length?`<div class="slist">${list.map(sCard).join('')}</div>`:(S.sf?'<div class="empty">Приоритетных позиций нет · <button data-a="sf" data-v="" class="lnk">показать все</button></div>':'<div class="empty">Позиций в производстве нет</div>')}
+function vShop(){const act=P.filter(prod);const pr=act.filter(prio).length;const list=P.filter(p=>(prod(p)||PEND[p.id])&&(!S.sf||prio(p))).sort((a,b)=>ru(a.plan||'9999',b.plan||'9999')||b.st-a.st||a.id-b.id);
+const G=[['p',ic('flag',16)+' В первую очередь','просьбы клиентов и срочное от офиса'],['o','Просрочено','план уже прошёл'],['n','По плану','']];
+const cards=S.sv==='c';const body=cards?`<div class="slist">${list.map(sCard).join('')}</div>`:G.map(([k,t,sub])=>{const rs=list.filter(p=>sGrp(p)===k);if(!rs.length)return '';return `<section class="sgrp sg-${k}" aria-label="${t.replace(/<[^>]+>/g,'').trim()}"><div class="sgh"><span class="sgt">${t}</span><span class="sgn">${rs.length}</span>${sub?`<span class="sm">${sub}</span>`:''}</div><div class="shd" aria-hidden="true"><span></span><span>Транспортёр</span><span>Шаг · тип</span><span>План</span><span>Стадия</span><span>Дальше</span></div>${rs.map(sRow).join('')}</section>`}).join('');
+return `<div class="phone shop">
+<div class="ph"><div><div class="h2">Цех</div><div class="sm">в производстве ${act.length} · ${fdy(TODAY)}${cards?'':'<span class="shint"> · нажмите на строку — откроется карточка</span>'}</div></div><div class="sbar"><div class="seg" role="group" aria-label="Вид"><button data-a="sv" data-v="l" class="${!cards?'on':''}" aria-pressed="${!cards}" title="Списком">${ic('list')} Список</button><button data-a="sv" data-v="c" class="${cards?'on':''}" aria-pressed="${cards}" title="Карточками">${ic('grid')} Карточки</button></div><div class="seg"><button data-a="sf" data-v="" class="${!S.sf?'on':''}">Все</button><button data-a="sf" data-v="1" class="${S.sf?'on':''}" aria-label="Только приоритет">${ic('flag')} ${pr}</button></div></div></div>
+${S.toast?toastH():''}${list.length?body:(S.sf?'<div class="empty">Приоритетных позиций нет · <button data-a="sf" data-v="" class="lnk">показать все</button></div>':'<div class="empty">Позиций в производстве нет</div>')}
 </div>`}
 
 /* ---------- клиенты и доступы ---------- */
@@ -837,79 +1534,154 @@ const msg=a.client?`Здравствуйте${a.nm?', '+a.nm:''}!\nГотовн�
 return `<div class="acc"><div style="font-size:13px">${a.isNew?'Доступ создан':'Пароль сброшен'} · ${esc(a.name)}</div><div class="b1" style="font-size:15px;margin-top:4px">Логин <span class="data">${fmtPh(a.ph)}</span> · пароль <span class="data">${a.pw}</span></div><textarea id="msg" rows="8" readonly aria-label="Сообщение для отправки">${esc(msg)}</textarea><div class="row2"><button data-a="copy">${ic('copy')} Скопировать сообщение</button><span id="cpst" style="font-size:12px">${esc(S.cp||'Вставьте в мессенджер клиента. Пароль виден один раз, дальше только сброс. Адрес кабинета подставится, когда выберем домен')}</span></div></div>`}
 function contact(u){const lst=u.last?'вход '+fd(u.last.slice(0,10))+' '+u.last.slice(11):'ещё не заходил';
 if(S.rc===u.ph)return `<span class="ct"><span class="sm">Сбросить пароль ${fmtPh(u.ph)}? Старый перестанет работать.</span><button data-a="resetok" data-v="${u.ph}" class="sm-btn danger">Да, сбросить</button><button data-a="resetno" class="sm-btn">Отмена</button></span>`;
-return `<span class="ct"><span class="data" style="font-size:13px">${fmtPh(u.ph)}</span><span class="sm">${esc(u.nm||'')}${u.nm?' · ':''}${lst}</span><button data-a="reset" data-v="${u.ph}" class="sm-btn">Сбросить пароль</button></span>`}
+return `<span class="ct"><span class="data" style="font-size:13px">${fmtPh(u.ph)}</span><span class="sm">${esc(u.nm||'')}${u.nm?' · ':''}${lst}</span>${can_('acc')?`<button data-a="reset" data-v="${u.ph}" class="sm-btn">Сбросить пароль</button>`:''}</span>`}
 function vAccess(){const cls=clients();const q=S.acq.trim().toLowerCase();const has=c=>U.some(u=>u.cl===c);
 let list=cls.filter(c=>!q||(ccode(c)+' '+c).toLowerCase().includes(q)).sort((a,b)=>has(b)-has(a)||ru(a,b));const total=list.length;if(!S.aall&&!q)list=list.slice(0,12);
 const row=(l,r)=>`<div class="lrow">${l}<div class="r">${r}</div></div>`;const after=us=>S.acc&&us.some(u=>u.ph===S.acc.at)?accCard():'';
-return `<section class="card pad"><h2 class="h3">Выдать доступ клиенту</h2><p class="mu" style="margin:4px 0 0">Логин — номер телефона, пароль генерируется: слово и четыре цифры. Клиент видит только свои позиции.</p>
+return `${S.toast?toastH():''}<section class="card pad"><h2 class="h3">Выдать доступ клиенту</h2><p class="mu" style="margin:4px 0 0">Логин — номер телефона, пароль генерируется: слово и четыре цифры. Клиент видит только свои позиции.</p>
 <div class="agrid"><div><label class="lb" for="acl">Клиент</label><select id="acl"><option value="">Выберите клиента</option>${cls.map(c=>`<option value="${esc(c)}"${S.acl===c?' selected':''}>${ccode(c)} · ${esc(c)}</option>`).join('')}</select></div><div><label class="lb" for="anm">Имя контакта</label><input id="anm" value="${esc(S.anm)}" placeholder="Игорь Николаевич" autocomplete="off"></div><div><label class="lb" for="aph">Телефон</label><input id="aph" type="tel" value="${esc(S.aph)}" placeholder="8 900 123-45-67"></div><button data-a="grant" class="pri">Создать пароль</button></div>
 ${S.aerr?`<div class="er">${esc(S.aerr)}</div>`:''}${S.acc&&S.acc.at==='form'?accCard():''}</section>
 <div class="sh"><h2 class="h3">Клиенты · ${cls.length}</h2><div class="search" style="flex:0 1 300px">${ic('search')}<input id="acq" value="${esc(S.acq)}" placeholder="Код или название" aria-label="Найти клиента"></div></div>
 ${list.map(c=>{const us=U.filter(u=>u.cl===c);const pr=P.filter(p=>p.cl===c&&prod(p)).length,rd=P.filter(p=>p.cl===c&&p.st===5&&!p.cx).length,all=P.filter(p=>p.cl===c).length;
 return row(`<div><div style="font-size:14px"><span class="data mu">${ccode(c)}</span> ${clLink(c)}</div><div class="sm">в производстве ${pr} · готовы ${rd} · всего в графике ${all}</div></div>`,(us.length?us.map(contact).join(''):'<span class="sm">доступа нет</span>')+`<button data-a="asopen" data-v="${esc(c)}" class="sm-btn">${ic('eye',14)} Глазами клиента</button>`)+after(us)}).join('')||'<div class="empty">Клиент не найден</div>'}
 ${!S.aall&&!q&&total>12?`<button data-a="aall" class="wide-b">Показать всех клиентов (${total})</button>`:''}
-<h2 class="h3 mt">Сотрудники</h2>
-${U.filter(u=>u.role!=='client').map(u=>row(`<div><div style="font-size:14px">${esc(u.nm)} · ${RL[u.role]}</div><div class="sm">${esc(u.place)}</div></div>`,contact(Object.assign({},u,{nm:''})))+after([u])).join('')}`}
+<div class="sh"><h2 class="h3">Сотрудники · ${U.filter(u=>u.role!=='client').length}</h2>${S.emp&&S.emp.mode==='new'?'':'<button data-a="stnew" class="pri">'+ic('plus')+' Добавить сотрудника</button>'}</div>
+${S.emp&&S.emp.mode==='new'?empForm():''}${S.acc&&S.acc.at==='staff'?accCard():''}
+${U.filter(u=>u.role!=='client').map(u=>{const cs=capsOf(u);const own=Array.isArray(u.caps)&&u.caps.slice().sort().join()!==RCAPS[u.role].slice().sort().join();
+return row(`<div class="stl"><div class="stn">${esc(u.nm)} <span class="pl ${u.role==='admin'?'s5':u.role==='shift'?'sp':'s0'}">${RL[u.role]}</span>${S.u.ph===u.ph?' <span class="sm">· это вы</span>':''}</div><div class="sm">${esc(u.place||'')}${u.place?' · ':''}${cs.length?CAPS.filter(([k])=>cs.includes(k)).map(([,t])=>t.toLowerCase()).join(', '):'только просмотр'}${own?' · <b>своя настройка</b>':''}</div></div>`,contact(Object.assign({},u,{nm:''}))+`<button data-a="stedit" data-v="${u.ph}" class="sm-btn">${ic('sliders',14)} Права</button>`)+(S.emp&&S.emp.mode==='edit'&&S.emp.ph===u.ph?empForm():'')+after([u])}).join('')}`}
+/* форма сотрудника: новый или правка прав */
+function empForm(){const e=S.emp;const self=e.mode==='edit'&&S.u.ph===e.ph;
+return `<section class="card pad empf"><div class="dh"><h3 class="h3">${e.mode==='new'?'Новый сотрудник':'Права · '+esc(e.nm)}</h3><button data-a="stcx" class="ghost sm-btn" aria-label="Закрыть">${ic('x',16)}</button></div>
+${e.mode==='new'?`<div class="agrid empg"><div><label class="lb" for="enm">Имя</label><input id="enm" value="${esc(e.nm)}" placeholder="Сергей П." autocomplete="off"></div><div><label class="lb" for="eph">Телефон — логин</label><input id="eph" type="tel" value="${esc(e.tel)}" placeholder="8 900 123-45-67"></div><div><label class="lb" for="epl">Где работает</label><input id="epl" value="${esc(e.place)}" placeholder="Цех, Брянск" list="epls" autocomplete="off"><datalist id="epls">${uniq(U.filter(u=>u.place).map(u=>u.place)).map(x=>`<option value="${esc(x)}">`).join('')}</datalist></div></div>`:''}
+<fieldset class="nfs"><legend class="lb">Роль</legend><div class="rolg">${['admin','shift','master'].map(r=>`<label class="nfo${e.role===r?' on':''}${self&&r!==e.role?' dis':''}"><input type="radio" name="erole" data-er="${r}"${e.role===r?' checked':''}${self&&r!==e.role?' disabled':''}><span><b>${RL[r]}</b><span class="sm">${RDESC[r]}</span></span></label>`).join('')}</div>${self?'<div class="sm">Свою роль сменить нельзя — иначе можно остаться без доступа к этому разделу.</div>':''}</fieldset>
+<fieldset class="nfs"><legend class="lb">Возможности <span class="sm">· отмечены по роли, можно поправить</span></legend><div class="capg">${CAPS.map(([k,t,d])=>`<label class="nfc2 cap"><input type="checkbox" data-ec="${k}"${e.caps.includes(k)?' checked':''}${self&&k==='acc'?' disabled':''}><span><b>${t}</b><span class="sm">${d}</span></span></label>`).join('')}</div><div class="sm" style="margin-top:6px">Видеть график может каждый сотрудник.</div></fieldset>
+${S.eerr?`<div class="er">${esc(S.eerr)}</div>`:''}<div class="acts"><button data-a="stsave" class="pri">${e.mode==='new'?'Создать и выдать пароль':'Сохранить права'}</button><button data-a="stcx">Отмена</button></div></section>`}
 
 /* ---------- кабинет клиента ---------- */
 function rqParts(p,ro){const r=p.rq;if(p.pri||!prod(p))return {line:'',btn:''};
-if(!r||r.st==='off'){if(ro)return {line:'',btn:''};if(S.rqf===p.id)return {line:`<div class="rqf"><label class="lb" for="rqd">Нужен к (необязательно)</label><input type="date" id="rqd" value="${esc(S.rqd)}" min="${TODAY}"><div class="acts"><button data-a="rqsend" data-v="${p.id}" class="pri">Отправить просьбу</button><button data-a="rqcancel">Отмена</button></div><div class="sm" style="margin-top:8px">Офис посмотрит и ответит здесь же.</div></div>`,btn:''};return {line:'',btn:`<button data-a="rqopen" data-v="${p.id}">${ic('flag')} Попросить в первую очередь</button>`}}
+if(!r||r.st==='off'||(r.st==='no'&&S.rqf===p.id&&!ro)){if(ro)return {line:'',btn:''};if(S.rqf===p.id)return {line:`<div class="rqf"><label class="lb" for="rqd">Нужен к (необязательно)</label><input type="date" id="rqd" value="${esc(S.rqd)}" min="${TODAY}"><div class="acts"><button data-a="rqsend" data-v="${p.id}" class="pri">Отправить просьбу</button><button data-a="rqcancel">Отмена</button></div><div class="sm" style="margin-top:8px">Офис посмотрит и ответит здесь же.</div></div>`,btn:''};return {line:'',btn:`<button data-a="rqopen" data-v="${p.id}">${ic('flag')} Попросить в первую очередь</button>`}}
 if(r.st==='new')return {line:`<div class="rqs">${ic('flag',14)} Просьба отправлена ${fd(r.d)}${r.need?', нужен к '+fd(r.need):''} · ждёт ответа офиса ${ro?'':`<button data-a="rqwd" data-v="${p.id}" class="lnk">Отозвать</button>`}</div>`,btn:''};
 if(r.st==='ok')return {line:`<div class="rqs ok">${ic('ok',14)} Офис принял просьбу ${fd(r.ad)} — позиция в приоритете</div>`,btn:''};
 return {line:`<div class="rqs no">Офис не может ускорить эту позицию, менеджер свяжется. ${ro?'':`<button data-a="rqopen" data-v="${p.id}" class="lnk">Попросить снова</button>`}</div>`,btn:''}}
 function qSheet(kind){return `<div class="qs"><label class="lb" for="qtx">${kind==='pickup'?'Сообщение менеджеру об отгрузке':'Вопрос менеджеру'}</label><textarea id="qtx" rows="3">${esc(S.qt)}</textarea>${S.qerr?`<div class="er">${esc(S.qerr)}</div>`:''}<div class="acts"><button data-a="qsend" class="pri">Отправить менеджеру</button><button data-a="qcancel">Отмена</button></div><div class="sm">Ответ появится здесь же. Срочно — звоните: <a href="tel:${MGR.ph}" class="data">${fmtPh(MGR.ph)}</a></div></div>`}
-function cCard(p,ro){const cn=cRoute(p);const st=p.st;const pr=prod(p);const since=pr?p.sdt[st]:'';const open=!!S.ex[p.id];
-const stn=p.cx?'Отменена':cn[st];
-const now=p.cx?'Отменена — менеджер свяжется':st===6?`Отгружен${p.sd?' '+fdy(p.sd):''}`:st===5?`Готов, можно забирать${p.rd?' · с '+fd(p.rd):''}`:'Сейчас: '+cn[st].toLowerCase();
-const eta=pr?(p.cd&&p.cd>=TODAY?`Ожидаем к ${fd(p.cd)}`:'Срок уточняет менеджер'):'';const rq=rqParts(p,ro);
-const th=`<button class="cth" id="ce-${p.id}" data-a="cex" data-v="${p.id}" aria-expanded="${open}" aria-controls="cb-${p.id}"><span class="cc-n">${numB(p)}${esc(p.nm)}</span><span class="cmt">${open?(prio(p)&&pr?`<span class="pl on-fl">${ic('flag',13)} В приоритете</span>`:''):`${prio(p)&&pr?`<span class="fl" title="В приоритете">${ic('flag',13)}</span> `:''}${p.msgs.length?`<span class="qm" title="Есть переписка">${ic('msg',13)}</span> `:''}${esc(p.cx?stn:route(p)[st])}${p.cx?'':' · '+PCT[st]+' %'}`}</span>${ic('chev',16)}</button>`;
-if(!open)return `<article class="card cc col${st===5&&!p.cx?' rdy':''}">${th}${p.cx?'':`<div class="cbar"><i style="width:${PCT[st]}%"></i></div>`}</article>`;
+/* название позиции: вид отдельно, размер отдельно и через «×» */
+function nmSplit(p){const m=String(p.nm||'').match(/^(\D*?)\s*(\d.*)$/);return m?{k:m[1]||'Транспортер',z:m[2].replace(/\s*[xх×]\s*/gi,' × ')}:{k:p.nm||'',z:''}}
+const stCls=p=>p.cx?'cx':p.st===0?'s0':p.st<5?'sp':p.st===5?'s5':'s6';
+function cSeg(p){const d=p.cx?0:Math.min(p.st+1,6);return `<span class="cseg" aria-label="Этап ${d} из 6">${[0,1,2,3,4,5].map(i=>`<i${i<d?' class="d"':''}></i>`).join('')}<span>${p.cx?'отменена':p.st===6?'отгружен':d+' из 6'}</span></span>`}
+function cTimeline(p){const cn=cRoute(p).slice(0,6);const st=p.st;const eta=p.cd&&p.cd>=TODAY?'ожидаем к '+fd(p.cd):'срок уточняет менеджер';
+return `<ol class="ctl">${cn.map((s,i)=>{const done=i<st,cur=i===st;const d=p.sdt[i];const r=cur?(st===5?(d?'с '+fd(d):''):'сейчас'+(d?' · с '+fd(d):'')):done?(d?fd(d):''):i===5?eta:'';
+return `<li class="${done?'d':cur?'c':''}"${cur?' aria-current="step"':''}><b aria-hidden="true">${done?ic('check',11):''}</b><span>${s}</span><em>${r}</em></li>`}).join('')}</ol>`}
+function cCard(p,ro){const st=p.st;const pr=prod(p);const open=!!S.ex[p.id];const nm=nmSplit(p);
+const stn=p.cx?'Отменена':open?cRoute(p)[st]:route(p)[st];
+const now=p.cx?'Отменена — менеджер свяжется':st===6?`Отгружен${p.sd?' '+fdy(p.sd):''}`:'';const rq=rqParts(p,ro);
+const th=`<button class="cth" id="ce-${p.id}" data-a="cex" data-v="${p.id}" aria-expanded="${open}" aria-controls="cb-${p.id}"><span class="c1"><span class="ck">${numB(p)}${esc(nm.k)}${open&&p.br?' · '+esc(p.br):''}${prio(p)&&pr?` <span class="fl" title="В приоритете">${ic('flag',13)}</span>`:''}${p.msgs.length?` <span class="qm" title="Есть переписка">${ic('msg',13)}</span>`:''}</span><span class="pl ${stCls(p)}">${esc(stn)}</span>${ic('chev',16)}</span><span class="csz data">${esc(nm.z||p.nm)}</span>${open?'':cSeg(p)}</button>`;
+if(!open)return `<article class="card cc col${st===5&&!p.cx?' rdy':''}">${th}</article>`;
 return `<article class="card cc${st===5&&!p.cx?' rdy':''}">${th}<div id="cb-${p.id}">
-<div class="sm" style="margin-top:2px">${esc(p.br||'')}${p.art?(p.br?' · ':'')+'арт. <span class="data">'+esc(p.art)+'</span>':''} · ${qtyTxt(p)}</div>
-<div class="now">${esc(now)}${since?`<span class="mu" style="font-weight:400"> · с ${fd(since)}</span>`:''}</div>${eta?`<div class="eta">${eta}</div>`:''}
-${!p.cx?`<div class="prog"><div class="bar"><i style="width:${PCT[st]}%"></i></div><span class="sm data">${PCT[st]}%</span></div>`:''}
-${!p.cx&&st<6?`<div class="csteps">${stepper(p,false,true)}</div>`:''}
+<div class="sm">${p.art?'арт. <span class="data">'+esc(p.art)+'</span> · ':''}${qtyTxt(p)}</div>
+${now?`<div class="now">${esc(now)}</div>`:''}${!p.cx&&st<6?cTimeline(p):''}
 ${rq.line}${thread(p,'client')}
-${ro?'':S.qs===p.id?qSheet('q'):`<div class="cact">${rq.btn}<button data-a="qopen" data-v="${p.id}">${ic('msg')} Вопрос по транспортёру</button></div>`}</div>
+${ro?'':S.qs===p.id?qSheet('q'):`<div class="cact">${rq.btn}<button data-a="qopen" data-v="${p.id}">${ic('msg')} Вопрос</button></div>`}</div>
 </article>`}
-function nfPrev(cl,mode,em){const my=P.filter(p=>p.cl===cl&&prod(p)&&p.st<5);const p=my.find(x=>x.num)||my[0]||{num:'12',nm:'Транспортер',cl,st:3,cx:null};
-if(mode==='off')return `<div class="sm">Выбрано «Не присылать» — писем не будет, статус виден в кабинете.</div>`;
-const to=mode==='all'?Math.min(Math.max(p.st+1,1),4):5;const sub=`${mTit(p)} ${mWhat(p,to)}`;
-return `<div class="mail"><div class="sm">Пример письма · кому: <span id="nfto">${esc(em||'ваш e-mail')}</span></div><div class="b1" style="margin:4px 0 8px">${esc(sub)}</div><div>Здравствуйте!</div><div style="margin-top:6px">${esc(mTit(p))}${p.num?' ('+esc(p.nm)+')':''} ${esc(mWhat(p,to))}.${to===5?' Можно договариваться об отгрузке.':''}</div><div style="margin-top:6px"><u>Открыть личный кабинет</u></div><div class="sm" style="margin-top:8px">КД-Групп · менеджер ${esc(MGR.nm)}, ${fmtPh(MGR.ph)}</div></div><div class="sm" style="margin-top:6px">Это пример: в прототипе письма не отправляются.</div>`}
-function nfCard(cl,ro){const r=CL.get(cl)||{em:'',nf:'ready'};const open=S.nfo&&!ro;const d=S.nf||{em:r.em,mode:r.nf};
-const st=r.em?(r.nf==='off'?'Не присылать':`${NFM[r.nf]} · ${esc(r.em)}`):'Не настроено — письма не приходят';
-if(!open)return `<section class="card nfc" aria-label="Уведомления на почту">${S.toast&&!ro?toastH():''}<div class="nfh"><span>${ic('mail',18)}</span><div style="min-width:0;flex:1"><div class="b1">Уведомления на почту</div><div class="sm">${st}</div></div>${ro?'':`<button data-a="nfopen" class="sm-btn">${r.em?'Изменить':'Настроить'}</button>`}</div></section>`;
-return `<section class="card nfc" aria-label="Уведомления на почту"><div class="nfh"><span>${ic('mail',18)}</span><div class="b1" style="flex:1">Уведомления на почту</div><button data-a="nfcancel" class="ghost sm-btn" aria-label="Закрыть">${ic('x',16)}</button></div>
-<label class="lb" for="nfe">E-mail (необязательно)</label><input id="nfe" type="email" inputmode="email" autocomplete="email" value="${esc(d.em)}" placeholder="name@example.com">
-<fieldset class="nfs"><legend class="lb">Когда писать</legend>${['ready','all','off'].map(k=>`<label class="nfr"><input type="radio" name="nfm" data-nf="${k}"${d.mode===k?' checked':''}><span>${NFM[k]}${k==='ready'?' <span class="sm">· по умолчанию</span>':''}</span></label>`).join('')}</fieldset>
+/* уведомления клиента: быстрое подключение, сводка, подробная настройка */
+const nfMy=cl=>P.filter(p=>p.cl===cl&&!p.cx&&p.st<6).sort((a,b)=>b.st-a.st);
+function nfWhen(r){return r.nf==='off'?'выключены':r.nf==='ready'?'когда готов к отгрузке':r.nf==='all'?'о каждом этапе':'этапы: '+NFST.filter(([k])=>(r.ns||[]).includes(k)).map(([,t])=>t.toLowerCase()).join(', ')}
+function nfWhich(r){return Array.isArray(r.np)?`выбрано транспортёров: ${r.np.length}`:'все транспортёры, новые тоже'}
+function nfLast(cl){let l=null;P.forEach(p=>{if(p.cl!==cl)return;p.h.forEach(h=>{if(h.r==='sys'&&/^Письмо клиенту/.test(h.x)){const k=h.d+' '+h.tm;if(!l||k>l.k)l={k,h}}})});return l?l.h:null}
+function nfPrev(cl,d){const my=nfMy(cl).filter(p=>!Array.isArray(d.np)||d.np.includes(p.id));const p=my[0]||{num:'12',nm:'Транспортер',cl,st:3,cx:null};
+if(d.mode==='off')return `<div class="sm">Письма не придут. Статус всегда виден здесь, в кабинете.</div>`;
+const ss=d.mode==='pick'?(d.ns||[]):d.mode==='all'?[Math.min(p.st+1,6)]:[5];const to=ss.find(x=>x>p.st)||ss[0]||5;const sub=`${mTit(p)} ${mWhat(p,to)}`;
+return `<div class="mail"><div class="sm">Кому: <span id="nfto">${esc(d.em||'ваш e-mail')}</span></div><div class="b1" style="margin:4px 0 8px">${esc(sub)}</div><div>Здравствуйте!</div><div style="margin-top:6px">${esc(mTit(p))}${p.num?' ('+esc(p.nm)+')':''} ${esc(mWhat(p,to))}.${to===5?' Можно договариваться об отгрузке.':''}</div><div style="margin-top:6px"><u>Открыть личный кабинет</u></div><div class="sm" style="margin-top:8px">КД-Групп · менеджер ${esc(MGR.nm)}, ${fmtPh(MGR.ph)}</div></div>`}
+function nfCard(cl,ro){const r=CL.get(cl)||{em:'',nf:'ready'};const open=S.nfo&&!ro;const head=(sub,right)=>`<div class="nfh"><span class="nfi">${ic('mail',18)}</span><div style="min-width:0;flex:1"><div class="b1">Уведомления на почту</div>${sub?`<div class="sm">${sub}</div>`:''}</div>${right||''}</div>`;
+const tst=S.toast&&!ro&&!open?toastH():'';
+if(!open){/* переключатели видны всегда: «готов к отгрузке» и «каждый этап»; до подключения почты — черновик S.nfd */
+const dr=S.nfd||{ready:true,all:false};const all=r.em?r.nf==='all':dr.all;const rdy=r.em?(r.nf==='ready'||r.nf==='all'||(r.nf==='pick'&&(r.ns||[]).includes(5))):dr.ready||dr.all;
+const sw=(k,t,sub,on,dis)=>`<button class="tgr nsw" data-a="nfsw" data-v="${k}" role="switch" aria-checked="${on}"${dis||ro?' disabled':''}><span><b>${t}</b><span class="sm">${sub}</span></span><span class="tgl${on?' on':''}"><i></i></span></button>`;
+const sum=!rdy&&!all?'не присылать':all?'о каждом этапе':r.nf==='pick'&&r.em?nfWhen(r):'когда готов к отгрузке';const exp=!!S.nfexp;
+const sws=`<button class="nfx" data-a="nfexp" aria-expanded="${exp}"><span><b>О чём писать</b><span class="sm">${esc(sum)}</span></span>${ic('chev',18)}</button>${exp?`<div class="nsws">${sw('ready','Готов к отгрузке','одно письмо — можно забирать',rdy,all)}${sw('all','О каждом этапе','взяли в работу, материал, сборка, готов, отгружен',all)}</div>${r.nf==='pick'&&r.em?`<div class="sm nfpk">Своя настройка: ${esc(nfWhen(r))}</div>`:''}<button data-a="nfexp" class="lnk sm nfcol">Свернуть</button>`:''}`;
+let mail;
+if(!r.em)mail=ro?'<div class="nfst2 mu">Клиент ещё не указал почту.</div>':`<div class="nfq"><label class="sr" for="nfq">E-mail для писем</label><input id="nfq" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" value="${esc(S.nfqv||'')}"><button data-a="nfquick" class="pri">Подключить</button></div>${S.nfx?`<div class="er">${esc(S.nfx)}</div>`:''}<div class="sm nfcons">Пришлём письмо со ссылкой — подтвердите адрес, и письма начнут приходить. Отписаться можно в любом письме.</div>`;
+else if(!r.ok)mail=`<div class="nfpend"><div><b>Подтвердите адрес</b> <span class="data">${esc(r.em)}</span></div><div class="sm">Отправили письмо со ссылкой${r.sent?' '+fd(r.sent):''}. Пока адрес не подтверждён, письма о транспортёрах не приходят.</div>${ro?'':`<div class="nfpb"><button data-a="nfresend" class="sm-btn">Отправить ещё раз</button><button data-a="nfopen" class="sm-btn">Другой адрес</button><button data-a="nfl" class="lnk sm">${S.nfl?'Скрыть письмо':'Открыть письмо (демо)'}</button></div>`}</div>${S.nfl&&!ro?`<div class="mail"><div class="sm">Кому: ${esc(r.em)}</div><div class="b1" style="margin:4px 0 8px">КД-Групп: подтвердите почту для уведомлений</div><div>Здравствуйте! Вы указали этот адрес в личном кабинете КД-Групп. Нажмите кнопку — и мы будем сообщать о готовности ваших транспортёров.</div><button data-a="nfok" class="pri" style="margin-top:10px">Подтвердить адрес</button><div class="sm" style="margin-top:8px">Если это были не вы — просто удалите письмо.</div></div>`:''}`;
+else mail=`<div class="nfst2"><span class="nfok">${ic('check',14)}</span><span class="data">${esc(r.em)}</span><span class="sm">подтверждён</span>${ro?'':'<button data-a="nfopen" class="lnk sm">изменить</button>'}</div>`;
+const on=r.em&&r.ok&&r.nf!=='off';const last=r.em?nfLast(cl):null;
+return `<section class="card nfc" aria-label="Уведомления на почту">${tst}${head(!r.em?'Выберите, о чём писать, и укажите почту':!r.ok?'Ждём подтверждения адреса':on?'Включены':'Выключены')}
+${sws}${mail}
+${last?`<div class="sm nflast">Последнее письмо: ${fd(last.d)} ${last.tm} · ${esc(last.x.replace(/^Письмо клиенту: «|» → .*$/g,''))}</div>`:''}
+${ro?'':`<button data-a="nfopen" class="lnk sm nfmore">Тонкая настройка: этапы и транспортёры</button>`}</section>`}
+const d=S.nf;const my=nfMy(cl);const pick=Array.isArray(d.np);
+const opt=(k,t,sub)=>`<label class="nfo${d.mode===k?' on':''}"><input type="radio" name="nfm" data-nf="${k}"${d.mode===k?' checked':''}><span><b>${t}</b>${sub?`<span class="sm">${sub}</span>`:''}</span></label>`;
+return `<section class="card nfc nfopen" aria-label="Уведомления на почту">${head('',`<button data-a="nfcancel" class="ghost sm-btn" aria-label="Закрыть">${ic('x',16)}</button>`)}
+<label class="lb" for="nfe">E-mail</label><input id="nfe" type="email" inputmode="email" autocomplete="email" value="${esc(d.em)}" placeholder="name@example.com">
+<fieldset class="nfs"><legend class="lb">Когда писать</legend>
+${opt('ready','Когда готов к отгрузке','одно письмо — можно забирать')}
+${opt('all','О каждом этапе','взяли в работу, сборка, готов, отгружен')}
+${opt('pick','Только выбранные этапы','')}
+${d.mode==='pick'?`<div class="nfst">${NFST.map(([k,t])=>`<label class="nfc2"><input type="checkbox" data-ns="${k}"${(d.ns||[]).includes(k)?' checked':''}><span>${t}</span></label>`).join('')}</div>`:''}
+${opt('off','Не присылать','статус виден только в кабинете')}</fieldset>
+${d.mode!=='off'?`<fieldset class="nfs"><legend class="lb">По каким транспортёрам</legend>
+<div class="seg nfseg" role="group"><button data-a="nfpa" data-v="all" class="${pick?'':'on'}" aria-pressed="${!pick}">Все</button><button data-a="nfpa" data-v="pick" class="${pick?'on':''}" aria-pressed="${pick}">Выбрать</button></div>
+${pick?`<div class="nfpl">${my.map(p=>`<label class="nfc2"><input type="checkbox" data-np="${p.id}"${d.np.includes(p.id)?' checked':''}><span>${numB(p)}<span class="data">${esc(nmSplit(p).z||p.nm)}</span> <span class="sm">· ${esc(route(p)[p.st])}</span></span></label>`).join('')||'<div class="sm">Сейчас нет транспортёров в работе.</div>'}</div>`:'<div class="sm" style="margin-top:6px">Новые транспортёры попадут в рассылку сами.</div>'}</fieldset>`:''}
 ${S.nfx?`<div class="er">${esc(S.nfx)}</div>`:''}<div class="acts"><button data-a="nfsave" class="pri">Сохранить</button><button data-a="nfcancel">Отмена</button></div>
-${nfPrev(cl,d.mode,d.em)}</section>`}
+<details class="nfpv"><summary>Как выглядит письмо</summary>${nfPrev(cl,d)}</details></section>`}
 function vMine(){const cl=S.as||S.u.cl;const ro=!!S.as;const my=P.filter(p=>p.cl===cl);
 const g={work:my.filter(prod).sort((a,b)=>b.st-a.st),ready:my.filter(p=>p.st===5&&!p.cx).sort((a,b)=>ru(b.rd||'',a.rd||'')),done:my.filter(p=>p.st===6&&!p.cx).sort((a,b)=>ru(b.sd||'',a.sd||'')),cx:my.filter(p=>p.cx)};
-const tabs=[['work','В производстве'],['ready','Готовы'],['done','Отгружены']].concat(g.cx.length?[['cx','Отменены']]:[]);const list=g[S.ct]||[];const invs=uniq(list.map(invLabel));
+const tabs=[['work','в работе'],['ready','готовы'],['done','отгружены']].concat(g.cx.length?[['cx','отменены']]:[]);const list=g[S.ct]||[];const invs=uniq(list.map(invLabel));
+let last=null;my.forEach(p=>p.h.forEach(h=>{const k=h.d+' '+(h.tm||'');if(!last||k>last.k)last={k,d:h.d,tm:h.tm}}));
+const upd=last?(last.d===TODAY?'сегодня':fd(last.d))+(last.tm?' в '+last.tm:''):'';
+const ttl={work:'В производстве',ready:'Готовы к отгрузке',done:'Отгружены',cx:'Отменены'}[S.ct]||'';
+const ready=g.ready.length?`<section class="readyb" aria-label="Можно забирать"><div class="rbh">${ic('ok',20)} Можно забирать — ${g.ready.length}</div><div class="rbl">${g.ready.slice(0,4).map(p=>`<div>${numB(p)}<span class="data">${esc(nmSplit(p).z||p.nm)}</span> <span class="sm">· с ${p.rd?fd(p.rd):'—'}</span></div>`).join('')}${g.ready.length>4?`<div class="sm">и ещё ${g.ready.length-4}</div>`:''}</div>${ro?'':S.qs==='pickup'?qSheet('pickup'):'<button data-a="pickup" class="pri wide">Договориться об отгрузке</button>'}</section>`:'';
+const mi=MGR.nm.split(/\s+/).map(w=>w[0]).join('').slice(0,2);
 return `<div class="mine">
 ${ro?`<div class="asb">${ic('eye')} <span>Вы смотрите кабинет глазами клиента <b>${esc(cl)}</b>. Кнопки клиента здесь не работают.</span><button data-a="asx" class="sm-btn">Вернуться к доступам</button></div>`:''}
-<h2 class="h2">Ваши транспортёры</h2><div class="mu">${esc(cl)} · статус меняется, как только производство отмечает стадию</div>
-${g.ready.length?`<section class="readyb"><div class="rbh">${ic('ok',20)} Можно забирать: ${g.ready.length}</div><div class="rbl">${g.ready.slice(0,4).map(p=>`<div>${numB(p)}${esc(p.nm)} <span class="sm">· готов${p.rd?' с '+fd(p.rd):''}</span></div>`).join('')}${g.ready.length>4?`<div class="sm">и ещё ${g.ready.length-4}</div>`:''}</div>${ro?'':S.qs==='pickup'?qSheet('pickup'):'<button data-a="pickup" class="pri">Договориться об отгрузке</button>'}</section>`:''}
-<div class="seg ctabs" role="group" aria-label="Группы позиций">${tabs.map(([k,t])=>`<button data-a="ct" data-v="${k}" class="${S.ct===k?'on':''}">${t}<span class="tn">${g[k].length}</span></button>`).join('')}</div>
-${list.length>1?`<div class="cexa"><button data-a="cexa" data-v="${list.map(p=>p.id).join(',')}" class="ghost sm-btn">${list.every(p=>S.ex[p.id])?'Свернуть все':'Развернуть все'}</button></div>`:''}
-${invs.map(i=>`<div class="inv">${esc(i)}</div>${list.filter(p=>invLabel(p)===i).map(p=>cCard(p,ro)).join('')}`).join('')||`<div class="empty">${S.ct==='work'?'Сейчас в производстве ничего нет':'Здесь пока пусто'}</div>`}
-${nfCard(cl,ro)}
-<div class="mgr">${ic('phone',14)} <span>Менеджер КД-Групп: ${esc(MGR.nm)}, <a href="tel:${MGR.ph}" class="data">${fmtPh(MGR.ph)}</a></span></div></div>`}
+<div class="mhd"><h1 class="mh1">${esc(cl)}</h1><div class="mu">${upd?'Последнее изменение '+upd+' · ':''}статус меняется, как только производство отмечает стадию</div></div>
+<div class="mgrid"><div class="mside">${ready}</div>
+<div class="mmain"><div class="cstats" role="group" aria-label="Группы позиций">${tabs.map(([k,t])=>`<button data-a="ct" data-v="${k}" class="${S.ct===k?'on':''}${k==='ready'&&g.ready.length?' rd':''}" aria-pressed="${S.ct===k}"><b>${g[k].length}</b><span>${t}</span></button>`).join('')}</div>
+<div class="clh"><span class="h3">${ttl}</span>${list.length>1?`<button data-a="cexa" data-v="${list.map(p=>p.id).join(',')}" class="ghost sm-btn">${list.every(p=>S.ex[p.id])?'Свернуть все':'Развернуть все'}</button>`:''}</div>
+${invs.map(i=>`<div class="inv">${esc(i)}</div>${list.filter(p=>invLabel(p)===i).map(p=>cCard(p,ro)).join('')}`).join('')||`<div class="empty">${S.ct==='work'?'Сейчас в производстве ничего нет':'Здесь пока пусто'}</div>`}</div>
+<div class="mside mside2"><section class="card mgc" aria-label="Ваш менеджер"><span class="ava" aria-hidden="true">${esc(mi)}</span><div class="mgt"><div class="b1">${esc(MGR.nm)}</div><div class="sm">ваш менеджер КД-Групп</div><div class="sm data">${fmtPh(MGR.ph)}</div></div><a class="abtn" href="tel:${MGR.ph}">${ic('phone',16)} Позвонить</a></section>
+${nfCard(cl,ro)}</div></div></div>`}
 
 /* ---------- сборка страницы ---------- */
-const FOOT='<p class="foot">Прототип: все 282 строки «Графика производства 2026», названия клиентов изменены. Стадии позиций в работе, сроки для клиента, просьбы, имена сотрудников и телефоны — для показа. Изменения живут до перезагрузки страницы, выбор колонок запоминается на этом устройстве. Вложения и письма клиентам — имитация.</p>';
+const FOOT='';
 function paneMain(){const v=S.view;return v==='client'?vClient():v==='grid'?vGrid():v==='shop'?vShop():v==='access'?vAccess():v==='mine'?vMine():vDetail()}
 function paneHTML(){if(!S.u)return vLogin();return bar()+'<main'+(S.view==='detail'||S.view==='access'||S.view==='client'?' class="narrow"':'')+'>'+paneMain()+'</main>'}
 function duoHead(){const l=DUO.L.u,r=DUO.R.u;const rc=r&&r.role==='client';return `<div class="card duoh"><div class="dl"><div class="b1">${ic('screens')} Показ: два экрана</div><div class="sm">Слева офис, справа телефон ${rc?'клиента':'цеха'}. Нажмите что-нибудь справа — слева это появится сразу, без звонка. Сейчас в графике: ${esc(l?l.nm:'—')} (офис), ${esc(r?(rc?r.cl:r.nm):'—')} (${rc?'клиент':'цех'}).</div></div><div class="dr"><div class="seg" role="group" aria-label="Кто справа"><button data-a="duor" data-v="shift" class="${r&&r.role==='shift'?'on':''}">Справа: цех</button><button data-a="duor" data-v="client" class="${rc?'on':''}">Справа: клиент</button></div><button data-a="duox">Выйти из показа</button></div></div>`}
-function render(){const ae=document.activeElement;let fid=null,fpn=null,ss=null;if(ae&&app.contains(ae)&&ae.id){fid=ae.id;const pn=ae.closest('[data-pane]');fpn=pn?pn.dataset.pane:null;try{ss=ae.selectionStart}catch(e){}}
+const TH={};
+function glass(anim){app.querySelectorAll('.seg,.nav').forEach(g=>{const on=g.querySelector(':scope>button.on');let t=g.querySelector(':scope>.thumb');if(!on){if(t)t.remove();g.classList.remove('gl');return}
+if(!t){t=document.createElement('span');t.className='thumb';t.setAttribute('aria-hidden','true');g.prepend(t)}g.classList.add('gl');
+const pn=g.closest('[data-pane]');const k=(pn?pn.dataset.pane:'')+'|'+[...g.querySelectorAll(':scope>button')].map(b=>b.dataset.v||b.textContent).join('|');
+const x=on.offsetLeft,w=on.offsetWidth,pv=TH[k];TH[k]={x,w};t.style.top=on.offsetTop+'px';t.style.height=on.offsetHeight+'px';
+const P0=(px,pw)=>'translateX('+(px-(w-pw)/2)+'px) scaleX('+(pw/w)+')';
+if(anim&&pv&&(pv.x!==x||pv.w!==w)&&!matchMedia('(prefers-reduced-motion: reduce)').matches){t.style.transition='none';t.style.width=w+'px';t.style.transform=P0(pv.x,pv.w);t.classList.add('lift');t.getBoundingClientRect();t.style.transition='';let gone=false;const go=()=>{if(gone)return;gone=true;t.style.transform=P0(x,w);setTimeout(()=>t.classList.remove('lift'),280)};requestAnimationFrame(()=>requestAnimationFrame(go));setTimeout(go,400)}
+else{t.style.transition='none';t.style.width=w+'px';t.style.transform=P0(x,w);t.getBoundingClientRect();t.style.transition=''}})}
+app.addEventListener('pointerdown',e=>{const b=e.target.closest('.gl>button');if(!b)return;const t=b.parentElement.querySelector(':scope>.thumb');if(t)t.classList.add('lift')});
+app.addEventListener('pointerup',()=>setTimeout(()=>app.querySelectorAll('.thumb.lift').forEach(t=>{if(!t.style.transition)t.classList.remove('lift')}),220));
+addEventListener('resize',()=>glass(false));
+app.addEventListener('pointerdown',()=>{PD=true},true);['click','keydown','submit','change'].forEach(k=>app.addEventListener(k,()=>{INACT=true;USED.clear()},true));addEventListener('pointerup',()=>{PD=false;setTimeout(flushSoft,350)},true);addEventListener('pointercancel',()=>{PD=false;setTimeout(flushSoft,0)},true);addEventListener('click',()=>setTimeout(flushSoft,0));
+app.addEventListener('compositionstart',()=>{COMP=true},true);app.addEventListener('compositionend',e=>{COMP=false;const t=e.target;setTimeout(()=>{if(t&&t.isConnected)t.dispatchEvent(new Event('input',{bubbles:true}));flushSoft()},0)},true);
+app.addEventListener('click',e=>{const b=e.target.closest('[data-thm]');if(!b){if(!e.target.closest('.thw'))thmClose();return}const w=b.closest('.thw');
+if(!w.classList.contains('open')){thmClose();w.classList.add('open');return}
+const v=b.dataset.thm;if(v!==THM){THM=v;try{localStorage.setItem('kd-erp-theme',v)}catch(x){}applyThm();app.querySelectorAll('.thw button').forEach(x=>{const on=x.dataset.thm===v;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on)})}
+w.classList.remove('open')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')thmClose()});
+/* перерисовка не должна стирать то, что человек ещё не сохранил (проверка 10.10: F01, F04, F10, F31) */
+const fCur=el=>el.type==='checkbox'||el.type==='radio'?el.checked:el.value;
+const fBase=el=>el.type==='checkbox'||el.type==='radio'?el.defaultChecked:el.tagName==='SELECT'?((([...el.options].find(o=>o.defaultSelected)||el.options[0])||{}).value??''):el.defaultValue;
+const paneOf=el=>{const pn=el&&el.closest?el.closest('[data-pane]'):null;return pn?pn.dataset.pane:''};
+const SCR='.fvals,.colb,.tbl,.chips,.legp,.flist,.pane.pr,.cstats,.seg';
+const views=()=>DUO?(DUO.L.view+'|'+DUO.R.view):S.view;
+function render(){const ae=document.activeElement;let fid=null,fpn=null,ss=null,fkey=null;if(ae&&app.contains(ae)&&ae.id){fid=ae.id;const pn=ae.closest('[data-pane]');fpn=pn?pn.dataset.pane:null;try{ss=ae.selectionStart}catch(e){}}else if(ae&&app.contains(ae)&&ae.dataset&&ae.dataset.a){fkey={sel:'[data-a="'+CSS.escape(ae.dataset.a)+'"]'+(ae.dataset.v!=null?'[data-v="'+CSS.escape(ae.dataset.v)+'"]':''),pn:paneOf(ae)}}else if(ae&&app.contains(ae)&&ae.dataset){const k=Object.keys(ae.dataset)[0];if(k){const at='data-'+k.replace(/[A-Z]/g,c=>'-'+c.toLowerCase());fkey={sel:'['+at+'="'+CSS.escape(ae.dataset[k])+'"]',pn:paneOf(ae)}}}
+const kept=[];app.querySelectorAll('input[id],textarea[id],select[id]').forEach(el=>{if(el.type==='file'||USED.has(el.id))return;const c=fCur(el),b=fBase(el);if(c!==b)kept.push({id:el.id,pn:paneOf(el),c,b})});INACT=false;USED.clear();
+const v0=views(),sc0=[...app.querySelectorAll(SCR)].map(el=>[el.scrollTop,el.scrollLeft]),dt0=[...app.querySelectorAll('details')].map(d=>d.open);
 const keep=S;let h;const cb0=app.querySelector('.colb'),cbs=cb0?cb0.scrollTop:0;
 if(DUO){S=DUO.L;const l=paneHTML();S=DUO.R;const r=paneHTML();S=keep;h=`<div class="wrap wide">${duoHead()}<div class="duo"><section class="pane cq" data-pane="L">${l}</section><section class="pane cq pr" data-pane="R">${r}</section></div>${FOOT}</div>`}
-else h=`<div class="wrap"><div class="cq">${paneHTML()}</div>${FOOT}</div>`;
+else h=`<div class="wrap${S.u&&S.view==='mine'?' cw':''}"><div class="cq">${paneHTML()}</div>${FOOT}</div>`;
 app.innerHTML=h+(VW?viewer():'');document.body.style.overflow=VW?'hidden':'';
+kept.forEach(k=>{const sc=k.pn?app.querySelector('[data-pane="'+k.pn+'"]'):app;const el=sc&&sc.querySelector('#'+CSS.escape(k.id));if(!el||fBase(el)!==k.b||fCur(el)===k.c)return;if(typeof k.c==='boolean')el.checked=k.c;else el.value=k.c});
+if(views()===v0){const D=[...app.querySelectorAll('details')];if(D.length===dt0.length)D.forEach((d,i)=>{if(dt0[i]&&!d.open)d.open=true});const L=[...app.querySelectorAll(SCR)];if(L.length===sc0.length)L.forEach((el,i)=>{if(sc0[i][0])el.scrollTop=sc0[i][0];if(sc0[i][1])el.scrollLeft=sc0[i][1]})}
+if(!fid&&fkey){const sc=fkey.pn?app.querySelector('[data-pane="'+fkey.pn+'"]'):app;const el=sc&&sc.querySelector(fkey.sel);if(el)try{el.focus({preventScroll:true})}catch(e){}}
 if(fid){const sc=fpn?app.querySelector('[data-pane="'+fpn+'"]'):app;const el=sc&&sc.querySelector('#'+fid);if(el){try{el.focus({preventScroll:true});if(ss!=null)el.setSelectionRange(ss,ss)}catch(e){}}}
 placePop();wireHsb();const cb1=app.querySelector('.colb');if(cb1)cb1.scrollTop=cbs;
-const tops=DUO?[DUO.L,DUO.R]:[S];tops.forEach(s=>{if(s.top){s.top=false;const y=s.sy||0;s.sy=0;if(!DUO){try{scrollTo(0,y)}catch(e){}}else{const pn=app.querySelector('[data-pane="'+(s===DUO.R?'R':'L')+'"]');if(pn&&s===DUO.R)pn.scrollTop=y}}})}
+{const hd=app.querySelector('.top');if(hd)document.documentElement.style.setProperty('--toph',hd.offsetHeight+'px')}glass(true);const tops=DUO?[DUO.L,DUO.R]:[S];tops.forEach(s=>{if(s.top){s.top=false;const y=s.sy||0;s.sy=0;if(!DUO){try{scrollTo(0,y)}catch(e){}}else{const pn=app.querySelector('[data-pane="'+(s===DUO.R?'R':'L')+'"]');if(pn&&s===DUO.R)pn.scrollTop=y}}})}
 function login(u){S.u=u;S.view=HOME[u.role];colLoad(u);S.lerr='';S.top=true;u.last=TODAY+' '+hm()}
 function doLogin(){const ph=normPh(S.lph);if(!ph){S.lerr='Нужен мобильный номер: 10 цифр после +7';return render()}const pw=String(S.lpw||'').trim();const u=U.find(x=>x.ph===ph&&x.pw===pw);if(!u){S.lerr=/[а-яё]/i.test(pw)?'Пароль набирается латиницей — переключите раскладку и введите снова':'Неверный телефон или пароль. Пароль — из сообщения КД-Групп';return render()}login(u);sync();render()}
 function startDuo(right){S=fresh();login(U[0]);const L=S;S=fresh();login(right==='client'?U[3]:U[1]);if(right!=='client')S.view='shop';DUO={L,R:S};CUR='L';S=L}
@@ -918,17 +1690,22 @@ if(!cl){S.aerr='Выберите клиента';return render()}if(!ph){S.aerr=
 const ex=U.find(u=>u.ph===ph);if(ex){S.aerr=`Этот телефон уже заведён${ex.cl?' у клиента '+ex.cl:''} — сбросьте ему пароль в списке ниже`;return render()}
 const pw=gen();U.push({ph,pw,role:'client',nm:S.anm.trim(),cl,last:''});S.aerr='';S.aph='';S.acc={ph,pw,name:cl,nm:S.anm.trim(),client:true,isNew:true,at:'form'};S.anm='';S.cp='';sync();render()}
 function copy(){const ta=$('msg');const done=m=>{S.cp=m;const s=$('cpst');if(s)s.textContent=m};const fb=()=>{ta.select();done('Текст выделен — нажмите Cmd+C (Ctrl+C)')};try{navigator.clipboard.writeText(ta.value).then(()=>done('Скопировано — вставьте в мессенджер клиента'),fb)}catch(err){fb()}}
-async function exportCsv(){const cols=visCols();const rs=sorted(rows());const q=v=>{v=String(v==null?'':v);return /[;"\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+async function exportCsv(){const cols=visCols();const rs=sorted(rows());const q=v=>{v=String(v==null?'':v);
+  /* F96: начало как у формулы — не исполнять; F42: коды вида 30/6, 12.5, 0123 Excel превращает в даты и числа — отдаём текстом */
+  if(/^[=@\t\r]/.test(v)||/^[+-][^\d\s]/.test(v))v="'"+v;else if(/^\d{1,2}[\/.]\d{1,2}$/.test(v)||/^0\d+$/.test(v)||/^\d{12,}$/.test(v))v='="'+v+'"';
+  return /[;"\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
 const lines=[cols.map(c=>q(c.t||'Приоритет')).join(';')].concat(rs.map(p=>cols.map(c=>q(c.v(p)==='нет'?'':c.v(p))).join(';')));
 try{await DL.save({filename:'grafik-proizvodstva-'+TODAY+'.csv',data:'﻿'+lines.join('\r\n')});S.toast={m:`Файл передан на сохранение: ${rs.length} строк`}}catch(e){S.toast={m:e&&e.code==='declined'?'Сохранение отменено':'Не получилось сохранить файл в этом окне'}}render()}
-const navReset=()=>{VW=null;S.atc=null;S.d=null;S.toast=null;S.fp=null;S.mf=false;S.of=false;S.ed=false;S.o=null;S.cf=null;S.cxo=false;S.hl=null;S.acc=null;S.as=null;S.qs=null;S.rqf=null;S.cdd=null;S.rc=null;S.top=true};
+const navReset=()=>{VW=null;S.um=false;S.atc=null;S.d=null;S.toast=null;S.fp=null;S.mf=false;S.of=false;S.ed=false;S.o=null;S.cf=null;S.cxo=false;S.hl=null;S.acc=null;S.as=null;S.qs=null;S.rqf=null;S.cdd=null;S.rc=null;S.top=true};
 
-app.addEventListener('click',e=>{pick(e.target);if((S.leg||S.cpop)&&!e.target.closest('.legw')){S.leg=false;S.cpop=false;if(!e.target.closest('[data-a]')){render();return}}const t=e.target.closest('[data-a]');if(!t||!app.contains(t))return;pick(t);const a=t.dataset.a,v=t.dataset.v;const p=S.d?byId(S.d):null;
+app.addEventListener('click',e=>{pick(e.target);if(S.um&&!e.target.closest('.umw')){S.um=false;if(!e.target.closest('[data-a]')){render();return}}if((S.leg||S.cpop)&&!e.target.closest('.legw')){S.leg=false;S.cpop=false;if(!e.target.closest('[data-a]')){render();return}}const t=e.target.closest('[data-a]');if(!t||!app.contains(t))return;pick(t);const a=t.dataset.a,v=t.dataset.v;if(e.detail>1&&(ONCE.has(a)||performance.now()-ONCE_T<600))return;if(ONCE.has(a))ONCE_T=performance.now();{const k=denied(a,v);if(k){S.toast={m:`Нет права «${CAPS.find(c=>c[0]===k)[1]}». Его выдаёт администратор в «Клиенты и доступы»`};render();return}}const p=S.d?byId(S.d):null;
 switch(a){
 case 'demo':{const u=U[+t.dataset.i];S.lph=fmtPh(u.ph);S.lpw=u.pw;doLogin();break}
 case 'duo':startDuo(v);render();break;
 case 'duor':{const ns=fresh();const keep=S;S=ns;login(v==='client'?U[3]:U[1]);if(v!=='client')ns.view='shop';S=keep;DUO.R=ns;render();break}
 case 'duox':S=DUO.L;DUO=null;CUR=null;S.top=true;render();break;
+case 'um':S.um=!S.um;render();break;
+
 case 'out':VW=null;if(DUO){DUO[CUR]=fresh();S=DUO[CUR]}else S=fresh();render();break;
 case 'pwv':S.pwv=!S.pwv;render();break;
 case 'policy':S.pol=!S.pol;render();break;
@@ -940,10 +1717,31 @@ case 'tdc':S.tdc=!S.tdc;TD0=S.tdc;try{localStorage.setItem(TDK,S.tdc?'1':'0')}ca
 case 'ccard':{if(S.u.role==='client')break;const fr=S.view==='client'?S.cfrom:{view:S.view,d:S.d,from:S.from};const y=DUO?(root().scrollTop||0):scrollY;navReset();S.cfrom=Object.assign(fr,{y});S.cc=v;S.view='client';S.clim=30;render();break}
 case 'cback':{const f=S.cfrom||{view:'grid'};navReset();S.view=f.view==='client'?'grid':f.view;if(f.view==='detail'){S.d=f.d;S.from=f.from||'grid'}S.cfrom=null;S.sy=f.y||0;render();break}
 case 'cgrid':{const c=S.cc;navReset();S.view='grid';S.chip='all';S.q='';S.f={cc:new Set([ccode(c)])};render();break}
-case 'csave':{const r=clReg(S.cc);const em=$('cem')?$('cem').value.trim():r.em;if(em&&!EMRE.test(em)){S.toast={m:'Проверьте e-mail: нужен адрес вида name@domain.ru. Ничего не сохранено'};render();break}r.c1=($('c1')||{value:r.c1}).value.trim();r.note=($('cnote')||{value:r.note}).value.trim();if($('cem')){r.em=em;r.nf=$('cnf').value}sync();S.toast={m:'Сохранено: код в 1С, заметка, уведомления'};render();break}
-case 'nfopen':{const r=CL.get(S.u.cl)||{em:'',nf:'ready'};S.nfo=true;S.nf={em:r.em,mode:r.nf};S.nfx='';S.toast=null;render();break}
-case 'nfcancel':S.nfo=false;S.nf=null;S.nfx='';render();break;
-case 'nfsave':{const d=S.nf,em=String(d.em||'').trim();if(em&&!EMRE.test(em)){S.nfx='Проверьте адрес: нужен вид name@domain.ru';render();break}if(!em&&d.mode!=='off'){S.nfx='Впишите e-mail или выберите «Не присылать»';render();break}const r=clReg(S.u.cl);r.em=em;r.nf=d.mode;S.nfo=false;S.nf=null;S.nfx='';sync();S.toast={m:em&&d.mode!=='off'?`Сохранено: ${NFM[d.mode].toLowerCase()} — на ${em}`:'Сохранено: письма не приходят'};render();break}
+case 'csave':{const r=clReg(S.cc);const em=$('cem')?$('cem').value.trim():r.em;if(em&&!EMRE.test(em)){USED.clear();S.toast={m:'Проверьте e-mail: нужен адрес вида name@domain.ru. Ничего не сохранено'};render();break}r.c1=($('c1')||{value:r.c1}).value.trim();r.note=($('cnote')||{value:r.note}).value.trim();if($('cem')){if(em!==r.em){r.ok=false;r.sent=em?TODAY:''}r.em=em;r.nf=$('cnf').value;if(r.nf==='pick'&&!(r.ns&&r.ns.length))r.ns=[5]}sync();S.toast={m:'Сохранено: код в 1С, заметка, уведомления'+(r.em&&!r.ok&&r.nf!=='off'?'. Клиенту ушло письмо для подтверждения адреса — до подтверждения письма не приходят':'')};render();break}
+case 'nfopen':{const r=CL.get(S.u.cl)||{em:'',nf:'ready'};const q=$('nfq');S.nfo=true;S.nf={em:r.em||(q?q.value.trim():''),mode:r.em?r.nf:'ready',ns:(r.ns||[5]).slice(),np:Array.isArray(r.np)?r.np.slice():null};S.nfx='';S.toast=null;render();break}
+case 'nfquick':{const em=($('nfq')||{value:''}).value.trim();S.nfqv=em;if(!EMRE.test(em)){S.nfx=em?'Проверьте адрес: нужен вид name@domain.ru':'Впишите e-mail';render();break}const d=S.nfd||{ready:true,all:false};if(!d.ready&&!d.all){S.nfx='Включите хотя бы один переключатель';render();break}const r=clReg(S.u.cl);r.em=em;r.ok=false;r.sent=TODAY;r.nf=d.all?'all':'ready';r.np=null;S.nfx='';S.nfqv='';S.nfd=null;S.nfl=false;sync();S.toast={m:`Письмо со ссылкой отправлено на ${em} — подтвердите адрес`};render();break}
+case 'nfsw':{const r=clReg(S.u.cl);if(!r.em){const d=S.nfd||{ready:true,all:false};if(v==='all')d.all=!d.all;else d.ready=!d.ready;S.nfd=d;S.nfx='';render();break}
+  if(v==='all')r.nf=r.nf==='all'?'ready':'all';else if(r.nf==='pick'){const ns=r.ns||[];r.ns=ns.includes(5)?ns.filter(x=>x!==5):ns.concat(5);if(!r.ns.length)r.nf='off'}else r.nf=r.nf==='off'?'ready':'off';
+  sync();S.toast={m:r.nf==='off'?'Письма выключены. Статус по-прежнему виден в кабинете':'Будем писать: '+nfWhen(r)};render();break}
+case 'nfresend':{const r=clReg(S.u.cl);r.sent=TODAY;S.toast={m:'Отправили письмо ещё раз на '+r.em};render();break}
+case 'nfl':S.nfl=!S.nfl;render();break;
+case 'nfexp':S.nfexp=!S.nfexp;render();break;
+case 'nfok':{const r=clReg(S.u.cl);r.ok=true;S.nfl=false;sync();S.toast={m:'Адрес подтверждён — письма будут приходить: '+nfWhen(r)};render();break}
+case 'dmenu':S.dmenu=!S.dmenu;render();break;
+case 'ie':S.ie=v;S.iee='';render();{const x=$('iev');if(x){x.focus();if(x.type==='text')x.select()}}break;
+case 'iecx':S.ie=null;S.iee='';render();break;
+case 'iesave':{const k=S.ie,x=($('iev')||{value:''}).value.trim();
+  if(k==='num'&&x){const dup=P.find(q=>q.cl===p.cl&&q.num===x&&!q.cx&&q.id!==p.id);if(dup){S.iee=`У клиента уже есть № ${x}: ${dup.nm}`;render();{const e=$('iev');if(e)e.focus()}break}}
+  const L={inv:'№ счёта',num:'номер клиента',plan:'план выдачи',cd:'срок для клиента'}[k];const old=p[k]||'';
+  if(x!==old){p[k]=x;p.h.push(ev(x?`${L}: ${k==='plan'||k==='cd'?fdy(x):x}`:`${L} убран`));touch(p);
+    S.toast={m:k==='cd'?(x?(x>=TODAY?`Клиент видит «ожидаем к ${fd(x)}»`:'Дата в прошлом — клиент видит «срок уточняет менеджер»'):'Срок убран — клиент видит «срок уточняет менеджер»'):`Сохранено: ${L}`}}
+  S.ie=null;S.iee='';render();break}
+case 'hf':S.hf=v;S.hall=false;render();break;
+case 'hall':S.hall=true;render();break;
+case 'sv':S.sv=SV0=v==='c'?'c':'l';try{localStorage.setItem('kd-erp-shopview',S.sv)}catch(e){}render();break;
+case 'nfpa':S.nf.np=v==='pick'?(S.nf.np||nfMy(S.u.cl).map(p=>p.id)):null;S.nfx='';render();break;
+case 'nfcancel':S.nfo=false;S.nf=null;S.nfx='';S.nfqv='';render();break;
+case 'nfsave':{const d=S.nf,em=String(d.em||'').trim();if(em&&!EMRE.test(em)){S.nfx='Проверьте адрес: нужен вид name@domain.ru';render();break}if(!em&&d.mode!=='off'){S.nfx='Впишите e-mail или выберите «Не присылать»';render();break}if(d.mode==='pick'&&!(d.ns||[]).length){S.nfx='Отметьте хотя бы один этап';render();break}if(d.mode!=='off'&&Array.isArray(d.np)&&!d.np.length){S.nfx='Отметьте хотя бы один транспортёр или выберите «Все»';render();break}const r=clReg(S.u.cl);if(em!==r.em){r.ok=false;r.sent=TODAY}r.em=em;r.nf=d.mode;r.ns=(d.ns||[]).slice().sort();r.np=d.mode==='off'?r.np:d.np;S.nfo=false;S.nf=null;S.nfx='';sync();S.toast={m:em&&d.mode!=='off'?`Сохранено: ${nfWhen(r)} — на ${em}`:'Сохранено: письма не приходят'};render();break}
 case 'cmore':S.clim=(S.clim||30)+50;render();break;
 case 'leg':S.leg=!S.leg;S.cpop=false;S.fp=null;render();break;
 case 'chip':S.chip=v;S.lim=50;if(S.view!=='grid'){navReset();S.view='grid'}render();break;
@@ -958,16 +1756,16 @@ case 'more':S.lim=(S.lim||50)+50;render();break;
 case 'tx':S.toast=null;render();break;
 case 'showall':S.f={};S.chip='all';S.q='';S.toast=null;render();break;
 case 'xls':if(DL)exportCsv();break;
-case 'open':if(S.view!=='detail'){S.from=S.view;S.sy0=DUO?(root().scrollTop||0):scrollY}S.d=+v;S.view='detail';S.toast=null;S.cf=null;S.ed=false;S.o=null;S.cxo=false;S.cerr='';S.cdd=null;S.rep='';S.top=true;render();break;
-case 'back':S.view=S.from;S.d=null;S.toast=null;S.cf=null;S.ed=false;S.o=null;S.cxo=false;S.top=true;S.sy=S.sy0;render();break;
+case 'open':if(S.view!=='detail'){S.from=S.view;S.sy0=DUO?(root().scrollTop||0):scrollY}S.of=false;S.d=+v;S.view='detail';S.dmenu=false;S.ie=null;S.hf='all';S.hall=false;S.toast=null;S.cf=null;S.ed=false;S.o=null;S.cxo=false;S.cerr='';S.cdd=null;S.rep='';S.top=true;render();break;
+case 'back':S.of=false;S.dmenu=false;S.ie=null;S.hf='all';S.hall=false;S.view=S.from;S.d=null;S.toast=null;S.cf=null;S.ed=false;S.o=null;S.cxo=false;S.top=true;S.sy=S.sy0;render();break;
 case 'next':if(p.st!==+t.dataset.f){S.toast={m:`Позицию уже изменили: сейчас «${stLabel(p)}». Проверьте и нажмите снова`};render();break}askStage(p,p.st+1);break;
-case 'prev':doStage(p,p.st-1);break;
+case 'prev':askStage(p,p.st-1);break;
 case 'setst':askStage(p,+v);break;
 case 'ship':doStage(p,6);break;
-case 'cfok':{const q=byId(S.cf.id),to=S.cf.to;if(S.view==='shop'){if(setStage(q,to))PEND[q.id]=Date.now()+6000;S.cf=null;tick();render()}else doStage(q,to);break}
+case 'cfok':{const q=byId(S.cf.id),to=S.cf.to;if(!q||q.cx||(S.cf.from!=null&&q.st!==S.cf.from)){S.cf=null;S.toast={m:q?(q.cx?`${tag(q)} отменена — стадию не меняем`:`Позицию уже изменили: сейчас «${stLabel(q)}». Проверьте и нажмите снова`):'Позиции нет'};render();break}if(S.view==='shop'){if(setStage(q,to))PEND[q.id]=Date.now()+6000;S.cf=null;tick();render()}else doStage(q,to);break}
 case 'cfno':S.cf=null;render();break;
-case 'snext':{const q=byId(+v);if(q.st!==+t.dataset.f){render();break}if(q.st+1===5){S.cf={id:q.id,to:5};render();break}if(setStage(q,q.st+1))PEND[q.id]=Date.now()+6000;S.cf=null;tick();render();break}
-case 'undo':{const id=+v;const q=byId(id);undoStage(id);S.toast=S.view==='shop'?null:{m:`Отменено: ${tag(q)} снова «${stLabel(q)}»`};render();break}
+case 'snext':{const q=byId(+v);if(q.st!==+t.dataset.f){render();break}if(q.st+1===5){S.cf={id:q.id,to:5,from:q.st};render();break}if(setStage(q,q.st+1))PEND[q.id]=Date.now()+6000;S.cf=null;tick();render();break}
+case 'undo':{const id=+v;const q=byId(id);const okU=undoStage(id);S.toast=!okU?{m:`Отменить нельзя: позицию уже изменили — сейчас «${stLabel(q)}»`}:S.view==='shop'?null:{m:`Отменено: ${tag(q)} снова «${stLabel(q)}»`};render();break}
 case 'sf':S.sf=v;render();break;
 case 'neworder':S.of=!S.of;S.o=S.of?blankO():null;S.oerr='';S.toast=null;render();break;
 case 'ocancel':S.of=false;S.ed=false;S.o=null;S.oerr='';render();break;
@@ -975,7 +1773,7 @@ case 'osave':saveOrder(v==='more');break;
 case 'edit':S.ed=true;S.o=editO(p);S.oerr='';S.toast=null;render();break;
 case 'pri':p.pri=!p.pri;p.h.push(ev(p.pri?'срочно (офис)':'«срочно» снято'));touch(p);render();break;
 case 'blue':p.blue=!p.blue;p.h.push(ev(p.blue?'голубая отметка поставлена':'голубая отметка снята'));touch(p);S.toast={m:p.blue?'Строка в графике стала голубой, как в Excel':'Голубая отметка снята — цвет снова по стадии'};render();break;
-case 'cxo':S.cxo=true;S.cxr='';S.cxe='';render();break;
+case 'cxo':S.dmenu=false;S.cxo=true;S.cxr='';S.cxe='';render();break;
 case 'cxno':S.cxo=false;render();break;
 case 'cxok':{const r=String(S.cxr||'').trim();if(!r){S.cxe='Напишите причину — её увидят офис и цех';render();break}p.cx={r,d:TODAY,w:who()};p.h.push(ev('позиция отменена: '+r));S.cxo=false;touch(p);S.toast={m:'Позиция отменена. Её можно вернуть в работу'};render();break}
 case 'uncx':p.cx=null;p.h.push(ev('позиция возвращена в работу'));touch(p);S.toast={m:'Позиция снова в работе'};render();break;
@@ -987,6 +1785,14 @@ case 'comment':{const x=$('cm').value.trim();if(!x){S.cerr='Напишите к�
 case 'reply':{const x=String(S.rep||'').trim();if(!x)break;p.msgs.push({from:'office',w:who(),d:TODAY,tm:hm(),x});p.h.push(ev('ответ клиенту: '+x));S.rep='';touch(p);S.toast={m:'Ответ отправлен — клиент видит его в кабинете'};render();break}
 case 'grant':grant();break;
 case 'reset':S.rc=v;render();break;
+case 'stnew':S.emp={mode:'new',nm:'',tel:'',place:'',role:'shift',caps:RCAPS.shift.slice()};S.eerr='';S.acc=null;render();{const x=$('enm');if(x)x.focus()}break;
+case 'stedit':{const u=U.find(x=>x.ph===v);if(S.emp&&S.emp.ph===v){S.emp=null;render();break}S.emp={mode:'edit',ph:u.ph,nm:u.nm,role:u.role,caps:capsOf(u).slice()};S.eerr='';S.acc=null;render();break}
+case 'stcx':S.emp=null;S.eerr='';render();break;
+case 'stsave':{const e=S.emp;if(e.mode==='new'){e.nm=($('enm')||{value:e.nm}).value.trim();e.tel=($('eph')||{value:e.tel}).value;e.place=($('epl')||{value:e.place}).value.trim();
+  if(!e.nm){S.eerr='Впишите имя';render();break}const ph=normPh(e.tel);if(!ph){S.eerr='Нужен мобильный номер: 10 цифр после +7';render();break}
+  const ex=U.find(u=>u.ph===ph);if(ex){S.eerr=`Этот телефон уже заведён: ${ex.cl?'клиент '+ex.cl:ex.nm}`;render();break}
+  const pw=gen();U.push({ph,pw,role:e.role,nm:e.nm,place:e.place,caps:e.caps.slice(),last:''});S.emp=null;S.eerr='';S.acc={ph,pw,name:e.nm,nm:'',client:false,isNew:true,at:'staff'};S.cp='';sync();render();break}
+  const u=U.find(x=>x.ph===e.ph);u.role=e.role;u.caps=e.caps.slice();if(S.u.ph===u.ph)S.u=u;S.emp=null;S.eerr='';sync();S.toast={m:`Права сохранены: ${u.nm} — ${RL[u.role].toLowerCase()}`};render();break}
 case 'resetno':S.rc=null;render();break;
 case 'resetok':{const u=U.find(x=>x.ph===v);u.pw=gen();S.rc=null;S.acc={ph:u.ph,pw:u.pw,name:u.role==='client'?u.cl:u.nm,nm:u.role==='client'?u.nm:'',client:u.role==='client',isNew:false,at:u.ph};S.cp='';sync();render();break}
 case 'copy':copy();break;
@@ -1015,7 +1821,7 @@ case 'qcancel':S.qs=null;S.qerr='';render();break;
 case 'qsend':{const x=String(S.qt||'').trim();if(x.length<5){S.qerr='Напишите вопрос';render();break}const q=S.qs==='pickup'?P.filter(y=>y.cl===S.u.cl&&y.st===5&&!y.cx)[0]:byId(S.qs);if(!q)break;q.msgs.push({from:'client',w:S.u.cl,d:TODAY,tm:hm(),x});q.h.push(ev('вопрос клиента: '+x));S.qs=null;S.qt='';touch(q);render();break}
 }});
 app.addEventListener('submit',e=>{e.preventDefault();pick(e.target);if(e.target.id==='lf'){S.lph=$('lph').value;S.lpw=$('lpw').value;doLogin()}});
-app.addEventListener('input',e=>{const t=e.target,id=t.id;pick(t);
+app.addEventListener('input',e=>{if(e.isComposing||COMP)return;const t=e.target,id=t.id;pick(t);
 const clr=k=>{if(S[k]){S[k]='';const er=root().querySelector('.er');if(er)er.remove()}};
 if(id==='q'){S.q=t.value;S.lim=50;render();return}
 if(id==='fsq'){S.fsq=t.value;render();return}
@@ -1038,17 +1844,22 @@ if(t.dataset&&t.dataset.ck){const k=t.dataset.ck;S.hid=t.checked?S.hid.filter(x=
 if(t.dataset&&t.dataset.fv!==undefined){const c=col(S.fp),f=c.fv||c.v,all=uniq(P.map(f));if(S.fsq.trim()){S.f[c.k]=new Set([...root().querySelectorAll('.fpop input[data-fv]')].filter(x=>x.checked).map(x=>x.dataset.fv));render();return}const set=S.f[c.k]?new Set(S.f[c.k]):new Set(all);if(t.checked)set.add(t.dataset.fv);else set.delete(t.dataset.fv);if(set.size===all.length)delete S.f[c.k];else S.f[c.k]=set;render();return}
 if(t.id==='ssh'){if(t.value==='')delete S.f.sh;else if(t.value!=='multi')S.f.sh=new Set([t.value]);render();return}
 if(t.id==='acl'){S.acl=t.value;return}
-if(t.dataset&&t.dataset.nf){S.nf.mode=t.dataset.nf;S.nfx='';render();return}});
+if(t.dataset&&t.dataset.er&&S.emp){S.emp.role=t.dataset.er;S.emp.caps=RCAPS[t.dataset.er].slice();const g=k=>{const x=$(k);return x?x.value:null};if(S.emp.mode==='new'){S.emp.nm=g('enm')??S.emp.nm;S.emp.tel=g('eph')??S.emp.tel;S.emp.place=g('epl')??S.emp.place}render();return}
+if(t.dataset&&t.dataset.ec&&S.emp){const k=t.dataset.ec;S.emp.caps=t.checked?[...new Set([...S.emp.caps,k])]:S.emp.caps.filter(x=>x!==k);return}
+if(t.dataset&&t.dataset.nf){S.nf.mode=t.dataset.nf;if(S.nf.mode==='pick'&&!(S.nf.ns||[]).length)S.nf.ns=[4,5];S.nfx='';render();return}
+if(t.dataset&&t.dataset.ns){const k=+t.dataset.ns;S.nf.ns=t.checked?[...new Set([...(S.nf.ns||[]),k])]:(S.nf.ns||[]).filter(x=>x!==k);S.nfx='';render();return}
+if(t.dataset&&t.dataset.np){const id=+t.dataset.np;const a=(S.nf.np||[]).map(Number);S.nf.np=t.checked?[...new Set([...a,id])]:a.filter(x=>x!==id);S.nfx='';render();return}});
 app.addEventListener('toggle',e=>{if(e.target.id==='zbox'){pick(e.target);if(S.o)S.o.zopen=e.target.open}},true);
 app.addEventListener('keydown',e=>{const t=e.target;pick(t);
-if(e.key!=='Enter')return;if(t.matches&&t.matches('[data-a]:not(button)')){e.preventDefault();t.click();return}
-if(t.id==='cm'){const b=root().querySelector('[data-a="comment"]');if(b)b.click()}else if(t.id==='aph'){grant()}else if(t.id==='nfe'){const b=root().querySelector('[data-a="nfsave"]');if(b)b.click()}});
+if(t.id==='iev'&&e.key==='Escape'){S.ie=null;S.iee='';render();return}
+if(e.key!=='Enter')return;if(t.id==='iev'){e.preventDefault();const b=root().querySelector('[data-a="iesave"]');if(b)b.click();return}if(t.matches&&t.matches('[data-a]:not(button)')){e.preventDefault();t.click();return}
+if(t.id==='cm'){const b=root().querySelector('[data-a="comment"]');if(b)b.click()}else if(t.id==='aph'){grant()}else if(t.id==='nfe'){const b=root().querySelector('[data-a="nfsave"]');if(b)b.click()}else if(t.id==='nfq'){const b=root().querySelector('[data-a="nfquick"]');if(b)b.click()}});
 addEventListener('resize',()=>{placePop();wireHsb()});
 document.addEventListener('keydown',e=>{if(!VW)return;if(e.key==='Escape'){VW=null;render()}else if(e.key==='ArrowLeft'){vStep(-1)}else if(e.key==='ArrowRight'){vStep(1)}});
 let TX=null;app.addEventListener('touchstart',e=>{TX=VW&&e.target.closest('.vbody')&&e.touches.length===1?e.touches[0].clientX:null},{passive:true});
 app.addEventListener('touchend',e=>{if(TX==null)return;const dx=e.changedTouches[0].clientX-TX;TX=null;if(Math.abs(dx)>50)vStep(dx<0?1:-1)},{passive:true});
 /* Esc закрывает фильтр и «Обозначения», даже если фокус ушёл со страницы */
-document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;const ss=DUO?[DUO.L,DUO.R]:[S];if(!ss.some(x=>x.fp||x.mf||x.leg||x.cpop))return;ss.forEach(x=>{x.fp=null;x.mf=false;x.leg=false;x.cpop=false});render()});
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;const ss=DUO?[DUO.L,DUO.R]:[S];if(!ss.some(x=>x.fp||x.mf||x.leg||x.cpop||x.um))return;ss.forEach(x=>{x.fp=null;x.mf=false;x.leg=false;x.cpop=false;x.um=false});render()});
 (function(){const h=(location.hash||'').slice(1);const m={admin:0,shift:1,master:2,client:3};if(h in m)login(U[m[h]]);else if(h==='duo'||h==='duo-client')startDuo(h==='duo'?'shift':'client')})();
 render();
 (async()=>{try{if(window.claude&&typeof window.claude.use==='function'){DL=await window.claude.use('downloads');if(DL)render()}}catch(e){DL=null}})();
