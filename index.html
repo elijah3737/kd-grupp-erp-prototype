@@ -1021,7 +1021,7 @@ button{transition:background-color .15s,border-color .15s,color .15s,box-shadow 
 <input type="file" id="fup" accept="image/*,application/pdf" multiple hidden tabindex="-1" aria-hidden="true">
 <script src="data.js"></script>
 <script>
-const TODAY='2026-10-02';
+let TODAY='2026-10-02';
 const R=['Принят','В работе','Разобран','К сборке','Сборка','Готов','Отгружен'];
 const RN=['Принят','В работе','Материал','К сборке','Сборка','Готов','Отгружен'];
 const CR=['Принят','В работе','Разобран','Подготовка к сборке','Сборка','Готов','Отгружен'];
@@ -1090,7 +1090,7 @@ const U=[
   {ph:'+79000000004',pw:'lenta-4827',role:'client',nm:'Игорь Н.',cl:'ООО «Нива»',last:'2026-10-01 18:20'},
   {ph:'+79000000005',pw:'sever-5005',role:'admin',nm:'Ольга К.',place:'Офис, Москва',last:'2026-10-01 16:12'}
 ];
-const MGR=U[0];
+let MGR=U[0];
 const DEMO_ST=[4,2,1,3,0,2,4,1,3,2,1,4,0,3,2,1,4,2,3,1,0];
 const DEMO_OFF=[0,1,3,0,2,5,1,4,0,2,6,3,1,5,2,4,1,3,6,2,4];
 const TIMES=['08:40','09:12','10:05','10:48','11:30','13:15','14:02','15:20','16:10','17:05'];
@@ -1245,11 +1245,11 @@ function vLogin(){const cyr=/[а-яё]/i.test(S.lpw);return `<div class="login">
 ${S.lerr?`<div class="er">${esc(S.lerr)}</div>`:''}
 <button type="submit" class="pri wide-b">Войти</button>
 <p class="sm" style="margin:8px 0 0">Вход запомнится на этом устройстве.</p></form>
-<p class="sm" style="margin:12px 0 0">Нет пароля или забыли? Менеджер КД-Групп: <a href="tel:${MGR.ph}" class="data">${fmtPh(MGR.ph)}</a></p>
+<p class="sm" style="margin:12px 0 0">Нет пароля или забыли? ${MGR.ph?`Менеджер КД-Групп: <a href="tel:${MGR.ph}" class="data">${fmtPh(MGR.ph)}</a>`:'Обратитесь к менеджеру КД-Групп'}</p>
 <p class="sm" style="margin:6px 0 0">Входя, вы соглашаетесь с <button class="lnk" data-a="policy">политикой обработки персональных данных</button>.</p>
 ${S.pol?`<div class="polb">Здесь будет политика обработки персональных данных КД-Групп: какие данные храним (телефон и имя контакта), зачем (вход и сообщения о готовности), где (сервер в России), как удалить. Текст готовим к запуску.</div>`:''}
-<div class="demo"><div class="sm">Демо-вход по ролям</div><div class="dg">${[0,1,2,3].map(i=>`<button data-a="demo" data-i="${i}">${RL[U[i].role]}</button>`).join('')}
-<button data-a="duo" data-v="shift" class="duo-b">${ic('screens')} Показ: офис и цех на одном экране</button><button data-a="duo" data-v="client" class="duo-b">${ic('screens')} Показ: офис и клиент на одном экране</button></div></div>
+${window.KDAPI?'':`<div class="demo"><div class="sm">Демо-вход по ролям</div><div class="dg">${[0,1,2,3].map(i=>`<button data-a="demo" data-i="${i}">${RL[U[i].role]}</button>`).join('')}
+<button data-a="duo" data-v="shift" class="duo-b">${ic('screens')} Показ: офис и цех на одном экране</button><button data-a="duo" data-v="client" class="duo-b">${ic('screens')} Показ: офис и клиент на одном экране</button></div></div>`}
 </div></div>`}
 function bar(){const u=S.u,c=u.role==='client';const role=c?esc(u.cl):RL[u.role];const ini=esc(u.nm.split(/\s+/).map(w=>w[0]).join('').slice(0,2));
 const nb=k=>k==='access'?P.filter(p=>rqNew(p)||unans(p)).length:0;
@@ -1499,12 +1499,26 @@ ${list.length>lim?`<button data-a="cmore" class="wide-b">Показать ещё
 /* ---------- цех ---------- */
 /* цех: список-очередь по срочности — «В первую очередь» → «Просрочено» → «По плану», одна строка на позицию */
 const sGrp=p=>prio(p)?'p':p.plan&&p.plan<TODAY?'o':'n';
+/* порядок цеха не меняется под пальцем (проверка 10.10: F19, F20, F24, F39): пока в цехе нажимают кнопки или открыто
+   «Отменить», строки стоят на своих местах и в своих группах; пересортировка — после 4 с без касаний */
+const SETTLE=4000;let SHOP_T=0,SHOP_TK=null;
+const shopFrozen=()=>Date.now()-SHOP_T<SETTLE||Object.values(PEND).some(t=>t>Date.now());
+function shopTouch(){SHOP_T=Date.now();clearTimeout(SHOP_TK);SHOP_TK=setTimeout(()=>{if(!shopFrozen()&&(DUO?[DUO.L,DUO.R]:[S]).some(s=>s.view==='shop'))renderSoft()},SETTLE+60)}
+/* «В первую очередь» → «Просрочено» → «По плану», внутри — по плану и дальше по стадии; и в списке, и в карточках (F43) */
+const cmpShop=(a,b)=>'pon'.indexOf(sGrp(a))-'pon'.indexOf(sGrp(b))||ru(a.plan||'9999',b.plan||'9999')||b.st-a.st||a.id-b.id;
+function shopList(){const nat=P.filter(p=>(prod(p)||PEND[p.id])&&(!S.sf||prio(p))).sort(cmpShop);const k=S.sv+'|'+S.sf;
+if(!S.sord||S.sord.k!==k||!shopFrozen()){S.sord={k,ids:nat.map(p=>[p.id,sGrp(p)])};return {list:nat,g:sGrp}}
+const have=new Set(S.sord.ids.map(x=>x[0]));nat.forEach(p=>{if(!have.has(p.id))S.sord.ids.push([p.id,sGrp(p)])});
+const G=new Map(S.sord.ids);return {list:S.sord.ids.map(x=>byId(x[0])).filter(p=>p&&(!S.sf||prio(p)||G.get(p.id)==='p')),g:p=>G.get(p.id)||sGrp(p)}}
+/* строка ушла из производства (готова, отменена — своим нажатием или чужим), но порядок ещё заморожен: только статус */
+const sGone=p=>!prod(p)&&!PEND[p.id];
 function sAct(p){const pend=PEND[p.id];const cf=S.cf&&S.cf.id===p.id;const rt=route(p);
+if(sGone(p))return `<div class="sact"><span class="sdone" role="status">${ic('ok',16)} <span><b>${stLabel(p)}</b></span></span></div>`;
 if(pend)return `<div class="sact"><span class="sdone" role="status">${ic('ok',16)} <span><b>${rt[p.st]}</b> · записано</span></span><button data-a="undo" data-v="${p.id}" class="sundo">Отменить</button></div>`;
 if(cf)return `<div class="sact scf"><button data-a="cfok" class="pri snx">${ic('ok',16)} Подтвердить: Готов</button><button data-a="cfno" class="sundo">Не сейчас</button></div>`;
 return `<div class="sact">${can_('stage')?`<button data-a="snext" data-v="${p.id}" data-f="${p.st}" class="pri snx" aria-label="Перевести № ${esc(p.num||'')} в стадию ${rt[p.st+1]}"><span><span class="sdx">Дальше: </span>${rt[p.st+1]}</span>${ic('right',16)}</button>`:''}${canAtt()?`<button data-a="attup" data-v="${p.id}" class="sclip${p.at&&(p.at.b||p.at.n)?' has':''}" aria-label="Прикрепить бланк или фото" title="${esc(attTitle(p)||'Прикрепить бланк или фото')}">${ic('clip',18)}</button>`:''}</div>`}
 function sRow(p){const nm=nmSplit(p);const pend=PEND[p.id];const late=p.plan&&p.plan<TODAY;
-return `<div class="srow${pend?' hl':''}${S.cf&&S.cf.id===p.id?' cfr':''}">
+return `<div data-id="${p.id}" class="srow${pend?' hl':''}${S.cf&&S.cf.id===p.id?' cfr':''}">
 <button class="sopen" data-a="open" data-v="${p.id}" aria-label="Карточка позиции № ${esc(p.num||'')}"><span class="sfl">${prio(p)?`<span class="fl" title="${p.pri?'срочно (офис)':'просьба клиента'}">${ic('flag',15)}</span>`:''}</span>
 <span class="snm"><span class="s1">${numB(p)}<b class="data">${esc(nm.z||p.nm)}</b></span><span class="s2">${esc(nm.k)} · ${esc(p.cl)}</span></span>
 <span class="sty data">шаг ${esc(p.sh||'—')} · ${esc(p.ty||'—')}<span class="sm">${qtyTxt(p)}</span></span>
@@ -1512,17 +1526,18 @@ return `<div class="srow${pend?' hl':''}${S.cf&&S.cf.id===p.id?' cfr':''}">
 <span class="sst">${pill(p)}</span></button>
 ${sAct(p)}</div>`}
 function sCard(p){const pend=PEND[p.id];const cf=S.cf&&S.cf.id===p.id;const rt=route(p);let act;
-if(pend)act=`<div class="sa"><div class="sdone" role="status">${ic('ok')} <span><b>${rt[p.st]}</b> · записано, офис и клиент видят</span></div><button data-a="undo" data-v="${p.id}" class="sundo">Отменить</button></div>`;
+if(sGone(p))act=`<div class="sa"><div class="sdone" role="status">${ic('ok')} <span><b>${stLabel(p)}</b></span></div></div>`;
+else if(pend)act=`<div class="sa"><div class="sdone" role="status">${ic('ok')} <span><b>${rt[p.st]}</b> · записано, офис и клиент видят</span></div><button data-a="undo" data-v="${p.id}" class="sundo">Отменить</button></div>`;
 else if(cf)act=`<div class="scf"><div class="sm">Клиент увидит «Готов, можно забирать».</div><div class="sa"><button data-a="cfok" class="pri grow">${ic('ok')} Подтвердить: Готов</button><button data-a="cfno">Не сейчас</button></div></div>`;
 else act=`<div class="sa">${can_('stage')?`<button data-a="snext" data-v="${p.id}" data-f="${p.st}" class="pri grow">Дальше: ${rt[p.st+1]} ${ic('right')}</button>`:''}<button data-a="open" data-v="${p.id}" aria-label="Карточка позиции" class="sq">${ic('doc')}</button>${canAtt()?`<button data-a="attup" data-v="${p.id}" class="sq${p.at&&(p.at.b||p.at.n)?' has':''}" aria-label="Прикрепить бланк или фото" title="${esc(attTitle(p)||'Прикрепить бланк или фото')}">${ic('clip',20)}</button>`:''}</div>`;
-return `<div class="card sc${pend?' hl':''}">
+return `<div data-id="${p.id}" class="card sc${pend?' hl':''}">
 <div class="mrow sm"><span>${esc(p.cl)}</span>${prio(p)?`<span class="fl">${ic('flag',13)} ${p.pri?'срочно (офис)':'просьба клиента'}</span>`:''}</div>
 <div class="mt-t">${numB(p)}${esc(p.nm)}</div>
 <div class="sm"><span class="data">шаг ${esc(p.sh||'—')} · ${esc(p.ty||'—')}</span> · ${qtyTxt(p)}${p.plan?' · '+(over(p)?`<span class="bad">план ${fd(p.plan)}, просрочено</span>`:'план '+fd(p.plan)):''}</div>
 <div class="prog">${pill(p)}<div class="bar"><i style="width:${PCT[p.st]}%"></i></div><span class="sm data">${PCT[p.st]}%</span></div>${act}</div>`}
-function vShop(){const act=P.filter(prod);const pr=act.filter(prio).length;const list=P.filter(p=>(prod(p)||PEND[p.id])&&(!S.sf||prio(p))).sort((a,b)=>ru(a.plan||'9999',b.plan||'9999')||b.st-a.st||a.id-b.id);
+function vShop(){const act=P.filter(prod);const pr=act.filter(prio).length;const {list,g}=shopList();
 const G=[['p',ic('flag',16)+' В первую очередь','просьбы клиентов и срочное от офиса'],['o','Просрочено','план уже прошёл'],['n','По плану','']];
-const cards=S.sv==='c';const body=cards?`<div class="slist">${list.map(sCard).join('')}</div>`:G.map(([k,t,sub])=>{const rs=list.filter(p=>sGrp(p)===k);if(!rs.length)return '';return `<section class="sgrp sg-${k}" aria-label="${t.replace(/<[^>]+>/g,'').trim()}"><div class="sgh"><span class="sgt">${t}</span><span class="sgn">${rs.length}</span>${sub?`<span class="sm">${sub}</span>`:''}</div><div class="shd" aria-hidden="true"><span></span><span>Транспортёр</span><span>Шаг · тип</span><span>План</span><span>Стадия</span><span>Дальше</span></div>${rs.map(sRow).join('')}</section>`}).join('');
+const cards=S.sv==='c';const body=cards?`<div class="slist">${list.map(sCard).join('')}</div>`:G.map(([k,t,sub])=>{const rs=list.filter(p=>g(p)===k);if(!rs.length)return '';return `<section class="sgrp sg-${k}" aria-label="${t.replace(/<[^>]+>/g,'').trim()}"><div class="sgh"><span class="sgt">${t}</span><span class="sgn">${rs.length}</span>${sub?`<span class="sm">${sub}</span>`:''}</div><div class="shd" aria-hidden="true"><span></span><span>Транспортёр</span><span>Шаг · тип</span><span>План</span><span>Стадия</span><span>Дальше</span></div>${rs.map(sRow).join('')}</section>`}).join('');
 return `<div class="phone shop">
 <div class="ph"><div><div class="h2">Цех</div><div class="sm">в производстве ${act.length} · ${fdy(TODAY)}${cards?'':'<span class="shint"> · нажмите на строку — откроется карточка</span>'}</div></div><div class="sbar"><div class="seg" role="group" aria-label="Вид"><button data-a="sv" data-v="l" class="${!cards?'on':''}" aria-pressed="${!cards}" title="Списком">${ic('list')} Список</button><button data-a="sv" data-v="c" class="${cards?'on':''}" aria-pressed="${cards}" title="Карточками">${ic('grid')} Карточки</button></div><div class="seg"><button data-a="sf" data-v="" class="${!S.sf?'on':''}">Все</button><button data-a="sf" data-v="1" class="${S.sf?'on':''}" aria-label="Только приоритет">${ic('flag')} ${pr}</button></div></div></div>
 ${S.toast?toastH():''}${list.length?body:(S.sf?'<div class="empty">Приоритетных позиций нет · <button data-a="sf" data-v="" class="lnk">показать все</button></div>':'<div class="empty">Позиций в производстве нет</div>')}
@@ -1530,8 +1545,8 @@ ${S.toast?toastH():''}${list.length?body:(S.sf?'<div class="empty">Приори�
 
 /* ---------- клиенты и доступы ---------- */
 function accCard(){const a=S.acc;const n=P.filter(p=>p.cl===a.name&&prod(p)).reduce((s,p)=>s+(p.qt||1),0);
-const msg=a.client?`Здравствуйте${a.nm?', '+a.nm:''}!\nГотовность ваших транспортёров теперь видна онлайн: стадия и ожидаемая дата по каждому. Сейчас в производстве — ${n} шт.\nВход: [адрес кабинета]\nЛогин — ваш номер: ${fmtPh(a.ph)}\nПароль: ${a.pw}\nНужен вход агроному или механику — ответьте на это сообщение.\n${S.u.nm}, КД-Групп, ${fmtPh(S.u.ph)}`:`Доступ к графику производства КД-Групп.\nВход: [адрес кабинета]\nЛогин: ${fmtPh(a.ph)}\nПароль: ${a.pw}`;
-return `<div class="acc"><div style="font-size:13px">${a.isNew?'Доступ создан':'Пароль сброшен'} · ${esc(a.name)}</div><div class="b1" style="font-size:15px;margin-top:4px">Логин <span class="data">${fmtPh(a.ph)}</span> · пароль <span class="data">${a.pw}</span></div><textarea id="msg" rows="8" readonly aria-label="Сообщение для отправки">${esc(msg)}</textarea><div class="row2"><button data-a="copy">${ic('copy')} Скопировать сообщение</button><span id="cpst" style="font-size:12px">${esc(S.cp||'Вставьте в мессенджер клиента. Пароль виден один раз, дальше только сброс. Адрес кабинета подставится, когда выберем домен')}</span></div></div>`}
+const msg=a.client?`Здравствуйте${a.nm?', '+a.nm:''}!\nГотовность ваших транспортёров теперь видна онлайн: стадия и ожидаемая дата по каждому. Сейчас в производстве — ${n} шт.\nВход: ${window.KDAPI?location.origin:'[адрес кабинета]'}\nЛогин — ваш номер: ${fmtPh(a.ph)}\nПароль: ${a.pw}\nНужен вход агроному или механику — ответьте на это сообщение.\n${S.u.nm}, КД-Групп, ${fmtPh(S.u.ph)}`:`Доступ к графику производства КД-Групп.\nВход: ${window.KDAPI?location.origin:'[адрес кабинета]'}\nЛогин: ${fmtPh(a.ph)}\nПароль: ${a.pw}`;
+return `<div class="acc"><div style="font-size:13px">${a.isNew?'Доступ создан':'Пароль сброшен'} · ${esc(a.name)}</div><div class="b1" style="font-size:15px;margin-top:4px">Логин <span class="data">${fmtPh(a.ph)}</span> · пароль <span class="data">${a.pw}</span></div><textarea id="msg" rows="8" readonly aria-label="Сообщение для отправки">${esc(msg)}</textarea><div class="row2"><button data-a="copy">${ic('copy')} Скопировать сообщение</button><span id="cpst" style="font-size:12px">${esc(S.cp||'Вставьте в мессенджер клиента. Пароль виден один раз, дальше только сброс.'+(window.KDAPI?'':' Адрес кабинета подставится, когда выберем домен'))}</span></div></div>`}
 function contact(u){const lst=u.last?'вход '+fd(u.last.slice(0,10))+' '+u.last.slice(11):'ещё не заходил';
 if(S.rc===u.ph)return `<span class="ct"><span class="sm">Сбросить пароль ${fmtPh(u.ph)}? Старый перестанет работать.</span><button data-a="resetok" data-v="${u.ph}" class="sm-btn danger">Да, сбросить</button><button data-a="resetno" class="sm-btn">Отмена</button></span>`;
 return `<span class="ct"><span class="data" style="font-size:13px">${fmtPh(u.ph)}</span><span class="sm">${esc(u.nm||'')}${u.nm?' · ':''}${lst}</span>${can_('acc')?`<button data-a="reset" data-v="${u.ph}" class="sm-btn">Сбросить пароль</button>`:''}</span>`}
@@ -1656,7 +1671,7 @@ else{t.style.transition='none';t.style.width=w+'px';t.style.transform=P0(x,w);t.
 app.addEventListener('pointerdown',e=>{const b=e.target.closest('.gl>button');if(!b)return;const t=b.parentElement.querySelector(':scope>.thumb');if(t)t.classList.add('lift')});
 app.addEventListener('pointerup',()=>setTimeout(()=>app.querySelectorAll('.thumb.lift').forEach(t=>{if(!t.style.transition)t.classList.remove('lift')}),220));
 addEventListener('resize',()=>glass(false));
-app.addEventListener('pointerdown',()=>{PD=true},true);['click','keydown','submit','change'].forEach(k=>app.addEventListener(k,()=>{INACT=true;USED.clear()},true));addEventListener('pointerup',()=>{PD=false;setTimeout(flushSoft,350)},true);addEventListener('pointercancel',()=>{PD=false;setTimeout(flushSoft,0)},true);addEventListener('click',()=>setTimeout(flushSoft,0));
+app.addEventListener('pointerdown',e=>{PD=true;if(e.target.closest&&e.target.closest('.shop'))shopTouch()},true);app.addEventListener('keydown',e=>{if(e.target.closest&&e.target.closest('.shop'))shopTouch()},true);['click','keydown','submit','change'].forEach(k=>app.addEventListener(k,()=>{INACT=true;USED.clear()},true));addEventListener('pointerup',()=>{PD=false;setTimeout(flushSoft,350)},true);addEventListener('pointercancel',()=>{PD=false;setTimeout(flushSoft,0)},true);addEventListener('click',()=>setTimeout(flushSoft,0));
 app.addEventListener('compositionstart',()=>{COMP=true},true);app.addEventListener('compositionend',e=>{COMP=false;const t=e.target;setTimeout(()=>{if(t&&t.isConnected)t.dispatchEvent(new Event('input',{bubbles:true}));flushSoft()},0)},true);
 app.addEventListener('click',e=>{const b=e.target.closest('[data-thm]');if(!b){if(!e.target.closest('.thw'))thmClose();return}const w=b.closest('.thw');
 if(!w.classList.contains('open')){thmClose();w.classList.add('open');return}
@@ -1696,9 +1711,10 @@ async function exportCsv(){const cols=visCols();const rs=sorted(rows());const q=
   return /[;"\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
 const lines=[cols.map(c=>q(c.t||'Приоритет')).join(';')].concat(rs.map(p=>cols.map(c=>q(c.v(p)==='нет'?'':c.v(p))).join(';')));
 try{await DL.save({filename:'grafik-proizvodstva-'+TODAY+'.csv',data:'﻿'+lines.join('\r\n')});S.toast={m:`Файл передан на сохранение: ${rs.length} строк`}}catch(e){S.toast={m:e&&e.code==='declined'?'Сохранение отменено':'Не получилось сохранить файл в этом окне'}}render()}
-const navReset=()=>{VW=null;S.um=false;S.atc=null;S.d=null;S.toast=null;S.fp=null;S.mf=false;S.of=false;S.ed=false;S.o=null;S.cf=null;S.cxo=false;S.hl=null;S.acc=null;S.as=null;S.qs=null;S.rqf=null;S.cdd=null;S.rc=null;S.top=true};
+const navReset=()=>{VW=null;S.sord=null;S.um=false;S.atc=null;S.d=null;S.toast=null;S.fp=null;S.mf=false;S.of=false;S.ed=false;S.o=null;S.cf=null;S.cxo=false;S.hl=null;S.acc=null;S.as=null;S.qs=null;S.rqf=null;S.cdd=null;S.rc=null;S.top=true};
 
 app.addEventListener('click',e=>{pick(e.target);if(S.um&&!e.target.closest('.umw')){S.um=false;if(!e.target.closest('[data-a]')){render();return}}if((S.leg||S.cpop)&&!e.target.closest('.legw')){S.leg=false;S.cpop=false;if(!e.target.closest('[data-a]')){render();return}}const t=e.target.closest('[data-a]');if(!t||!app.contains(t))return;pick(t);const a=t.dataset.a,v=t.dataset.v;if(e.detail>1&&(ONCE.has(a)||performance.now()-ONCE_T<600))return;if(ONCE.has(a))ONCE_T=performance.now();{const k=denied(a,v);if(k){S.toast={m:`Нет права «${CAPS.find(c=>c[0]===k)[1]}». Его выдаёт администратор в «Клиенты и доступы»`};render();return}}const p=S.d?byId(S.d):null;
+let KH=null;if(window.KDAPI){KH=KDAPI.before(a,v,t,p);if(KH===true)return}
 switch(a){
 case 'demo':{const u=U[+t.dataset.i];S.lph=fmtPh(u.ph);S.lpw=u.pw;doLogin();break}
 case 'duo':startDuo(v);render();break;
@@ -1819,7 +1835,7 @@ case 'qopen':{const q=byId(+v);S.qs=q.id;S.rqf=null;S.qerr='';S.qt=`Вопрос
 case 'pickup':{const rd=P.filter(x=>x.cl===S.u.cl&&x.st===5&&!x.cx);S.qs='pickup';S.qerr='';S.qt=`Хотим забрать готовые: ${rd.map(x=>x.num?'№ '+x.num:x.nm).join(', ')}. Когда можно приехать?`;render();break}
 case 'qcancel':S.qs=null;S.qerr='';render();break;
 case 'qsend':{const x=String(S.qt||'').trim();if(x.length<5){S.qerr='Напишите вопрос';render();break}const q=S.qs==='pickup'?P.filter(y=>y.cl===S.u.cl&&y.st===5&&!y.cx)[0]:byId(S.qs);if(!q)break;q.msgs.push({from:'client',w:S.u.cl,d:TODAY,tm:hm(),x});q.h.push(ev('вопрос клиента: '+x));S.qs=null;S.qt='';touch(q);render();break}
-}});
+}if(KH)KDAPI.after(KH)});
 app.addEventListener('submit',e=>{e.preventDefault();pick(e.target);if(e.target.id==='lf'){S.lph=$('lph').value;S.lpw=$('lpw').value;doLogin()}});
 app.addEventListener('input',e=>{if(e.isComposing||COMP)return;const t=e.target,id=t.id;pick(t);
 const clr=k=>{if(S[k]){S[k]='';const er=root().querySelector('.er');if(er)er.remove()}};
@@ -1860,7 +1876,7 @@ let TX=null;app.addEventListener('touchstart',e=>{TX=VW&&e.target.closest('.vbod
 app.addEventListener('touchend',e=>{if(TX==null)return;const dx=e.changedTouches[0].clientX-TX;TX=null;if(Math.abs(dx)>50)vStep(dx<0?1:-1)},{passive:true});
 /* Esc закрывает фильтр и «Обозначения», даже если фокус ушёл со страницы */
 document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;const ss=DUO?[DUO.L,DUO.R]:[S];if(!ss.some(x=>x.fp||x.mf||x.leg||x.cpop||x.um))return;ss.forEach(x=>{x.fp=null;x.mf=false;x.leg=false;x.cpop=false;x.um=false});render()});
-(function(){const h=(location.hash||'').slice(1);const m={admin:0,shift:1,master:2,client:3};if(h in m)login(U[m[h]]);else if(h==='duo'||h==='duo-client')startDuo(h==='duo'?'shift':'client')})();
+if(window.KDAPI)KDAPI.install();else(function(){const h=(location.hash||'').slice(1);const m={admin:0,shift:1,master:2,client:3};if(h in m)login(U[m[h]]);else if(h==='duo'||h==='duo-client')startDuo(h==='duo'?'shift':'client')})();
 render();
 (async()=>{try{if(window.claude&&typeof window.claude.use==='function'){DL=await window.claude.use('downloads');if(DL)render()}}catch(e){DL=null}})();
 </script>
